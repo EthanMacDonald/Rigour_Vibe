@@ -3,7 +3,7 @@ description: Create a Product Requirements Document with integrated testing stra
 globs:
 alwaysApply: false
 ---
-# Rule: Hybrid Vibe PRD Creation
+# Rule: Rigour Vibe PRD Creation
 
 ## Goal
 
@@ -14,8 +14,8 @@ To guide an AI assistant in creating a Product Requirements Document (PRD) that 
 1. **Receive Initial Prompt:** User provides feature description
 2. **Complexity Assessment:** Determine rigor level needed (Light/Balanced/Full)
 3. **Gather Requirements:** Ask targeted clarifying questions based on complexity
-4. **Generate Hybrid PRD:** Create PRD with integrated testing considerations
-5. **Save Document:** Store as `hvb-prd-[feature-name].md` in `/specs` directory
+4. **Generate Rigour PRD:** Create PRD with integrated testing considerations
+5. **Save Document:** Store as `rvb-prd-[feature-name].md` in `/specs` directory
 
 ## Complexity Assessment Questions
 
@@ -66,7 +66,7 @@ Based on answers, recommend:
 - What compliance/regulatory requirements exist?
 - How will this be monitored and alerted?
 
-## Hybrid PRD Structure
+## Rigour PRD Structure
 
 ```markdown
 # PRD: [Feature Name]
@@ -129,7 +129,7 @@ Based on answers, recommend:
 
 - **Format:** Markdown (`.md`)
 - **Location:** `/specs/`
-- **Filename:** `hvb-prd-[feature-name].md`
+- **Filename:** `rvb-prd-[feature-name].md`
 - **Include:** Testing strategy appropriate to complexity level
 - **Focus:** Balance between velocity and quality
 

@@ -3,7 +3,7 @@ description: Test-first implementation of individual tasks with progressive veri
 globs:
 alwaysApply: false
 ---
-# Rule: Hybrid Vibe Task Implementation
+# Rule: Rigour Vibe Task Implementation
 
 ## Goal
 
@@ -107,7 +107,7 @@ git commit -m "feat: implement [task description]" \
            -m "- [specific change 1]" \
            -m "- [specific change 2]" \
            -m "- Tests: [test description]" \
-           -m "Related to task [X.Y] in hvb-tasks-[feature].md"
+           -m "Related to task [X.Y] in rvb-tasks-[feature].md"
 ```
 
 ### Parent Task Completion

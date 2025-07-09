@@ -1,4 +1,4 @@
-# Hybrid Vibe Tasks: [Feature Name]
+# Rigour Vibe Tasks: [Feature Name]
 
 ## Project Overview
 **Complexity Level:** [Light Touch | Balanced Rigor | Full Rigor]

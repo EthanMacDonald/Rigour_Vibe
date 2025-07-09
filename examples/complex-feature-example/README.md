@@ -1,6 +1,6 @@
 # Example: Multi-Tenant Payment Processing (Full Rigor)
 
-This example demonstrates the Hybrid Vibe approach for a complex, high-risk feature that requires comprehensive testing and verification.
+This example demonstrates the Rigour Vibe approach for a complex, high-risk feature that requires comprehensive testing and verification.
 
 ## Feature Description
 Implement a payment processing system that supports multiple tenants (organizations) with different payment providers, subscription models, and compliance requirements.
@@ -211,7 +211,7 @@ Enable organizations to process payments through their preferred payment provide
 ## Task List Example (Abbreviated)
 
 ```markdown
-# Hybrid Vibe Tasks: Multi-Tenant Payment Processing
+# Rigour Vibe Tasks: Multi-Tenant Payment Processing
 
 ## Project Overview
 **Complexity Level:** Full Rigor
@@ -398,4 +398,4 @@ Enable organizations to process payments through their preferred payment provide
 - **Performance Value:** System handles 5x expected load without modification
 - **Maintenance Value:** Well-tested code reduces maintenance overhead by 60%
 
-This example demonstrates how Hybrid Vibe's Full Rigor approach ensures quality and compliance for high-stakes features while maintaining structured development practices.
+This example demonstrates how Rigour Vibe's Full Rigor approach ensures quality and compliance for high-stakes features while maintaining structured development practices.

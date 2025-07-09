@@ -3,7 +3,7 @@ description: Progressive verification and quality assurance throughout developme
 globs:
 alwaysApply: false
 ---
-# Rule: Hybrid Vibe Progress Verification
+# Rule: Rigour Vibe Progress Verification
 
 ## Goal
 
@@ -87,7 +87,7 @@ npm test --changedSince=HEAD~1
 
 ### Status Report Format
 ```markdown
-## Hybrid Vibe Progress Report
+## Rigour Vibe Progress Report
 
 ### Overall Progress
 - **Tasks Completed:** [X] of [Y] ([Z]%)
@@ -263,7 +263,7 @@ When automated tests aren't sufficient:
 
 ### Verification Response Format
 ```
-🔍 HYBRID VIBE VERIFICATION REPORT
+🔍 RIGOUR VIBE VERIFICATION REPORT
 
 📊 Progress: [X/Y tasks complete] ([Z]%)
 🧪 Tests: [Passing/Total] ([Coverage]%)

@@ -1,4 +1,4 @@
-# Hybrid Vibe Verification Checklist
+# Rigour Vibe Verification Checklist
 
 ## Quality Gate Verification
 

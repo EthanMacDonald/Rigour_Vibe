@@ -1,4 +1,4 @@
-# 🚀 Hybrid Vibe Quick Start Guide
+# 🚀 Rigour Vibe Quick Start Guide
 
 Get started with test-driven, rigorous development in under 10 minutes!
 
@@ -30,14 +30,14 @@ Get started with test-driven, rigorous development in under 10 minutes!
 
 ### For Light Touch:
 ```
-Use @hvb-create-prd.mdc
+Use @rvb-create-prd.mdc
 Feature: [Simple description]
 Context: [What problem this solves]
 ```
 
 ### For Balanced/Full Rigor:
 ```
-Use @hvb-create-prd.mdc
+Use @rvb-create-prd.mdc
 Feature: [Detailed description]
 Risk factors: [Security, performance, integration concerns]
 Compliance: [Any regulatory requirements]
@@ -46,8 +46,8 @@ Compliance: [Any regulatory requirements]
 ## 3. Generate Test-Aware Tasks 📝
 
 ```
-Use @hvb-generate-tasks.mdc with your PRD file
-Reference: @hvb-prd-[your-feature].md
+Use @rvb-generate-tasks.mdc with your PRD file
+Reference: @rvb-prd-[your-feature].md
 ```
 
 The AI will create tasks with built-in test requirements.
@@ -55,7 +55,7 @@ The AI will create tasks with built-in test requirements.
 ## 4. Implement with Tests First 🧪
 
 ```
-Use @hvb-implement-task.mdc
+Use @rvb-implement-task.mdc
 Start with: Task 1.1 from your task list
 ```
 
@@ -68,7 +68,7 @@ Start with: Task 1.1 from your task list
 ## 5. Verify Progress Continuously ✅
 
 ```
-Use @hvb-verify-progress.mdc
+Use @rvb-verify-progress.mdc
 Check: Overall progress and quality gates
 ```
 
@@ -83,13 +83,13 @@ Check: Overall progress and quality gates
 ### Light Touch (Level 1) - 15 minutes setup
 ```bash
 # 1. Simple PRD (5 min)
-"Use @hvb-create-prd.mdc to add user profile photo upload"
+"Use @rvb-create-prd.mdc to add user profile photo upload"
 
 # 2. Basic tasks (5 min)  
-"Use @hvb-generate-tasks.mdc with @hvb-prd-profile-photo.md"
+"Use @rvb-generate-tasks.mdc with @rvb-prd-profile-photo.md"
 
 # 3. Test-first implementation (5 min per task)
-"Use @hvb-implement-task.mdc for task 1.1"
+"Use @rvb-implement-task.mdc for task 1.1"
 ```
 
 **Focus:** Core functionality + basic error handling + simple integration
@@ -97,13 +97,13 @@ Check: Overall progress and quality gates
 ### Balanced Rigor (Level 2) - 30 minutes setup
 ```bash
 # 1. Detailed PRD (10 min)
-"Use @hvb-create-prd.mdc to add user notification system with email/SMS"
+"Use @rvb-create-prd.mdc to add user notification system with email/SMS"
 
 # 2. Comprehensive tasks (10 min)
-"Use @hvb-generate-tasks.mdc with @hvb-prd-notifications.md"
+"Use @rvb-generate-tasks.mdc with @rvb-prd-notifications.md"
 
 # 3. Test-driven implementation (10 min per task)
-"Use @hvb-implement-task.mdc for task 1.1 with integration testing"
+"Use @rvb-implement-task.mdc for task 1.1 with integration testing"
 ```
 
 **Focus:** Unit tests + integration tests + edge cases + performance
@@ -111,13 +111,13 @@ Check: Overall progress and quality gates
 ### Full Rigor (Level 3) - 60 minutes setup
 ```bash
 # 1. Comprehensive PRD (20 min)
-"Use @hvb-create-prd.mdc to add payment processing with PCI compliance"
+"Use @rvb-create-prd.mdc to add payment processing with PCI compliance"
 
 # 2. Detailed task breakdown (20 min)
-"Use @hvb-generate-tasks.mdc with security and compliance requirements"
+"Use @rvb-generate-tasks.mdc with security and compliance requirements"
 
 # 3. TDD implementation (20 min per task)
-"Use @hvb-implement-task.mdc with comprehensive test coverage"
+"Use @rvb-implement-task.mdc with comprehensive test coverage"
 ```
 
 **Focus:** TDD + security tests + performance tests + compliance + documentation

@@ -1,6 +1,6 @@
 # Example: User Profile Avatar Upload (Light Touch)
 
-This example demonstrates the Hybrid Vibe approach for a simple, low-risk feature that still benefits from structured testing.
+This example demonstrates the Rigour Vibe approach for a simple, low-risk feature that still benefits from structured testing.
 
 ## Feature Description
 Add the ability for users to upload and display a profile avatar image in an existing user profile page.
@@ -82,7 +82,7 @@ Users can upload and display a profile picture to personalize their account.
 ## Task List Example
 
 ```markdown
-# Hybrid Vibe Tasks: User Profile Avatar Upload
+# Rigour Vibe Tasks: User Profile Avatar Upload
 
 ## Project Overview
 **Complexity Level:** Light Touch
@@ -194,4 +194,4 @@ Users can upload and display a profile picture to personalize their account.
 - ❌ If performance becomes critical
 - ❌ If feature complexity grows beyond expectations
 
-This example shows how Hybrid Vibe's Light Touch approach can deliver quality features quickly while maintaining professional development standards.
+This example shows how Rigour Vibe's Light Touch approach can deliver quality features quickly while maintaining professional development standards.

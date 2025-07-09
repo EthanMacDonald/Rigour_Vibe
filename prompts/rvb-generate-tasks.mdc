@@ -1,13 +1,13 @@
 ---
-description: Generate test-aware task list from Hybrid Vibe PRD
+description: Generate test-aware task list from Rigour Vibe PRD
 globs:
 alwaysApply: false
 ---
-# Rule: Hybrid Vibe Task Generation
+# Rule: Rigour Vibe Task Generation
 
 ## Goal
 
-To create a detailed, test-driven task list from a Hybrid Vibe PRD that ensures quality while maintaining development velocity. Each task includes both implementation and verification requirements.
+To create a detailed, test-driven task list from a Rigour Vibe PRD that ensures quality while maintaining development velocity. Each task includes both implementation and verification requirements.
 
 ## Process
 
@@ -15,12 +15,12 @@ To create a detailed, test-driven task list from a Hybrid Vibe PRD that ensures 
 2. **Generate Test-Aware Tasks:** Create tasks with integrated testing
 3. **Define Test Dependencies:** Ensure tests build progressively
 4. **Create Quality Checkpoints:** Add verification gates between major tasks
-5. **Save Task List:** Store as `hvb-tasks-[feature-name].md`
+5. **Save Task List:** Store as `rvb-tasks-[feature-name].md`
 
 ## Output Format
 
 ```markdown
-# Hybrid Vibe Tasks: [Feature Name]
+# Rigour Vibe Tasks: [Feature Name]
 
 ## Project Overview
 **Complexity Level:** [From PRD]
@@ -159,7 +159,7 @@ A task is only complete when:
 ## Output Location
 - **Format:** Markdown (`.md`)
 - **Location:** `/specs/`
-- **Filename:** `hvb-tasks-[feature-name].md`
+- **Filename:** `rvb-tasks-[feature-name].md`
 
 ## AI Instructions
 

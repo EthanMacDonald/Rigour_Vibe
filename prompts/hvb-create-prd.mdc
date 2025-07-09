@@ -1,0 +1,143 @@
+---
+description: Create a Product Requirements Document with integrated testing strategy
+globs:
+alwaysApply: false
+---
+# Rule: Hybrid Vibe PRD Creation
+
+## Goal
+
+To guide an AI assistant in creating a Product Requirements Document (PRD) that balances streamlined development with rigorous testing requirements. The PRD will include both feature requirements and testing strategy to ensure quality without over-engineering.
+
+## Process
+
+1. **Receive Initial Prompt:** User provides feature description
+2. **Complexity Assessment:** Determine rigor level needed (Light/Balanced/Full)
+3. **Gather Requirements:** Ask targeted clarifying questions based on complexity
+4. **Generate Hybrid PRD:** Create PRD with integrated testing considerations
+5. **Save Document:** Store as `hvb-prd-[feature-name].md` in `/specs` directory
+
+## Complexity Assessment Questions
+
+Before diving into detailed questions, assess complexity:
+
+**A. What's the risk level if this feature has bugs?**
+   1. Low (cosmetic issues, easy to fix)
+   2. Medium (affects user experience, moderate impact)
+   3. High (data loss, security issues, business critical)
+
+**B. How many systems/components will this touch?**
+   1. Single component/file
+   2. Multiple related components
+   3. Cross-system integration
+
+**C. What's your timeline pressure?**
+   1. Experimental/prototype (speed over perfection)
+   2. Production feature (balanced approach)
+   3. Mission-critical (quality over speed)
+
+Based on answers, recommend:
+- **Mostly 1s → Light Touch** (Level 1)
+- **Mix of 1s and 2s → Balanced Rigor** (Level 2)  
+- **Any 3s or mostly 2s → Full Rigor** (Level 3)
+
+## Clarifying Questions by Rigor Level
+
+### Light Touch (Level 1)
+- What's the main user action this feature enables?
+- What should happen when it works correctly?
+- What are the most obvious failure modes?
+- Are there any existing patterns to follow?
+
+### Balanced Rigor (Level 2)
+- All Level 1 questions, plus:
+- What are the edge cases you're concerned about?
+- How does this integrate with existing features?
+- What data validation is needed?
+- What error messages should users see?
+- How will you know it's working in production?
+
+### Full Rigor (Level 3)
+- All previous questions, plus:
+- What are the security implications?
+- What happens under high load?
+- How does this affect system performance?
+- What are the rollback scenarios?
+- What compliance/regulatory requirements exist?
+- How will this be monitored and alerted?
+
+## Hybrid PRD Structure
+
+```markdown
+# PRD: [Feature Name]
+
+## Complexity Level
+**Rigor Level:** [Light Touch | Balanced Rigor | Full Rigor]
+**Risk Assessment:** [Low | Medium | High]
+**Reasoning:** [Brief explanation of why this level was chosen]
+
+## Overview
+[Brief description of the feature and problem it solves]
+
+## Goals & Success Metrics
+[Specific, measurable objectives with testing implications]
+
+## User Stories & Acceptance Criteria
+[User narratives with built-in verification criteria]
+
+## Functional Requirements
+[Numbered requirements with testability in mind]
+
+## Quality Requirements
+### Testing Strategy
+- **Unit Tests:** [What functionality needs unit test coverage]
+- **Integration Tests:** [What interactions need testing]
+- **End-to-End Tests:** [What user workflows need verification]
+- **Performance Tests:** [Any speed/load requirements]
+- **Security Tests:** [Any security verification needed]
+
+### Quality Gates
+- [ ] **Task Completion:** All tests pass before moving to next task
+- [ ] **Feature Completion:** Full test suite passes
+- [ ] **Integration Verification:** Works with existing system
+- [ ] **Regression Protection:** Doesn't break existing features
+
+## Technical Considerations
+[Dependencies, constraints, integration points]
+
+## Non-Goals (Out of Scope)
+[Clear boundaries to prevent scope creep]
+
+## Risk Mitigation
+### High-Risk Areas
+[Components that need extra attention/testing]
+
+### Rollback Plan
+[How to undo changes if problems arise]
+
+## Implementation Notes
+### Progressive Development
+- Each task must include test requirements
+- No task is complete until tests pass
+- Verify all previous tests still pass before proceeding
+
+### Definition of Done
+[Specific criteria for considering feature complete]
+```
+
+## Output Requirements
+
+- **Format:** Markdown (`.md`)
+- **Location:** `/specs/`
+- **Filename:** `hvb-prd-[feature-name].md`
+- **Include:** Testing strategy appropriate to complexity level
+- **Focus:** Balance between velocity and quality
+
+## Final Instructions
+
+1. Always assess complexity level first
+2. Ask clarifying questions appropriate to the level
+3. Create PRD with integrated testing strategy
+4. Do NOT start implementing - focus on requirements and test planning
+5. Ensure testing requirements match the complexity assessment
+6. Provide clear quality gates and definition of done

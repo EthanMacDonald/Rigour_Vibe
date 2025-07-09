@@ -1,0 +1,172 @@
+---
+description: Generate test-aware task list from Hybrid Vibe PRD
+globs:
+alwaysApply: false
+---
+# Rule: Hybrid Vibe Task Generation
+
+## Goal
+
+To create a detailed, test-driven task list from a Hybrid Vibe PRD that ensures quality while maintaining development velocity. Each task includes both implementation and verification requirements.
+
+## Process
+
+1. **Analyze PRD:** Read complexity level and testing requirements
+2. **Generate Test-Aware Tasks:** Create tasks with integrated testing
+3. **Define Test Dependencies:** Ensure tests build progressively
+4. **Create Quality Checkpoints:** Add verification gates between major tasks
+5. **Save Task List:** Store as `hvb-tasks-[feature-name].md`
+
+## Output Format
+
+```markdown
+# Hybrid Vibe Tasks: [Feature Name]
+
+## Project Overview
+**Complexity Level:** [From PRD]
+**Testing Strategy:** [Summary from PRD]
+**Quality Gates:** [Key checkpoints]
+
+## Relevant Files
+- `path/to/implementation/file.ts` - [Purpose]
+- `path/to/implementation/file.test.ts` - Unit tests for implementation
+- `path/to/integration/test.spec.ts` - Integration tests
+- `docs/feature-name.md` - Documentation
+
+## Progressive Test Requirements
+
+### Test Foundation (Complete First)
+- [ ] 0.1 Set up test infrastructure
+  - [ ] 0.1.1 Configure test runner for project
+  - [ ] 0.1.2 Create test utilities and helpers
+  - [ ] 0.1.3 Set up test data factories/fixtures
+  - [ ] 0.1.4 Verify test pipeline runs successfully
+
+### Implementation Tasks
+
+- [ ] 1.0 [Parent Task Name]
+  - **Tests Required Before Implementation:**
+    - [ ] 1.0.T1 Write failing unit tests for [specific functionality]
+    - [ ] 1.0.T2 Create integration test stubs for [workflow]
+  - **Implementation Subtasks:**
+    - [ ] 1.1 [Implementation subtask]
+    - [ ] 1.2 [Implementation subtask]
+  - **Verification Requirements:**
+    - [ ] 1.0.V1 All new tests pass
+    - [ ] 1.0.V2 All existing tests still pass
+    - [ ] 1.0.V3 Integration points verified
+  
+- [ ] 2.0 [Parent Task Name]
+  - **Tests Required Before Implementation:**
+    - [ ] 2.0.T1 Write tests for [functionality]
+  - **Implementation Subtasks:**
+    - [ ] 2.1 [Implementation subtask]
+  - **Verification Requirements:**
+    - [ ] 2.0.V1 Full test suite passes
+    - [ ] 2.0.V2 No performance regressions
+
+### Quality Gates
+
+#### Gate 1: Core Functionality ✅
+**Required Before Proceeding to Advanced Features**
+- [ ] All core task tests passing
+- [ ] Basic integration verified
+- [ ] No critical test failures
+- [ ] Performance within acceptable range
+
+#### Gate 2: Feature Complete ✅
+**Required Before Final Testing**
+- [ ] All feature tasks completed
+- [ ] Full test coverage achieved
+- [ ] Integration tests passing
+- [ ] Documentation updated
+
+#### Gate 3: Release Ready ✅
+**Required Before Deployment**
+- [ ] Complete test suite passing
+- [ ] End-to-end scenarios verified
+- [ ] Performance benchmarks met
+- [ ] Security requirements satisfied
+- [ ] Rollback procedures tested
+
+## Test Execution Commands
+- **Unit Tests:** `[command for running unit tests]`
+- **Integration Tests:** `[command for integration tests]`
+- **Full Suite:** `[command for complete test run]`
+- **Coverage:** `[command for test coverage report]`
+
+## Definition of Task Completion
+
+A task is only complete when:
+1. ✅ All required tests are written and initially failing
+2. ✅ Implementation makes tests pass
+3. ✅ All previous tests still pass (regression check)
+4. ✅ Code meets quality standards
+5. ✅ Changes committed with passing CI
+
+## Complexity-Specific Requirements
+
+### Light Touch Tasks
+- Focus on happy path testing
+- Basic error handling verification
+- Smoke tests for integration
+
+### Balanced Rigor Tasks
+- Comprehensive unit test coverage
+- Edge case handling
+- Integration workflow testing
+- Error scenario verification
+
+### Full Rigor Tasks
+- TDD red-green-refactor cycle
+- Exhaustive edge case coverage
+- Performance testing
+- Security verification
+- End-to-end scenario testing
+```
+
+## Task Generation Rules
+
+### For Light Touch (Level 1):
+- 3-5 main tasks maximum
+- 1-2 tests per task
+- Focus on core functionality
+- Basic integration verification
+
+### For Balanced Rigor (Level 2):
+- 5-8 main tasks
+- 2-4 tests per task
+- Include edge cases
+- Integration and error handling tests
+- Performance considerations
+
+### For Full Rigor (Level 3):
+- 6-12 main tasks
+- 3-6 tests per task
+- Comprehensive test coverage
+- Security and performance tests
+- Multiple integration scenarios
+- Monitoring and observability
+
+## Phase-Based Generation
+
+1. **Generate High-Level Tasks:** Present main tasks with test requirements
+2. **Wait for Approval:** User responds with "Go" to proceed
+3. **Detail Subtasks:** Break down each task with specific test and implementation steps
+4. **Add Quality Gates:** Insert verification checkpoints
+5. **Finalize:** Complete task list with execution commands
+
+## Output Location
+- **Format:** Markdown (`.md`)
+- **Location:** `/specs/`
+- **Filename:** `hvb-tasks-[feature-name].md`
+
+## AI Instructions
+
+1. Analyze the PRD's complexity level first
+2. Generate tasks appropriate to the rigor level
+3. Always include test requirements BEFORE implementation steps
+4. Create progressive quality gates
+5. Ensure each task has clear completion criteria
+6. Include specific test commands for the project type
+7. Wait for user confirmation before adding detailed subtasks

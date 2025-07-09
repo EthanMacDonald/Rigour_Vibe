@@ -1,0 +1,295 @@
+---
+description: Progressive verification and quality assurance throughout development
+globs:
+alwaysApply: false
+---
+# Rule: Hybrid Vibe Progress Verification
+
+## Goal
+
+To continuously verify progress, maintain quality standards, and ensure all previous functionality remains intact as development progresses. This prevents regression and maintains confidence in the codebase.
+
+## Verification Triggers
+
+### After Each Task Completion
+Run verification automatically after marking any task complete:
+- [ ] All tests for current task pass
+- [ ] Full regression test suite passes
+- [ ] Code quality checks pass
+- [ ] Integration points verified
+
+### Before Major Quality Gates
+Before proceeding past any quality gate:
+- [ ] Comprehensive test suite review
+- [ ] Performance regression check
+- [ ] Security consideration review
+- [ ] Documentation completeness
+
+### On Request
+When user asks for verification or status check:
+- [ ] Current progress summary
+- [ ] Test suite health report
+- [ ] Risk assessment update
+- [ ] Next steps recommendation
+
+## Verification Procedures
+
+### 1. Test Suite Verification
+```bash
+# Full test suite execution
+echo "🧪 Running Full Test Suite..."
+npm test --coverage
+
+# Integration test verification
+echo "🔗 Verifying Integration Points..."
+npm run test:integration
+
+# End-to-end verification (if applicable)
+echo "🎯 Running E2E Tests..."
+npm run test:e2e
+
+# Performance regression check
+echo "⚡ Checking Performance..."
+npm run test:performance
+```
+
+### 2. Code Quality Verification
+```bash
+# Linting check
+echo "📝 Code Quality Check..."
+npm run lint
+
+# Type safety verification
+echo "🔍 Type Checking..."
+npm run type-check
+
+# Security audit
+echo "🔒 Security Audit..."
+npm audit --audit-level=moderate
+
+# Format verification
+echo "✨ Format Check..."
+npm run format:check
+```
+
+### 3. Regression Detection
+```bash
+# Compare test results with baseline
+echo "🔍 Regression Detection..."
+git diff HEAD~1 --name-only | grep -E '\.(test|spec)\.' || echo "No test files changed"
+
+# Run tests on changed files only (for speed)
+echo "⚡ Quick Regression Check..."
+npm test --changedSince=HEAD~1
+```
+
+## Progress Reporting
+
+### Status Report Format
+```markdown
+## Hybrid Vibe Progress Report
+
+### Overall Progress
+- **Tasks Completed:** [X] of [Y] ([Z]%)
+- **Current Quality Gate:** [Gate Name]
+- **Risk Level:** [Low/Medium/High]
+- **Estimated Completion:** [Timeline]
+
+### Test Suite Health
+- **Total Tests:** [Number]
+- **Passing:** [Number] ✅
+- **Failing:** [Number] ❌
+- **Coverage:** [Percentage]%
+- **Performance:** [Within/Outside] acceptable range
+
+### Recent Completions
+- [x] Task X.Y: [Description] - ✅ All tests passing
+- [x] Task X.Z: [Description] - ✅ All tests passing
+
+### Current Focus
+- [ ] Task A.B: [Description] - 🔄 In progress
+  - Tests written: ✅
+  - Implementation: 🔄 [Progress description]
+  - Verification: ⏳ Pending
+
+### Quality Gates Status
+- [x] Gate 1: Core Functionality ✅
+- [ ] Gate 2: Feature Complete ⏳
+- [ ] Gate 3: Release Ready ⏳
+
+### Risk Assessment
+**🟢 Low Risk:**
+- [Items that are solid and unlikely to cause issues]
+
+**🟡 Medium Risk:**
+- [Items that need attention but aren't blocking]
+
+**🔴 High Risk:**
+- [Items that could cause significant problems]
+
+### Next Steps
+1. [Immediate next action]
+2. [Following action]
+3. [Future consideration]
+```
+
+### Test Results Summary
+```markdown
+### Test Results Summary
+
+#### Unit Tests
+- **Files:** [Number] test files
+- **Tests:** [Number] total tests
+- **Status:** [All Passing/Some Failing]
+- **Coverage:** [Percentage]%
+
+#### Integration Tests
+- **Workflows:** [Number] tested
+- **Status:** [All Passing/Some Failing]
+- **Critical Paths:** [Status of key workflows]
+
+#### Quality Metrics
+- **Code Quality Score:** [Score/Rating]
+- **Performance:** [Benchmark results]
+- **Security:** [Audit results]
+```
+
+## Quality Gate Verification
+
+### Gate 1: Core Functionality ✅
+**Verification Criteria:**
+- [ ] All core task tests passing
+- [ ] Basic integration verified
+- [ ] No critical failures
+- [ ] Performance baseline established
+
+**Verification Commands:**
+```bash
+# Run core functionality tests
+npm test -- --testNamePattern="core|basic|fundamental"
+
+# Verify critical paths
+npm run test:critical-path
+
+# Performance baseline
+npm run benchmark:baseline
+```
+
+### Gate 2: Feature Complete ✅
+**Verification Criteria:**
+- [ ] All feature tasks completed
+- [ ] Full test coverage achieved
+- [ ] Integration tests passing
+- [ ] Documentation updated
+- [ ] Error handling verified
+
+**Verification Commands:**
+```bash
+# Full feature test suite
+npm test
+
+# Coverage report
+npm run coverage:report
+
+# Integration verification
+npm run test:integration
+
+# Documentation check
+npm run docs:verify
+```
+
+### Gate 3: Release Ready ✅
+**Verification Criteria:**
+- [ ] Complete test suite passing
+- [ ] End-to-end scenarios verified
+- [ ] Performance benchmarks met
+- [ ] Security requirements satisfied
+- [ ] Monitoring in place
+- [ ] Rollback procedures tested
+
+**Verification Commands:**
+```bash
+# Full release verification
+npm run test:release
+
+# End-to-end verification
+npm run test:e2e
+
+# Performance verification
+npm run test:performance
+
+# Security scan
+npm run security:scan
+
+# Pre-deployment check
+npm run verify:deployment
+```
+
+## Regression Prevention
+
+### Continuous Monitoring
+- **Test Suite Health:** Track test pass rate over time
+- **Performance Metrics:** Monitor for performance regressions
+- **Coverage Trends:** Ensure coverage doesn't decrease
+- **Quality Metrics:** Track code quality scores
+
+### Automated Checks
+```bash
+# Pre-commit verification
+npm run verify:pre-commit
+
+# Post-implementation verification
+npm run verify:post-task
+
+# Quality gate verification
+npm run verify:quality-gate
+```
+
+### Manual Verification Points
+When automated tests aren't sufficient:
+- [ ] User workflow testing
+- [ ] Visual regression testing
+- [ ] Performance profiling
+- [ ] Security review
+- [ ] Documentation accuracy
+
+## AI Instructions
+
+### When to Run Verification
+1. **After each task completion** - Automatically verify
+2. **Before quality gates** - Comprehensive verification
+3. **When requested** - Provide detailed status
+4. **When issues detected** - Deep diagnostic verification
+
+### Verification Response Format
+```
+🔍 HYBRID VIBE VERIFICATION REPORT
+
+📊 Progress: [X/Y tasks complete] ([Z]%)
+🧪 Tests: [Passing/Total] ([Coverage]%)
+⚡ Performance: [Status]
+🔒 Security: [Status]
+📋 Quality: [Score/Rating]
+
+🟢 All Clear: [What's working well]
+🟡 Attention Needed: [What needs monitoring]
+🔴 Action Required: [What must be fixed]
+
+➡️ Next Action: [Specific recommendation]
+```
+
+### Regression Response Protocol
+If regressions detected:
+1. **STOP all implementation**
+2. **Report regression details**
+3. **Identify root cause**
+4. **Propose fix strategy**
+5. **Wait for guidance before proceeding**
+
+### Quality Gate Response
+When approaching quality gates:
+1. **Pre-gate verification**
+2. **Report gate readiness**
+3. **Highlight any concerns**
+4. **Recommend go/no-go**
+5. **Wait for approval to proceed**

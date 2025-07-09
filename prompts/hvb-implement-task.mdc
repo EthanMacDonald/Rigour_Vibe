@@ -1,0 +1,239 @@
+---
+description: Test-first implementation of individual tasks with progressive verification
+globs:
+alwaysApply: false
+---
+# Rule: Hybrid Vibe Task Implementation
+
+## Goal
+
+To implement individual tasks using a test-first approach that ensures quality while maintaining development velocity. Each task must pass all tests before proceeding to the next.
+
+## Implementation Protocol
+
+### Pre-Implementation Checklist
+Before starting any task:
+- [ ] Identify current task from task list
+- [ ] Review test requirements for this task
+- [ ] Verify all previous tasks' tests are still passing
+- [ ] Understand integration points with existing code
+
+### Test-First Implementation Steps
+
+1. **Red Phase: Write Failing Tests**
+   - Write tests that describe the expected behavior
+   - Verify tests fail for the right reasons
+   - Ensure test coverage matches complexity level
+
+2. **Green Phase: Make Tests Pass**
+   - Implement minimal code to make tests pass
+   - Focus on functionality over optimization
+   - Verify all new tests pass
+
+3. **Refactor Phase: Improve Code Quality**
+   - Clean up implementation
+   - Remove duplication
+   - Improve readability and maintainability
+   - Ensure tests still pass after refactoring
+
+4. **Regression Phase: Verify Stability**
+   - Run full test suite to ensure no existing functionality broken
+   - Fix any regressions before proceeding
+   - Update integration tests if needed
+
+### Task Completion Protocol
+
+A task is ONLY complete when:
+1. ✅ **All required tests written and passing**
+2. ✅ **Full regression test suite passes**
+3. ✅ **Code quality standards met**
+4. ✅ **Integration points verified**
+5. ✅ **Task marked complete in task list**
+6. ✅ **Changes committed with descriptive message**
+
+### Complexity-Level Implementation
+
+#### Light Touch Implementation
+```
+1. Write 1-2 core functionality tests
+2. Implement basic functionality
+3. Add basic error handling
+4. Verify integration points work
+5. Run smoke tests
+```
+
+#### Balanced Rigor Implementation
+```
+1. Write comprehensive unit tests (happy path + edge cases)
+2. Add integration tests for key workflows
+3. Implement functionality with proper error handling
+4. Add logging/monitoring hooks
+5. Performance check (if applicable)
+6. Full test suite verification
+```
+
+#### Full Rigor Implementation
+```
+1. Write exhaustive test coverage (unit + integration + e2e)
+2. Security consideration tests
+3. Performance benchmark tests
+4. Implement with defensive programming
+5. Add comprehensive error handling and recovery
+6. Monitoring and alerting integration
+7. Load testing (if applicable)
+8. Full system verification
+```
+
+## Task Management
+
+### Updating Task Lists
+After completing each task:
+1. Mark task as complete: `[ ]` → `[x]`
+2. Update "Relevant Files" section with any new/modified files
+3. Add any newly discovered tasks
+4. Update test execution status
+
+### Git Workflow
+For each completed task:
+```bash
+# 1. Run tests to ensure everything passes
+npm test  # or appropriate test command
+
+# 2. Stage changes
+git add .
+
+# 3. Commit with conventional format
+git commit -m "feat: implement [task description]" \
+           -m "- [specific change 1]" \
+           -m "- [specific change 2]" \
+           -m "- Tests: [test description]" \
+           -m "Related to task [X.Y] in hvb-tasks-[feature].md"
+```
+
+### Parent Task Completion
+When all subtasks under a parent task are complete:
+1. ✅ Verify all subtask tests pass
+2. ✅ Run integration tests for the parent task
+3. ✅ Check quality gate requirements
+4. ✅ Mark parent task complete
+5. ✅ Commit parent task completion
+
+## Error Handling and Recovery
+
+### When Tests Fail
+1. **Analyze the failure** - Understand why tests are failing
+2. **Fix implementation** - Address the root cause
+3. **Verify fix** - Ensure tests now pass
+4. **Regression check** - Make sure no other tests broke
+5. **Document** - If it was a complex issue, add comments
+
+### When Regressions Occur
+1. **Stop implementation** - Don't proceed until regressions are fixed
+2. **Identify cause** - Use git diff to see what changed
+3. **Fix regression** - Update code or tests as needed
+4. **Verify solution** - Full test suite must pass
+5. **Prevent recurrence** - Add tests to catch similar issues
+
+### When Complexity Exceeds Expectations
+If a task becomes more complex than anticipated:
+1. **Pause implementation**
+2. **Re-assess complexity level** - May need to upgrade rigor level
+3. **Break down further** - Create subtasks if needed
+4. **Add more tests** - Increase test coverage for complex areas
+5. **Update task list** - Reflect new understanding
+
+## Quality Verification Commands
+
+### Test Execution
+```bash
+# Run specific test file
+npm test path/to/test.spec.ts
+
+# Run all tests
+npm test
+
+# Run tests with coverage
+npm run test:coverage
+
+# Run integration tests only
+npm run test:integration
+
+# Run e2e tests
+npm run test:e2e
+```
+
+### Code Quality Checks
+```bash
+# Linting
+npm run lint
+
+# Type checking (TypeScript)
+npm run type-check
+
+# Format check
+npm run format:check
+
+# Security audit
+npm audit
+```
+
+## Progress Tracking
+
+### After Each Task
+Update the task list file with:
+- Completed tasks marked `[x]`
+- Any new files created/modified
+- Test results summary
+- Any blockers or issues discovered
+
+### Quality Gate Verification
+Before moving to next major section:
+- [ ] All tasks in current section complete
+- [ ] All tests passing
+- [ ] Performance within acceptable range
+- [ ] Integration verified
+- [ ] Documentation updated
+
+## AI Instructions
+
+When implementing tasks:
+
+1. **Always start with tests** - Never write implementation code first
+2. **One task at a time** - Complete fully before moving to next
+3. **Verify regressions** - Always run full test suite
+4. **Update documentation** - Keep task list current
+5. **Commit frequently** - After each completed task
+6. **Ask for guidance** - If complexity exceeds expectations
+7. **Stop and wait** - Get user approval before proceeding to next task
+
+### Interaction Pattern
+1. Identify next task
+2. Write tests for the task
+3. Implement functionality
+4. Verify all tests pass
+5. Update task list
+6. Commit changes
+7. **Wait for user approval before continuing**
+
+### Communication Format
+```
+🔄 Starting Task [X.Y]: [Task Description]
+
+✅ Tests Written:
+- [Test 1 description]
+- [Test 2 description]
+
+✅ Implementation Complete:
+- [Change 1]
+- [Change 2]
+
+✅ Verification:
+- All new tests passing
+- Full test suite: [PASS/FAIL]
+- Regressions: [NONE/FIXED]
+
+📝 Task [X.Y] marked complete in task list
+💾 Changes committed
+
+Ready to proceed to Task [X.Y+1]? (Respond with 'yes' to continue)
+```

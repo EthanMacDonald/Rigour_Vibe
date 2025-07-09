@@ -34,6 +34,7 @@ Use @rvb-create-prd.mdc
 Feature: [Simple description]
 Context: [What problem this solves]
 ```
+Creates: `../directives/prd/2025-07-08_prd_feature-name.md`
 
 ### For Balanced/Full Rigor:
 ```
@@ -42,15 +43,17 @@ Feature: [Detailed description]
 Risk factors: [Security, performance, integration concerns]
 Compliance: [Any regulatory requirements]
 ```
+Creates: `../directives/prd/2025-07-08_prd_feature-name.md`
 
 ## 3. Generate Test-Aware Tasks 📝
 
 ```
 Use @rvb-generate-tasks.mdc with your PRD file
-Reference: @rvb-prd-[your-feature].md
+Reference: @../directives/prd/2025-07-08_prd_your-feature.md
 ```
 
 The AI will create tasks with built-in test requirements.
+Creates: `../directives/tasks/2025-07-08_task_your-feature.md`
 
 ## 4. Implement with Tests First 🧪
 
@@ -64,6 +67,11 @@ Start with: Task 1.1 from your task list
 2. **Green:** Write minimal code to make tests pass
 3. **Refactor:** Clean up code while keeping tests passing
 4. **Verify:** Run full test suite to catch regressions
+5. **Document:** Create test specs and implementation summaries
+
+**Creates per task:**
+- `../directives/tests/2025-07-08_test_feature-name_task-1-1.md`
+- `../directives/summaries/2025-07-08_summary_feature-name_task-1-1.md`
 
 ## 5. Verify Progress Continuously ✅
 
@@ -84,12 +92,15 @@ Check: Overall progress and quality gates
 ```bash
 # 1. Simple PRD (5 min)
 "Use @rvb-create-prd.mdc to add user profile photo upload"
+# Creates: ../directives/prd/2025-07-08_prd_profile-photo-upload.md
 
 # 2. Basic tasks (5 min)  
-"Use @rvb-generate-tasks.mdc with @rvb-prd-profile-photo.md"
+"Use @rvb-generate-tasks.mdc with @../directives/prd/2025-07-08_prd_profile-photo-upload.md"
+# Creates: ../directives/tasks/2025-07-08_task_profile-photo-upload.md
 
 # 3. Test-first implementation (5 min per task)
 "Use @rvb-implement-task.mdc for task 1.1"
+# Creates test specs and summaries per task
 ```
 
 **Focus:** Core functionality + basic error handling + simple integration
@@ -98,12 +109,15 @@ Check: Overall progress and quality gates
 ```bash
 # 1. Detailed PRD (10 min)
 "Use @rvb-create-prd.mdc to add user notification system with email/SMS"
+# Creates: ../directives/prd/2025-07-08_prd_user-notifications.md
 
 # 2. Comprehensive tasks (10 min)
-"Use @rvb-generate-tasks.mdc with @rvb-prd-notifications.md"
+"Use @rvb-generate-tasks.mdc with @../directives/prd/2025-07-08_prd_user-notifications.md"
+# Creates: ../directives/tasks/2025-07-08_task_user-notifications.md
 
 # 3. Test-driven implementation (10 min per task)
 "Use @rvb-implement-task.mdc for task 1.1 with integration testing"
+# Creates detailed test specs and summaries
 ```
 
 **Focus:** Unit tests + integration tests + edge cases + performance
@@ -112,15 +126,52 @@ Check: Overall progress and quality gates
 ```bash
 # 1. Comprehensive PRD (20 min)
 "Use @rvb-create-prd.mdc to add payment processing with PCI compliance"
+# Creates: ../directives/prd/2025-07-08_prd_payment-processing.md
 
 # 2. Detailed task breakdown (20 min)
 "Use @rvb-generate-tasks.mdc with security and compliance requirements"
+# Creates: ../directives/tasks/2025-07-08_task_payment-processing.md
 
 # 3. TDD implementation (20 min per task)
 "Use @rvb-implement-task.mdc with comprehensive test coverage"
+# Creates extensive test documentation and summaries
 ```
 
 **Focus:** TDD + security tests + performance tests + compliance + documentation
+
+## 📁 File Organization Benefits
+
+### Chronological Tracking
+- Dates in filenames enable chronological project tracking
+- Easy to see development timeline and progress
+- Helps with version control and rollback scenarios
+
+### Organized Documentation
+- **`../directives/prd/`** - All requirements in one place
+- **`../directives/tasks/`** - Implementation plans and breakdowns
+- **`../directives/tests/`** - Test specifications and results
+- **`../directives/summaries/`** - Implementation details and decisions
+
+### Easy Navigation
+```bash
+# View all PRDs
+ls ../directives/prd/
+
+# Find specific feature tasks
+ls ../directives/tasks/*user-auth*
+
+# Review test results for a feature
+ls ../directives/tests/*payment*
+
+# Check implementation summaries
+ls ../directives/summaries/2025-07-08*
+```
+
+### Team Collaboration
+- Clear file naming makes handoffs easy
+- Test specs provide context for new team members
+- Implementation summaries capture decision rationale
+- Organized structure scales with team size
 
 ## Common Commands by Project Type
 

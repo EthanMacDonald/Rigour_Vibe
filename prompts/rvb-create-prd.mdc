@@ -15,7 +15,7 @@ To guide an AI assistant in creating a Product Requirements Document (PRD) that 
 2. **Complexity Assessment:** Determine rigor level needed (Light/Balanced/Full)
 3. **Gather Requirements:** Ask targeted clarifying questions based on complexity
 4. **Generate Rigour PRD:** Create PRD with integrated testing considerations
-5. **Save Document:** Store as `rvb-prd-[feature-name].md` in `/specs` directory
+5. **Save Document:** Store as `YYYY-MM-DD_prd_feature-name.md` in `../directives/prd/` directory
 
 ## Complexity Assessment Questions
 
@@ -128,10 +128,17 @@ Based on answers, recommend:
 ## Output Requirements
 
 - **Format:** Markdown (`.md`)
-- **Location:** `/specs/`
-- **Filename:** `rvb-prd-[feature-name].md`
+- **Location:** `../directives/prd/` (one level up from rigour_vibe framework)
+- **Filename:** `YYYY-MM-DD_prd_feature-name.md` (where YYYY-MM-DD is today's date)
 - **Include:** Testing strategy appropriate to complexity level
 - **Focus:** Balance between velocity and quality
+
+## File Naming Convention
+
+Use today's date (2025-07-08) and format the feature name in lowercase with hyphens:
+- Example: `2025-07-08_prd_user-authentication.md`
+- Example: `2025-07-08_prd_payment-processing.md`
+- Example: `2025-07-08_prd_profile-photo-upload.md`
 
 ## Final Instructions
 

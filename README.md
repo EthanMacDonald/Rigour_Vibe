@@ -48,21 +48,62 @@ Traditional approaches force you to choose:
 ## 📁 File Structure
 
 ```
-rigour_vibe/
-├── README.md                    # This file
-├── prompts/
-│   ├── rvb-create-prd.mdc      # Enhanced PRD creation with test planning
-│   ├── rvb-generate-tasks.mdc   # Task generation with test requirements
-│   ├── rvb-implement-task.mdc   # Test-first task implementation
-│   └── rvb-verify-progress.mdc  # Progressive verification and regression testing
-├── templates/
-│   ├── rigour-prd-template.md   # PRD template with testing considerations
-│   ├── task-with-tests.md       # Task template including test requirements
-│   └── verification-checklist.md # Quality gate checklist
-└── examples/
-    ├── simple-feature-example/  # Example of light-touch rigour approach
-    └── complex-feature-example/ # Example of full rigorous approach
+project-root/
+├── rigour_vibe/                 # Framework files
+│   ├── README.md                # This file
+│   ├── QUICK-START.md          # Getting started guide
+│   ├── prompts/
+│   │   ├── rvb-create-prd.mdc  # Enhanced PRD creation with test planning
+│   │   ├── rvb-generate-tasks.mdc # Task generation with test requirements
+│   │   ├── rvb-implement-task.mdc # Test-first task implementation
+│   │   └── rvb-verify-progress.mdc # Progressive verification and regression testing
+│   ├── templates/
+│   │   ├── rigour-prd-template.md # PRD template with testing considerations
+│   │   ├── task-with-tests.md   # Task template including test requirements
+│   │   └── verification-checklist.md # Quality gate checklist
+│   └── examples/
+│       ├── simple-feature-example/ # Example of light-touch rigour approach
+│       └── complex-feature-example/ # Example of full rigorous approach
+├── directives/                  # Generated project files (created when using framework)
+│   ├── prd/                     # Product Requirements Documents
+│   │   └── YYYY-MM-DD_prd_feature-name.md
+│   ├── tasks/                   # Task breakdowns and plans
+│   │   └── YYYY-MM-DD_task_feature-name.md
+│   ├── tests/                   # Test specifications and results
+│   │   └── YYYY-MM-DD_test_feature-name_task-id.md
+│   └── summaries/               # Implementation summaries and reports
+│       └── YYYY-MM-DD_summary_feature-name_task-id.md
+└── [your-project-files]/        # Your actual project code
 ```
+
+## 📋 File Organization System
+
+### Directory Structure
+All generated project files are organized in the `../directives/` folder (sibling to rigour_vibe) with the following subfolders:
+
+- **`prd/`** - Product Requirements Documents
+- **`tasks/`** - Task breakdowns and implementation plans  
+- **`tests/`** - Test specifications, results, and coverage reports
+- **`summaries/`** - Implementation summaries and progress reports
+
+### File Naming Convention
+**Format:** `YYYY-MM-DD_<filetype>_<feature-or-task>.md`
+
+**Components:**
+- **Date**: ISO format (YYYY-MM-DD) for chronological organization
+- **File Type**: `prd`, `task`, `test`, or `summary`
+- **Feature/Task**: Descriptive identifier (lowercase, hyphen-separated)
+
+**Examples:**
+- `2025-07-08_prd_user-authentication.md`
+- `2025-07-08_task_user-authentication.md`
+- `2025-07-08_test_user-authentication_login-flow.md`
+- `2025-07-08_summary_user-authentication_task-1-2.md`
+
+### Framework vs Project Files
+- **Framework files** stay in `rigour_vibe/` (methodology, prompts, templates)
+- **Project files** are created in `../directives/` (PRDs, tasks, tests, summaries)
+- This separation keeps the framework clean and reusable across projects
 
 ## 🎚️ Adaptive Rigor Levels
 
@@ -152,9 +193,14 @@ Copy prompts into your workspace as reusable templates.
 
 1. **Identify Your Project's Complexity Level**
 2. **Start with PRD Creation**: `@rvb-create-prd.mdc`
+   - Creates: `../directives/prd/YYYY-MM-DD_prd_feature-name.md`
 3. **Generate Test-Aware Tasks**: `@rvb-generate-tasks.mdc`
+   - Creates: `../directives/tasks/YYYY-MM-DD_task_feature-name.md`
 4. **Implement with Progressive Testing**: `@rvb-implement-task.mdc`
+   - Creates: `../directives/tests/YYYY-MM-DD_test_feature-name_task-id.md`
+   - Creates: `../directives/summaries/YYYY-MM-DD_summary_feature-name_task-id.md`
 5. **Verify and Progress**: `@rvb-verify-progress.mdc`
+   - Updates existing files and creates progress summaries
 
 ## 📚 Learn More
 

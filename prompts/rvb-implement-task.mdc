@@ -7,7 +7,7 @@ alwaysApply: false
 
 ## Goal
 
-To implement individual tasks using a test-first approach that ensures quality while maintaining development velocity. Each task must pass all tests before proceeding to the next.
+To implement individual tasks using a test-first approach that ensures quality while maintaining development velocity. Each task must pass all tests before proceeding to the next. Generate test specifications and implementation summaries in organized directories.
 
 ## Implementation Protocol
 
@@ -49,7 +49,9 @@ A task is ONLY complete when:
 3. ✅ **Code quality standards met**
 4. ✅ **Integration points verified**
 5. ✅ **Task marked complete in task list**
-6. ✅ **Changes committed with descriptive message**
+6. ✅ **Test specification created**: `../directives/tests/YYYY-MM-DD_test_feature-name_task-id.md`
+7. ✅ **Implementation summary created**: `../directives/summaries/YYYY-MM-DD_summary_feature-name_task-id.md`
+8. ✅ **Changes committed with descriptive message**
 
 ### Complexity-Level Implementation
 
@@ -107,7 +109,7 @@ git commit -m "feat: implement [task description]" \
            -m "- [specific change 1]" \
            -m "- [specific change 2]" \
            -m "- Tests: [test description]" \
-           -m "Related to task [X.Y] in rvb-tasks-[feature].md"
+           -m "Related to task [X.Y] in ../directives/tasks/YYYY-MM-DD_task_[feature].md"
 ```
 
 ### Parent Task Completion
@@ -177,6 +179,73 @@ npm run format:check
 npm audit
 ```
 
+## Documentation Creation
+
+### Test Specification File
+For each task, create a test specification file:
+- **Location:** `../directives/tests/`
+- **Filename:** `YYYY-MM-DD_test_feature-name_task-id.md`
+- **Content:** Test cases, expected outcomes, verification criteria
+- **Format:**
+  ```markdown
+  # Test Specification: [Feature Name] - Task [X.Y]
+  
+  ## Test Overview
+  **Task:** [Task description]
+  **Feature:** [Feature name]
+  **Date:** [YYYY-MM-DD]
+  
+  ## Test Cases
+  ### Test Case 1: [Description]
+  - **Input:** [Test input]
+  - **Expected Output:** [Expected result]
+  - **Actual Output:** [Result after implementation]
+  - **Status:** [PASS/FAIL]
+  
+  ## Coverage Report
+  - **Lines Covered:** [X]%
+  - **Branches Covered:** [X]%
+  - **Functions Covered:** [X]%
+  ```
+
+### Implementation Summary File
+For each completed task, create a summary file:
+- **Location:** `../directives/summaries/`
+- **Filename:** `YYYY-MM-DD_summary_feature-name_task-id.md`
+- **Content:** Implementation details, decisions made, challenges overcome
+- **Format:**
+  ```markdown
+  # Implementation Summary: [Feature Name] - Task [X.Y]
+  
+  ## Task Overview
+  **Task:** [Task description]
+  **Feature:** [Feature name]
+  **Date:** [YYYY-MM-DD]
+  **Duration:** [Time taken]
+  **Status:** [COMPLETE/IN_PROGRESS]
+  
+  ## Implementation Details
+  ### Changes Made
+  - [File 1]: [Description of changes]
+  - [File 2]: [Description of changes]
+  
+  ### Technical Decisions
+  - [Decision 1]: [Rationale]
+  - [Decision 2]: [Rationale]
+  
+  ### Challenges & Solutions
+  - **Challenge:** [Description]
+  - **Solution:** [How it was resolved]
+  
+  ### Testing Results
+  - **Tests Added:** [Number]
+  - **All Tests Pass:** [YES/NO]
+  - **Coverage:** [Percentage]
+  
+  ### Next Steps
+  - [What comes next]
+  ```
+
 ## Progress Tracking
 
 ### After Each Task
@@ -185,6 +254,7 @@ Update the task list file with:
 - Any new files created/modified
 - Test results summary
 - Any blockers or issues discovered
+- References to test specification and summary files created
 
 ### Quality Gate Verification
 Before moving to next major section:
@@ -203,17 +273,9 @@ When implementing tasks:
 3. **Verify regressions** - Always run full test suite
 4. **Update documentation** - Keep task list current
 5. **Commit frequently** - After each completed task
-6. **Ask for guidance** - If complexity exceeds expectations
-7. **Stop and wait** - Get user approval before proceeding to next task
-
-### Interaction Pattern
-1. Identify next task
-2. Write tests for the task
-3. Implement functionality
-4. Verify all tests pass
-5. Update task list
-6. Commit changes
-7. **Wait for user approval before continuing**
+6. **Create documentation** - Test specs and implementation summaries
+7. **Commit changes** - After each completed task
+8. **Wait for user approval before continuing**
 
 ### Communication Format
 ```
@@ -231,6 +293,10 @@ When implementing tasks:
 - All new tests passing
 - Full test suite: [PASS/FAIL]
 - Regressions: [NONE/FIXED]
+
+📝 Documentation Created:
+- Test Spec: ../directives/tests/YYYY-MM-DD_test_feature-name_task-id.md
+- Summary: ../directives/summaries/YYYY-MM-DD_summary_feature-name_task-id.md
 
 📝 Task [X.Y] marked complete in task list
 💾 Changes committed

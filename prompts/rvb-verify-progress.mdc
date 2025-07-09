@@ -7,7 +7,7 @@ alwaysApply: false
 
 ## Goal
 
-To continuously verify progress, maintain quality standards, and ensure all previous functionality remains intact as development progresses. This prevents regression and maintains confidence in the codebase.
+To continuously verify progress, maintain quality standards, and ensure all previous functionality remains intact as development progresses. This prevents regression and maintains confidence in the codebase while tracking progress through organized documentation.
 
 ## Verification Triggers
 
@@ -94,6 +94,12 @@ npm test --changedSince=HEAD~1
 - **Current Quality Gate:** [Gate Name]
 - **Risk Level:** [Low/Medium/High]
 - **Estimated Completion:** [Timeline]
+
+### File Organization Status
+- **PRD Files:** ../directives/prd/[list files]
+- **Task Files:** ../directives/tasks/[list files]
+- **Test Files:** ../directives/tests/[count] files
+- **Summary Files:** ../directives/summaries/[count] files
 
 ### Test Suite Health
 - **Total Tests:** [Number]

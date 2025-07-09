@@ -11,11 +11,11 @@ To create a detailed, test-driven task list from a Rigour Vibe PRD that ensures 
 
 ## Process
 
-1. **Analyze PRD:** Read complexity level and testing requirements
+1. **Analyze PRD:** Read complexity level and testing requirements from the PRD file
 2. **Generate Test-Aware Tasks:** Create tasks with integrated testing
 3. **Define Test Dependencies:** Ensure tests build progressively
 4. **Create Quality Checkpoints:** Add verification gates between major tasks
-5. **Save Task List:** Store as `rvb-tasks-[feature-name].md`
+5. **Save Task List:** Store as `YYYY-MM-DD_task_feature-name.md` in `../directives/tasks/`
 
 ## Output Format
 
@@ -158,8 +158,14 @@ A task is only complete when:
 
 ## Output Location
 - **Format:** Markdown (`.md`)
-- **Location:** `/specs/`
-- **Filename:** `rvb-tasks-[feature-name].md`
+- **Location:** `../directives/tasks/`
+- **Filename:** `YYYY-MM-DD_task_feature-name.md` (where YYYY-MM-DD is today's date)
+
+## File Naming Convention
+
+Use today's date (2025-07-08) and match the feature name from the PRD:
+- If PRD is `2025-07-08_prd_user-authentication.md`
+- Then task file is `2025-07-08_task_user-authentication.md`
 
 ## AI Instructions
 

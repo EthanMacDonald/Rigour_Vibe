@@ -1,5 +1,9 @@
 # Rigour Vibe Tasks: [Feature Name]
 
+**File:** `../directives/tasks/YYYY-MM-DD_task_feature-name.md`
+**PRD Reference:** `../directives/prd/YYYY-MM-DD_prd_feature-name.md`
+**Created:** [Date]
+
 ## Project Overview
 **Complexity Level:** [Light Touch | Balanced Rigor | Full Rigor]
 **Testing Strategy:** [Summary of testing approach from PRD]
@@ -33,6 +37,8 @@
 - `tests/e2e/[feature].e2e.ts` - End-to-end tests (if applicable)
 
 ### Documentation Files
+- `../directives/tests/YYYY-MM-DD_test_[feature]_task-[id].md` - Test specifications per task
+- `../directives/summaries/YYYY-MM-DD_summary_[feature]_task-[id].md` - Implementation summaries per task
 - `docs/features/[feature].md` - Feature documentation
 - `docs/api/[feature]-api.md` - API documentation (if applicable)
 - `README.md` - Updated with feature information

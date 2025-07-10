@@ -121,6 +121,29 @@
 - **Development Tools:** [Testing frameworks, build tools]
 - **Deployment:** [How feature will be deployed]
 
+### File Organization (Rigour Vibe Structure)
+**Implementation Files:**
+- Core logic: `src/core/[feature-name]/`
+- API endpoints: `src/api/[feature-name]/` (if applicable)
+- UI components: `src/ui/[feature-name]/` (if applicable)
+- Utilities: `src/utils/[feature-name]/` (if applicable)
+
+**Test Files:**
+- Unit tests: `tests/unit/[feature-name]/`
+- Integration tests: `tests/integration/[feature-name]/`
+- E2E tests: `tests/e2e/[feature-name]/` (if applicable)
+- Test fixtures: `tests/fixtures/[feature-name]/`
+
+**Environment & Scripts:**
+- Docker configs: `environment/docker/` (if needed)
+- CI/CD configs: `environment/ci/` (if needed)
+- Build scripts: `scripts/build/` (if needed)
+- Deploy scripts: `scripts/deploy/` (if needed)
+
+**Documentation:**
+- API docs: `docs/api/[feature-name].md` (if applicable)
+- User guides: `docs/user/[feature-name].md` (if applicable)
+
 ## Risk Assessment & Mitigation
 
 ### Technical Risks

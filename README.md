@@ -225,8 +225,8 @@ project-root/
 # Create complete project structure
 mkdir -p {rigour_vibe,directives/{prd,spec,tasks,tests,summaries},src/{core,api,ui,utils,config},tests/{unit,integration,e2e,performance,fixtures},build/{debug,release,docs},scripts/{build,deploy,test,dev},environment/{docker,conda,venv,ci},docs/{api,user,dev},assets/{images,fonts,data},config/{development,staging,production}}
 
-# Or use the setup script (created by the framework)
-./scripts/dev/setup_project_structure.sh
+# Or use the setup script (included in the framework)
+./rigour_vibe/scripts/dev/setup_project_structure.sh
 ```
 
 ## 📋 File Organization System

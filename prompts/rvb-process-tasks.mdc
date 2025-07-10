@@ -143,13 +143,17 @@ Before considering feature complete:
 - **Document Decisions:** Record important implementation choices
 
 ### File Updates Required
-1. **Relevant Files Section:**
+1. **Relevant Files Section (Update with actual paths following project structure):**
    ```markdown
    ## Relevant Files
-   - `path/to/file1.ts` - [Updated description]
-   - `path/to/file2.test.ts` - Unit tests for file1
-   - `path/to/new-file.tsx` - [New file description]
-   - `docs/feature-guide.md` - [Documentation updates]
+   - `src/core/[feature]/[component].ts` - Core implementation
+   - `src/api/[feature]/[endpoint].ts` - API endpoints (if applicable)
+   - `src/ui/[feature]/[component].tsx` - UI components (if applicable)
+   - `tests/unit/[feature]/[component].test.ts` - Unit tests
+   - `tests/integration/[feature]/[workflow].spec.ts` - Integration tests
+   - `environment/docker/Dockerfile` - Environment config (if modified)
+   - `scripts/build/build-[feature].sh` - Build scripts (if needed)
+   - `docs/api/[feature].md` - API documentation (if applicable)
    ```
 
 2. **Task Progress Tracking:**
@@ -224,10 +228,11 @@ Quality checks:
 
 ### Mandatory Behavior
 1. **One sub-task at a time:** NEVER start the next sub-task without explicit user permission
-2. **Always run tests:** Before marking any task complete
-3. **Update task lists:** Keep progress tracking current
-4. **Commit properly:** Use structured commit messages
-5. **Wait for permission:** After each sub-task completion
+2. **Follow project structure:** Place all files in their designated directories (src/, tests/, environment/, etc.)
+3. **Always run tests:** Before marking any task complete
+4. **Update task lists:** Keep progress tracking current
+5. **Commit properly:** Use structured commit messages
+6. **Wait for permission:** After each sub-task completion
 
 ### Prohibited Actions
 - ❌ Working on multiple sub-tasks simultaneously

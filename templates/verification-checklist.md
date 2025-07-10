@@ -44,6 +44,21 @@
   - [ ] Type checking passes (if TypeScript)
   - [ ] Code formatting consistent
 
+- [ ] **Project Structure Verification**
+  ```bash
+  # Verify all files are in correct directories
+  ls -la src/{core,api,ui,utils,config}/ 2>/dev/null
+  ls -la tests/{unit,integration,e2e,fixtures}/ 2>/dev/null
+  ls -la environment/{docker,conda,ci}/ 2>/dev/null
+  ls -la scripts/{build,deploy,test,dev}/ 2>/dev/null
+  ```
+  - [ ] All implementation files in `src/` subdirectories
+  - [ ] All test files in `tests/` subdirectories
+  - [ ] Environment configs in `environment/`
+  - [ ] Scripts organized in `scripts/`
+  - [ ] Documentation in `docs/`
+  - [ ] Planning files in `directives/`
+
 #### Go/No-Go Decision
 - **✅ GO:** All checks pass - proceed to UI development
 - **❌ NO-GO:** Address failing items before proceeding

@@ -21,27 +21,33 @@
   - [ ] 0.5 Verify CI/CD pipeline includes tests
   - [ ] 0.6 Document test execution commands
 
-## Relevant Files
+## Relevant Files (Following Rigour Vibe Project Structure)
 ### Implementation Files
-- `src/components/[feature]/Component.tsx` - Main component implementation
-- `src/services/[feature]Service.ts` - Business logic and API calls
-- `src/types/[feature].ts` - Type definitions
-- `src/utils/[feature]Helpers.ts` - Utility functions
+- `src/core/[feature]/[module].ts` - Core business logic
+- `src/api/[feature]/[endpoint].ts` - API endpoints (if applicable)
+- `src/ui/[feature]/[component].tsx` - UI components (if applicable)
+- `src/utils/[feature]/[helpers].ts` - Utility functions
+- `src/config/[feature].ts` - Configuration settings (if needed)
 
 ### Test Files
-- `src/components/[feature]/Component.test.tsx` - Component unit tests
-- `src/services/[feature]Service.test.ts` - Service unit tests
-- `src/types/[feature].test.ts` - Type validation tests
-- `src/utils/[feature]Helpers.test.ts` - Utility function tests
-- `tests/integration/[feature].spec.ts` - Integration tests
-- `tests/e2e/[feature].e2e.ts` - End-to-end tests (if applicable)
+- `tests/unit/[feature]/[module].test.ts` - Unit tests for core logic
+- `tests/unit/[feature]/[component].test.tsx` - Component unit tests (if applicable)
+- `tests/integration/[feature]/[workflow].spec.ts` - Integration tests
+- `tests/e2e/[feature]/[scenario].e2e.ts` - End-to-end tests (if applicable)
+- `tests/fixtures/[feature]/[data].json` - Test data and mock objects
+
+### Environment & Scripts
+- `environment/docker/Dockerfile` - Docker configuration (if needed)
+- `environment/ci/github-actions.yml` - CI/CD configuration (if needed)
+- `scripts/build/build-[feature].sh` - Build scripts (if needed)
+- `scripts/test/test-[feature].sh` - Test execution scripts (if needed)
 
 ### Documentation Files
-- `../directives/tests/YYYY-MM-DD_test_[feature]_task-[id].md` - Test specifications per task
-- `../directives/summaries/YYYY-MM-DD_summary_[feature]_task-[id].md` - Implementation summaries per task
-- `docs/features/[feature].md` - Feature documentation
-- `docs/api/[feature]-api.md` - API documentation (if applicable)
-- `README.md` - Updated with feature information
+- `directives/tests/YYYY-MM-DD_test_[feature]_task-[id].md` - Test specifications per task
+- `directives/summaries/YYYY-MM-DD_summary_[feature]_task-[id].md` - Implementation summaries per task
+- `docs/api/[feature].md` - API documentation (if applicable)
+- `docs/user/[feature].md` - User documentation (if applicable)
+- `docs/dev/[feature].md` - Developer documentation (if needed)
 
 ## Implementation Tasks
 

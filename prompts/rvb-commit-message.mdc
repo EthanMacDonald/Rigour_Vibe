@@ -224,13 +224,15 @@ git commit -m "fix: Resolved race condition in user session management" \
 When generating commit messages:
 
 1. **Always analyze staged changes first** using `git diff --staged`
-2. **Read current task context** from task list file
-3. **Include all required components** (problem, solution, testing, traceability)
-4. **Verify quality gates** mentioned are actually verified
-5. **Use proper conventional commit format**
-6. **Make messages informative** for future developers
-7. **Include rigour vibe specific elements** (quality gates, task progress, rigor level)
-8. **Format as executable command** using `-m` flags for multi-line messages
+2. **Read current task context** from task list file in `../directives/tasks/`
+3. **Verify file organization** - ensure all modified files follow project structure
+4. **Include all required components** (problem, solution, testing, traceability)
+5. **Verify quality gates** mentioned are actually verified
+6. **Use proper conventional commit format**
+7. **Make messages informative** for future developers
+8. **Include rigour vibe specific elements** (quality gates, task progress, rigor level)
+9. **Reference correct file paths** following standardized project structure
+10. **Format as executable command** using `-m` flags for multi-line messages
 
 ### Required Information to Include
 - ✅ Commit type and description

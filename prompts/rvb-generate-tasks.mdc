@@ -173,9 +173,9 @@ A task is only complete when:
 
 ## File Naming Convention
 
-Use today's date (2025-07-08) and match the feature name from the PRD:
-- If PRD is `2025-07-08_prd_user-authentication.md`
-- Then task file is `2025-07-08_task_user-authentication.md`
+Use today's date (2025-07-10) and match the feature name from the PRD:
+- If PRD is `2025-07-10_prd_user-authentication.md`
+- Then task file is `2025-07-10_task_user-authentication.md`
 
 ## AI Instructions
 

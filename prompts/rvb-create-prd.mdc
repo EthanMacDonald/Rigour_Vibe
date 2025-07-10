@@ -154,10 +154,10 @@ Based on answers, recommend:
 
 ## File Naming Convention
 
-Use today's date (2025-07-08) and format the feature name in lowercase with hyphens:
-- Example: `2025-07-08_prd_user-authentication.md`
-- Example: `2025-07-08_prd_payment-processing.md`
-- Example: `2025-07-08_prd_profile-photo-upload.md`
+Use today's date (2025-07-10) and format the feature name in lowercase with hyphens:
+- Example: `2025-07-10_prd_user-authentication.md`
+- Example: `2025-07-10_prd_payment-processing.md`
+- Example: `2025-07-10_prd_profile-photo-upload.md`
 
 ## Final Instructions
 

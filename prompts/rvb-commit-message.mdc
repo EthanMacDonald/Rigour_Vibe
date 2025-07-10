@@ -1,0 +1,245 @@
+---
+description: Generate structured commit messages following rigour vibe quality standards
+globs:
+alwaysApply: false
+---
+# Rule: Rigour Vibe Commit Message Generation
+
+## Goal
+
+To create structured, informative commit messages that maintain traceability between requirements, implementation, and testing within the rigour vibe methodology. Commit messages should clearly communicate what was done, why it was done, and how it was verified.
+
+## When to Use This Prompt
+
+Use this when:
+- Completing a task or sub-task
+- Making significant code changes
+- Fixing bugs discovered during implementation
+- Refactoring code for quality improvements
+- Updating tests or documentation
+
+## Commit Message Structure
+
+### Standard Format
+```
+<type>: <description in past tense>
+
+<problem description>
+
+<solution description>
+
+<testing verification>
+
+<traceability links>
+```
+
+### Commit Types
+- **feat:** New functionality or features
+- **fix:** Bug fixes or corrections
+- **test:** Adding or updating tests
+- **refactor:** Code improvements without functional changes
+- **docs:** Documentation updates
+- **style:** Code formatting or style changes
+- **perf:** Performance improvements
+- **chore:** Maintenance tasks, dependency updates
+
+## Template Components
+
+### 1. Title Line
+- **Format:** `<type>: <description in past tense>`
+- **Length:** Under 50 characters if possible
+- **Style:** Sentence case, no period
+- **Examples:**
+  - `feat: Added user authentication middleware`
+  - `fix: Resolved payment validation edge case`
+  - `test: Added integration tests for user workflow`
+
+### 2. Problem Description
+Clearly explain what issue was being addressed:
+- What functionality was missing?
+- What bug was occurring?
+- What quality issue needed addressing?
+- What requirement was being fulfilled?
+
+### 3. Solution Description
+Explain how the changes solve the problem:
+- Key implementation decisions
+- Technical approach used
+- Integration points addressed
+- Quality improvements made
+
+### 4. Testing Verification
+Document how changes were verified:
+- Unit tests added/updated
+- Integration tests performed
+- Manual testing completed
+- Performance impact verified
+- Security considerations tested
+
+### 5. Traceability Links
+Connect to the broader context:
+- Reference to task number and file
+- Related PRD or specification
+- Related quality gates passed
+- Dependencies resolved
+
+## Rigour Vibe Specific Elements
+
+### Quality Gate Documentation
+Include which quality gates were verified:
+```
+Quality Gates Verified:
+- All new tests pass ✅
+- Full regression suite passes ✅
+- Code quality standards met ✅
+- Integration points verified ✅
+```
+
+### Complexity Level Integration
+Reference the rigour level and testing approach:
+```
+Rigour Level: [Light Touch | Balanced Rigor | Full Rigor]
+Testing Approach: [Brief description of test strategy used]
+```
+
+### Task Progress Tracking
+Link to task management:
+```
+Task Progress:
+- Completed: Task [X.Y] in [task-file-name]
+- Parent Task: [X.0] - [percentage]% complete
+- Next: Task [X.Y+1]
+```
+
+## Complete Example
+
+```
+feat: Added payment validation middleware with comprehensive error handling
+
+The checkout process lacked proper validation for payment data, leading to 
+failed transactions and poor user experience. Payment errors were not being 
+caught early enough in the process, causing downstream API failures.
+
+Implemented a multi-layered validation middleware that checks payment data 
+structure, validates card numbers using Luhn algorithm, verifies expiry dates, 
+and sanitizes inputs. Added custom error classes for different failure types 
+with user-friendly messages. Integrated with existing error handling pipeline 
+to maintain consistent error responses.
+
+Testing Verification:
+- Added 15 unit tests covering all validation scenarios
+- Created integration tests for payment flow end-to-end
+- Manual testing with invalid card data confirmed proper error handling
+- Performance testing shows <5ms validation overhead
+- Security review confirmed no PII exposure in logs
+
+Quality Gates Verified:
+- All new tests pass ✅
+- Full regression suite passes ✅ 
+- Code quality standards met ✅
+- Integration points verified ✅
+- Performance benchmarks met ✅
+
+Rigour Level: Balanced Rigor
+Testing Approach: Comprehensive unit + integration testing with manual verification
+
+Task Progress:
+- Completed: Task 3.2 in 2025-07-09_task_payment-processing.md
+- Parent Task: 3.0 Payment Integration - 80% complete
+- Next: Task 3.3 Payment confirmation workflow
+
+Files Modified:
+- src/middleware/payment-validation.ts (new)
+- src/middleware/payment-validation.test.ts (new)
+- src/types/payment.ts (updated)
+- src/api/checkout.ts (updated)
+```
+
+## Auto-Generation Process
+
+When user requests commit message generation:
+
+1. **Analyze Changes:**
+   ```bash
+   git diff --staged
+   git status
+   ```
+
+2. **Review Context:**
+   - Check current task in task list
+   - Review PRD or spec requirements
+   - Identify test results
+
+3. **Generate Message Components:**
+   - Determine commit type based on changes
+   - Extract problem/solution from context
+   - Document testing performed
+   - Create traceability links
+
+4. **Format Final Message:**
+   - Follow rigour vibe structure
+   - Include quality gate verification
+   - Add task progress tracking
+   - Ensure completeness
+
+## Usage Examples
+
+### Simple Feature Addition
+```
+User: "Generate commit message for the changes I just made"
+
+AI Response:
+Based on the staged changes and current task context:
+
+git commit -m "feat: Added user profile avatar upload functionality" \
+           -m "" \
+           -m "Users needed ability to personalize profiles with photos. Previous system only supported text-based profiles." \
+           -m "" \
+           -m "Implemented secure file upload with image validation, automatic resizing to standard dimensions, and cloud storage integration. Added fallback avatar generation for users without uploads." \
+           -m "" \
+           -m "Testing: Added unit tests for file validation, integration tests for upload workflow, manual testing with various image formats confirmed proper handling." \
+           -m "" \
+           -m "Quality Gates: All tests pass ✅, Security review ✅, Performance within limits ✅" \
+           -m "" \
+           -m "Task: 2.3 in 2025-07-09_task_user-profiles.md | Rigour Level: Balanced"
+```
+
+### Bug Fix
+```
+git commit -m "fix: Resolved race condition in user session management" \
+           -m "" \
+           -m "Multiple concurrent requests were causing session corruption due to non-atomic read-modify-write operations on session data." \
+           -m "" \
+           -m "Added proper locking mechanism and converted session updates to atomic operations. Implemented retry logic for failed session operations." \
+           -m "" \
+           -m "Testing: Added concurrency tests, stress testing with 100 concurrent users, verified no session corruption under load." \
+           -m "" \
+           -m "Quality Gates: All tests pass ✅, Load testing ✅, Security verified ✅" \
+           -m "" \
+           -m "Task: 4.1 in 2025-07-09_task_session-management.md | Rigour Level: Full Rigor"
+```
+
+## AI Instructions
+
+When generating commit messages:
+
+1. **Always analyze staged changes first** using `git diff --staged`
+2. **Read current task context** from task list file
+3. **Include all required components** (problem, solution, testing, traceability)
+4. **Verify quality gates** mentioned are actually verified
+5. **Use proper conventional commit format**
+6. **Make messages informative** for future developers
+7. **Include rigour vibe specific elements** (quality gates, task progress, rigor level)
+8. **Format as executable command** using `-m` flags for multi-line messages
+
+### Required Information to Include
+- ✅ Commit type and description
+- ✅ Problem being solved
+- ✅ Solution approach
+- ✅ Testing verification performed
+- ✅ Quality gates passed
+- ✅ Task progress tracking
+- ✅ Files modified summary
+- ✅ Rigour level and approach
+
+This ensures every commit provides complete context for future development and maintains the high-quality standards of the rigour vibe methodology.

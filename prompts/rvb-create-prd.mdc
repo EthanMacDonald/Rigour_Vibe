@@ -12,10 +12,29 @@ To guide an AI assistant in creating a Product Requirements Document (PRD) that 
 ## Process
 
 1. **Receive Initial Prompt:** User provides feature description
-2. **Complexity Assessment:** Determine rigor level needed (Light/Balanced/Full)
-3. **Gather Requirements:** Ask targeted clarifying questions based on complexity
-4. **Generate Rigour PRD:** Create PRD with integrated testing considerations
-5. **Save Document:** Store as `YYYY-MM-DD_prd_feature-name.md` in `../directives/prd/` directory
+2. **Ask Clarifying Questions:** Before writing the PRD, the AI *must* ask clarifying questions to gather sufficient detail. This includes both complexity assessment and feature-specific questions. Make sure to provide options in letter/number lists so the user can respond easily with their selections.
+3. **Complexity Assessment:** Determine rigor level needed (Light/Balanced/Full) based on clarifying questions
+4. **Ask Additional Questions:** Based on complexity level, ask targeted follow-up questions
+5. **Generate Rigour PRD:** Create PRD with integrated testing considerations using the answers
+6. **Save Document:** Store as `YYYY-MM-DD_prd_feature-name.md` in `../directives/prd/` directory
+
+## Initial Clarifying Questions
+
+The AI should adapt its questions based on the prompt, but must ask these core areas before proceeding:
+
+### Core Feature Questions (Always Ask)
+*   **Problem/Goal:** "What problem does this feature solve for the user?" or "What is the main goal we want to achieve with this feature?"
+*   **Target User:** "Who is the primary user of this feature?"
+*   **Core Functionality:** "Can you describe the key actions a user should be able to perform with this feature?"
+*   **User Stories:** "Could you provide a few user stories? (e.g., As a [type of user], I want to [perform an action] so that [benefit].)"
+*   **Acceptance Criteria:** "How will we know when this feature is successfully implemented? What are the key success criteria?"
+*   **Scope/Boundaries:** "Are there any specific things this feature *should not* do (non-goals)?"
+
+### Additional Context Questions (Adapt Based on Feature)
+*   **Data Requirements:** "What kind of data does this feature need to display or manipulate?"
+*   **Design/UI:** "Are there any existing design mockups or UI guidelines to follow?" or "Can you describe the desired look and feel?"
+*   **Edge Cases:** "Are there any potential edge cases or error conditions we should consider?"
+*   **Integration:** "How should this feature integrate with existing parts of the system?"
 
 ## Complexity Assessment Questions
 
@@ -142,9 +161,11 @@ Use today's date (2025-07-08) and format the feature name in lowercase with hyph
 
 ## Final Instructions
 
-1. Always assess complexity level first
-2. Ask clarifying questions appropriate to the level
-3. Create PRD with integrated testing strategy
-4. Do NOT start implementing - focus on requirements and test planning
-5. Ensure testing requirements match the complexity assessment
-6. Provide clear quality gates and definition of done
+1. Always ask initial clarifying questions first (core feature questions)
+2. Then assess complexity level with assessment questions 
+3. Ask additional clarifying questions appropriate to the complexity level
+4. Take the user's answers to all clarifying questions and create a comprehensive PRD
+5. Create PRD with integrated testing strategy
+6. Do NOT start implementing - focus on requirements and test planning
+7. Ensure testing requirements match the complexity assessment
+8. Provide clear quality gates and definition of done

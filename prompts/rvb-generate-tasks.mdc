@@ -12,10 +12,12 @@ To create a detailed, test-driven task list from a Rigour Vibe PRD that ensures 
 ## Process
 
 1. **Analyze PRD:** Read complexity level and testing requirements from the PRD file
-2. **Generate Test-Aware Tasks:** Create tasks with integrated testing
-3. **Define Test Dependencies:** Ensure tests build progressively
-4. **Create Quality Checkpoints:** Add verification gates between major tasks
-5. **Save Task List:** Store as `YYYY-MM-DD_task_feature-name.md` in `../directives/tasks/`
+2. **Phase 1: Generate Parent Tasks:** Based on the PRD analysis, create the file and generate the main, high-level tasks required to implement the feature. Use your judgement on how many high-level tasks to use based on complexity level. Present these tasks to the user in the specified format (without sub-tasks yet). Inform the user: "I have generated the high-level tasks based on the PRD. Ready to generate the detailed sub-tasks and testing requirements? Respond with 'Go' to proceed."
+3. **Wait for Confirmation:** Pause and wait for the user to respond with "Go"
+4. **Phase 2: Generate Detailed Tasks:** Once the user confirms, break down each parent task into smaller, actionable sub-tasks with integrated testing requirements
+5. **Define Test Dependencies:** Ensure tests build progressively
+6. **Create Quality Checkpoints:** Add verification gates between major tasks
+7. **Save Task List:** Store as `YYYY-MM-DD_task_feature-name.md` in `../directives/tasks/`
 
 ## Output Format
 
@@ -170,9 +172,14 @@ Use today's date (2025-07-08) and match the feature name from the PRD:
 ## AI Instructions
 
 1. Analyze the PRD's complexity level first
-2. Generate tasks appropriate to the rigor level
-3. Always include test requirements BEFORE implementation steps
-4. Create progressive quality gates
-5. Ensure each task has clear completion criteria
-6. Include specific test commands for the project type
-7. Wait for user confirmation before adding detailed subtasks
+2. Generate high-level parent tasks appropriate to the rigor level
+3. Present parent tasks and wait for user confirmation with "Go" 
+4. Only after confirmation, generate detailed subtasks with test requirements BEFORE implementation steps
+5. Always include test requirements BEFORE implementation steps in detailed tasks
+6. Create progressive quality gates
+7. Ensure each task has clear completion criteria
+8. Include specific test commands for the project type
+
+## Interaction Model
+
+The process explicitly requires a pause after generating parent tasks to get user confirmation ("Go") before proceeding to generate the detailed sub-tasks with testing requirements. This ensures the high-level plan aligns with user expectations before diving into implementation and testing details.

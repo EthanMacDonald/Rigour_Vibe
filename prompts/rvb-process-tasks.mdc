@@ -1,0 +1,246 @@
+---
+description: Step-by-step task execution protocol for maintaining quality and progress tracking
+globs:
+alwaysApply: false
+---
+# Rule: Rigour Vibe Task List Management
+
+## Goal
+
+To provide a structured protocol for executing task lists while maintaining quality standards, proper testing, and comprehensive progress tracking. This ensures no task is considered complete until all quality gates are met.
+
+## Task Execution Protocol
+
+### Before Starting Any Work
+1. **Identify Current Task:** Find the next unchecked `[ ]` task in the task list
+2. **Review Context:** Read the task description and any related documentation
+3. **Check Prerequisites:** Ensure all previous tasks are properly completed
+4. **Verify Test Environment:** Confirm all existing tests are passing
+
+### Individual Sub-Task Execution
+
+#### For Each Sub-Task:
+1. **Start Implementation:** 
+   - Follow test-first approach if new functionality
+   - Read existing code if modifying functionality
+   - Understand integration points
+
+2. **Complete Implementation:**
+   - Write/update tests as required
+   - Implement functionality
+   - Verify tests pass
+   - Check code quality
+
+3. **Mark Sub-Task Complete:**
+   - Change `[ ]` to `[x]` in task list
+   - **CRITICAL:** Wait for user permission before proceeding to next sub-task
+   - User must respond with "yes", "y", "continue", or "go" to proceed
+
+4. **Sub-Task Completion Documentation:**
+   ```markdown
+   ✅ Completed Sub-Task [X.Y]: [Description]
+   - Implementation: [Brief description of changes]
+   - Tests: [Test status and coverage]
+   - Files Modified: [List of files changed]
+   
+   ⏸️ Waiting for permission to continue to next sub-task...
+   ```
+
+### Parent Task Completion Protocol
+
+When all sub-tasks under a parent task are marked `[x]`:
+
+#### Automated Quality Checks
+1. **Run Full Test Suite:**
+   ```bash
+   # Execute complete test suite
+   npm test
+   # or appropriate test command for the project
+   ```
+
+2. **Verify All Tests Pass:**
+   - Unit tests: ✅
+   - Integration tests: ✅  
+   - Regression tests: ✅
+   - Any project-specific tests: ✅
+
+#### Git Workflow (Only if all tests pass)
+3. **Stage Changes:**
+   ```bash
+   git add .
+   ```
+
+4. **Clean Up:**
+   - Remove temporary files
+   - Remove debugging code
+   - Remove commented-out code
+   - Ensure code follows project conventions
+
+5. **Commit with Structured Message:**
+   ```bash
+   git commit -m "feat: [parent task description]" \
+              -m "- [key change 1]" \
+              -m "- [key change 2]" \
+              -m "- [key change 3]" \
+              -m "Tests: [test summary]" \
+              -m "Related to Task [X.0] in [task-file-path]"
+   ```
+
+#### Mark Parent Task Complete
+6. **Update Task List:**
+   - Mark parent task `[x]`
+   - Update "Relevant Files" section
+   - Add any newly discovered files
+   - Note any new tasks discovered during implementation
+
+7. **Parent Task Completion Documentation:**
+   ```markdown
+   🎉 Completed Parent Task [X.0]: [Description]
+   
+   📊 Summary:
+   - Sub-tasks completed: [count]
+   - Files modified: [count] 
+   - Tests added/updated: [count]
+   - All tests passing: ✅
+   
+   📝 Changes committed with message: [commit hash]
+   
+   🔄 Ready for next parent task...
+   ```
+
+## Quality Gates & Verification
+
+### Task-Level Quality Gates
+Before marking any task complete:
+- [ ] **Functionality Complete:** All required functionality implemented
+- [ ] **Tests Pass:** All new and existing tests passing
+- [ ] **Code Quality:** Meets project coding standards
+- [ ] **Documentation:** Code is properly documented
+- [ ] **Integration:** Works with existing system
+
+### Parent Task Quality Gates
+Before moving to next parent task:
+- [ ] **Full Test Suite:** Complete test suite passes
+- [ ] **Regression Check:** No existing functionality broken
+- [ ] **Performance:** No significant performance degradation
+- [ ] **Security:** No security vulnerabilities introduced
+- [ ] **Code Review Ready:** Code is clean and ready for review
+
+### Feature Quality Gates
+Before considering feature complete:
+- [ ] **All Tasks Complete:** Every task in task list marked `[x]`
+- [ ] **Integration Testing:** Feature works with full system
+- [ ] **User Acceptance:** Feature meets original requirements
+- [ ] **Performance Benchmarks:** Performance targets met
+- [ ] **Documentation Complete:** All documentation updated
+
+## Task List Maintenance
+
+### During Development
+- **Add New Tasks:** When new requirements are discovered
+- **Update Descriptions:** If task scope changes
+- **Track Dependencies:** Note any blocking relationships
+- **Document Decisions:** Record important implementation choices
+
+### File Updates Required
+1. **Relevant Files Section:**
+   ```markdown
+   ## Relevant Files
+   - `path/to/file1.ts` - [Updated description]
+   - `path/to/file2.test.ts` - Unit tests for file1
+   - `path/to/new-file.tsx` - [New file description]
+   - `docs/feature-guide.md` - [Documentation updates]
+   ```
+
+2. **Task Progress Tracking:**
+   ```markdown
+   ## Progress Summary
+   - **Total Tasks:** [X]
+   - **Completed:** [Y] 
+   - **In Progress:** [Z]
+   - **Remaining:** [X-Y-Z]
+   - **Last Updated:** [YYYY-MM-DD HH:MM]
+   ```
+
+## Error Recovery Procedures
+
+### When Tests Fail
+1. **Stop All Progress:** Do not proceed with any new tasks
+2. **Identify Root Cause:** Analyze test failures
+3. **Fix Implementation:** Address the underlying issues
+4. **Verify Fix:** Ensure all tests now pass
+5. **Update Documentation:** Note any lessons learned
+
+### When Regressions Occur  
+1. **Immediate Halt:** Stop all development work
+2. **Isolate Issue:** Use git bisect or diff analysis
+3. **Create Regression Test:** Add test to prevent recurrence
+4. **Fix Regression:** Restore proper functionality
+5. **Verify Solution:** Full test suite must pass
+
+### When Scope Changes
+1. **Document Change:** Note why scope changed
+2. **Update Task List:** Modify affected tasks
+3. **Reassess Timeline:** Update effort estimates
+4. **Communicate Impact:** Report scope change effects
+
+## Communication Protocol
+
+### After Each Sub-Task
+```
+✅ Sub-Task [X.Y] Complete: [Brief description]
+
+Changes:
+- [File 1]: [Changes made]
+- [File 2]: [Changes made]
+
+Testing:
+- [Test type]: [Pass/Fail status]
+- Coverage: [If applicable]
+
+⏸️ Ready for next sub-task? (Respond with 'yes' to continue)
+```
+
+### After Each Parent Task
+```
+🎉 Parent Task [X.0] Complete: [Task name]
+
+Summary:
+- Sub-tasks: [X] completed
+- Files modified: [count]
+- Tests: All passing ✅
+- Commit: [hash] "[commit message]"
+
+Quality checks:
+- Functionality: ✅
+- Tests: ✅  
+- Integration: ✅
+- Code quality: ✅
+
+🔄 Moving to next parent task...
+```
+
+## AI Instructions
+
+### Mandatory Behavior
+1. **One sub-task at a time:** NEVER start the next sub-task without explicit user permission
+2. **Always run tests:** Before marking any task complete
+3. **Update task lists:** Keep progress tracking current
+4. **Commit properly:** Use structured commit messages
+5. **Wait for permission:** After each sub-task completion
+
+### Prohibited Actions
+- ❌ Working on multiple sub-tasks simultaneously
+- ❌ Marking tasks complete without running tests
+- ❌ Proceeding without user permission
+- ❌ Committing code with failing tests
+- ❌ Skipping quality gate checks
+
+### Communication Requirements
+- ✅ Clear status updates after each sub-task
+- ✅ Explicit permission requests before proceeding
+- ✅ Test results reporting
+- ✅ File change summaries
+- ✅ Quality gate verification
+
+This protocol ensures systematic progress while maintaining high quality standards and proper coordination between AI and human team members.

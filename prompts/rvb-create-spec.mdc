@@ -1,0 +1,231 @@
+---
+description: Create detailed technical specifications for complex features requiring deep analysis
+globs:
+alwaysApply: false
+---
+# Rule: Rigour Vibe Specification Creation
+
+## Goal
+
+To create detailed technical specifications for complex features that need comprehensive analysis before implementation. This complements the PRD process for features requiring deeper technical investigation, root cause analysis, or extensive system integration.
+
+## When to Use Specs vs PRDs
+
+### Use PRD Creation (`rvb-create-prd.mdc`) for:
+- New feature development
+- User-facing functionality
+- Business requirement driven changes
+- Features with clear user stories
+
+### Use Spec Creation (`rvb-create-spec.mdc`) for:
+- Bug fixes requiring root cause analysis
+- Technical refactoring or architectural changes
+- Integration with external systems
+- Performance optimization
+- Security enhancements
+- Complex technical problems needing investigation
+
+## Process
+
+1. **Receive Request:** User provides technical problem or complex feature description
+2. **Problem Assessment:** Determine if this requires spec-level analysis
+3. **Investigation Questions:** Ask clarifying questions focused on technical details
+4. **Root Cause Analysis:** For bugs/issues, investigate underlying causes
+5. **Generate Technical Spec:** Create comprehensive specification with implementation steps
+6. **Save Specification:** Store as `YYYY-MM-DD_spec_feature-name.md` in `../directives/spec/`
+
+## Investigation Questions
+
+### Core Technical Questions (Always Ask)
+- **Problem Definition:** "What exactly is the technical problem or requirement?"
+- **Current State:** "How does the current system work in this area?"
+- **Root Cause:** "For bugs/issues, what appears to be causing the problem?"
+- **Affected Systems:** "What systems, components, or modules are involved?"
+- **Constraints:** "Are there any technical constraints or limitations to consider?"
+- **Dependencies:** "What other systems or components does this depend on?"
+
+### Analysis Questions (Based on Problem Type)
+- **Performance Issues:** "What are the current performance metrics? What are the targets?"
+- **Integration Problems:** "What external systems are involved? What are the interface requirements?"
+- **Security Concerns:** "What are the security implications? What compliance requirements exist?"
+- **Scalability Issues:** "What are the load patterns? What are the growth projections?"
+- **Data Issues:** "What data is involved? What are the data flow requirements?"
+
+## Technical Specification Structure
+
+```markdown
+# Technical Specification: [Feature/Problem Name]
+
+## Overview
+[Brief summary of the technical problem or feature]
+
+## Problem Statement
+[Clear technical problem definition]
+
+## Background & Context
+[Technical context and relevant system information]
+
+### Current Implementation
+[Description of how things currently work]
+
+### Root Cause Analysis
+[For bugs/issues, detailed analysis of underlying causes]
+
+## Technical Requirements
+[Specific technical requirements and constraints]
+
+### Performance Requirements
+[Speed, throughput, latency, resource usage requirements]
+
+### Integration Requirements  
+[External system interfaces, APIs, data formats]
+
+### Security Requirements
+[Authentication, authorization, data protection, compliance]
+
+### Scalability Requirements
+[Load handling, growth planning, resource scaling]
+
+## Affected Systems & Components
+
+### System Architecture
+[High-level view of affected systems]
+
+### File Structure
+[Specific files and directories that will be impacted]
+
+### Database Changes
+[Schema changes, migrations, data impact]
+
+### API Changes
+[Interface modifications, versioning considerations]
+
+## Technical Analysis
+
+### Research Findings
+[Investigation results, experiments, proof of concepts]
+
+### Alternative Approaches
+[Different technical solutions considered]
+
+### Risk Assessment
+[Technical risks and mitigation strategies]
+
+### Dependencies & Blockers
+[Technical dependencies that must be resolved first]
+
+## Implementation Strategy
+
+### Phased Approach
+[How to break down implementation into manageable phases]
+
+### Testing Strategy
+[Unit, integration, performance, security testing approaches]
+
+### Deployment Strategy
+[How to deploy changes safely, rollback procedures]
+
+### Monitoring & Observability
+[How to monitor the changes, metrics to track]
+
+## Detailed Implementation Plan
+
+### Phase 1: [Phase Name]
+- [ ] **Step 1.1:** [Specific technical step with file paths]
+- [ ] **Step 1.2:** [Specific technical step with file paths]
+
+### Phase 2: [Phase Name]  
+- [ ] **Step 2.1:** [Specific technical step with file paths]
+- [ ] **Step 2.2:** [Specific technical step with file paths]
+
+### Verification Steps
+- [ ] **V1:** [Technical verification step]
+- [ ] **V2:** [Integration verification step]
+- [ ] **V3:** [Performance verification step]
+
+## Technical Considerations
+
+### Performance Impact
+[Expected performance implications and optimizations]
+
+### Security Implications
+[Security analysis and hardening requirements]
+
+### Backward Compatibility
+[Compatibility considerations and migration paths]
+
+### Error Handling & Recovery
+[Error scenarios and recovery procedures]
+
+## Success Criteria
+
+### Technical Metrics
+[Measurable technical outcomes]
+
+### Quality Gates
+[Technical quality checkpoints]
+
+### Acceptance Tests
+[Technical acceptance criteria]
+
+## Appendices
+
+### Code References
+[Relevant existing code snippets and structures]
+
+### External Documentation
+[Links to external APIs, libraries, standards]
+
+### Technical Decisions Log
+[Record of key technical decisions and rationale]
+```
+
+## Complexity-Based Specification Depth
+
+### Light Technical Analysis
+- Focus on immediate problem and direct solution
+- Basic root cause identification
+- Minimal system impact analysis
+- Direct implementation steps
+
+### Balanced Technical Analysis
+- Comprehensive problem analysis
+- Multiple solution alternatives
+- System integration considerations
+- Phased implementation approach
+- Performance and security basics
+
+### Deep Technical Analysis
+- Exhaustive root cause analysis
+- Comprehensive alternative evaluation
+- Full system impact assessment
+- Detailed risk analysis
+- Security and compliance deep dive
+- Performance modeling
+- Scalability planning
+
+## Output Requirements
+
+- **Format:** Markdown (`.md`)
+- **Location:** `../directives/spec/` (create directory if needed)
+- **Filename:** `YYYY-MM-DD_spec_feature-name.md`
+- **Technical Focus:** Implementation-ready technical details
+- **Integration:** Reference related PRDs and task lists
+
+## File Naming Convention
+
+Use today's date and descriptive technical names:
+- Example: `2025-07-09_spec_payment-api-integration.md`
+- Example: `2025-07-09_spec_database-performance-optimization.md`
+- Example: `2025-07-09_spec_authentication-security-hardening.md`
+
+## Final Instructions
+
+1. **Assess if spec is needed** - Complex technical problems require specs
+2. **Ask comprehensive technical questions** - Focus on technical details
+3. **Investigate thoroughly** - Especially for bugs and system issues
+4. **Create implementation-ready specification** - AI agents should be able to execute steps
+5. **Include verification criteria** - Technical validation at each step
+6. **Cross-reference** - Link to related PRDs and tasks
+7. **Do NOT start implementing** - Focus on analysis and detailed planning
+8. **Ensure traceability** - Clear path from problem to solution to implementation

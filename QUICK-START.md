@@ -1,22 +1,100 @@
 # 🚀 Rigour Vibe Quick Start Guide
 
-Get started with test-driven, rigorous development in under 10 minutes!
+Get started with rigorous development - from single-shot apps to complex features!
 
-## 1. Choose Your Complexity Level ⚖️
+## 🎯 Choose Your Development Style
+
+### 🏃‍♂️ Single-Shot App (4-8 hours total)
+**For**: MVPs, prototypes, personal projects, learning experiments
+**Goal**: Working app by end of day
+
+### 🏗️ Feature Development (days to weeks)  
+**For**: Production features, team projects, business requirements
+**Goal**: Reliable, maintainable, well-tested features
+
+### 🔧 Technical Problems (varies)
+**For**: Bug fixes, performance issues, architecture changes
+**Goal**: Root cause analysis and systematic solutions
+
+---
+
+## 🚀 Single-Shot App Workflow
+
+**Perfect for building a complete app in one focused session**
+
+### ⚡ Quick Setup (2 minutes)
+Answer these 4 questions:
+1. **What are you building?** (Be specific but concise)
+2. **Who will use it?** (Primary user type)  
+3. **What's the core action?** (Main thing users do)
+4. **How will you know it works?** (Success criteria)
+
+### Step 1: Lightning PRD (15-30 minutes)
+```bash
+@rvb-create-prd.mdc "Build a [your app idea]"
+```
+
+**Examples:**
+- "Build a todo app with drag-and-drop priority ordering"
+- "Build a expense tracker that categorizes spending automatically"  
+- "Build a team standup bot that collects daily updates"
+
+**AI will:**
+- Ask 4-6 focused questions
+- Auto-select Light Touch complexity
+- Focus on 3-5 core features only
+- Create: `../directives/prd/2025-07-09_prd_your-app.md`
+
+### Step 2: Rapid Tasks (10 minutes)
+```bash
+@rvb-generate-tasks.mdc [reference your PRD file]
+```
+
+**AI creates:**
+- 3-5 high-level tasks maximum
+- 2-3 subtasks each
+- Light testing requirements
+- Waits for your "Go" to proceed
+
+### Step 3: Focused Implementation (3-6 hours)
+```bash
+@rvb-process-tasks.mdc
+```
+
+**AI systematically:**
+- Does one subtask at a time
+- Waits for approval between subtasks
+- Uses Light Touch quality gates (fast!)
+- Tests core functionality only
+
+### Step 4: Ship It (5 minutes)
+```bash
+@rvb-commit-message.mdc
+```
+
+**Total Time: 4-8 hours for a working app! 🎉**
+
+---
+
+## 🏗️ Feature Development Workflow
+
+**For production features and team collaboration**
+
+### 1. Choose Your Complexity Level ⚖️
 
 **Answer these quick questions:**
 
-### A. Risk Assessment
+#### A. Risk Assessment
 - **Low Risk:** Cosmetic changes, easy to fix if broken
 - **Medium Risk:** Affects user workflows, moderate impact if broken  
 - **High Risk:** Financial/security/data implications if broken
 
-### B. System Impact
+#### B. System Impact
 - **Single Component:** Changes one file/component
 - **Multiple Components:** Changes several related parts
 - **Cross-System:** Integration across multiple systems
 
-### C. Timeline Pressure
+#### C. Timeline Pressure
 - **Experimental:** Speed over perfection, prototype
 - **Production:** Balanced approach, real feature
 - **Mission-Critical:** Quality over speed, can't fail
@@ -26,43 +104,42 @@ Get started with test-driven, rigorous development in under 10 minutes!
 - **Mix of Medium + Multiple + Production = Balanced Rigor (Level 2)**
 - **Any High + Cross-System + Mission-Critical = Full Rigor (Level 3)**
 
-## 2. Create Your PRD 📋
+### 2. Create Your PRD 📋
 
-### For Light Touch:
-```
-Use @rvb-create-prd.mdc
-Feature: [Simple description]
-Context: [What problem this solves]
-```
-Creates: `../directives/prd/2025-07-08_prd_feature-name.md`
-
-### For Balanced/Full Rigor:
-```
-Use @rvb-create-prd.mdc
-Feature: [Detailed description]
-Risk factors: [Security, performance, integration concerns]
-Compliance: [Any regulatory requirements]
-```
-Creates: `../directives/prd/2025-07-08_prd_feature-name.md`
-
-## 3. Generate Test-Aware Tasks 📝
-
-```
-Use @rvb-generate-tasks.mdc with your PRD file
-Reference: @../directives/prd/2025-07-08_prd_your-feature.md
+#### For Light Touch:
+```bash
+@rvb-create-prd.mdc "Feature: [Simple description]"
 ```
 
-The AI will create tasks with built-in test requirements.
-Creates: `../directives/tasks/2025-07-08_task_your-feature.md`
-
-## 4. Implement with Tests First 🧪
-
-```
-Use @rvb-implement-task.mdc
-Start with: Task 1.1 from your task list
+#### For Balanced/Full Rigor:
+```bash
+@rvb-create-prd.mdc "Feature: [Detailed description with risk factors]"
 ```
 
-### The Test-First Cycle:
+Creates: `../directives/prd/2025-07-09_prd_feature-name.md`
+
+### 3. Generate Test-Aware Tasks 📝
+```bash
+@rvb-generate-tasks.mdc [reference your PRD file]
+```
+
+**AI creates:**
+- High-level tasks based on complexity level
+- Built-in test requirements
+- Waits for your "Go" to generate detailed subtasks
+- Creates: `../directives/tasks/2025-07-09_task_feature-name.md`
+
+### 4. Implement with Tests First 🧪
+```bash
+@rvb-process-tasks.mdc
+```
+
+**OR for individual tasks:**
+```bash
+@rvb-implement-task.mdc
+```
+
+#### The Test-First Cycle:
 1. **Red:** Write failing tests that describe what you want
 2. **Green:** Write minimal code to make tests pass
 3. **Refactor:** Clean up code while keeping tests passing

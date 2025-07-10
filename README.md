@@ -30,22 +30,66 @@ Traditional approaches force you to choose:
 
 ## 🔄 The Complete Rigour Workflow
 
-### Phase 1: Discovery & Planning
-1. **Interactive Requirements Gathering** - AI asks clarifying questions before proceeding
-2. **Create Business PRD** - For user-facing features and business requirements
-3. **Create Technical Specs** - For complex technical problems and system integrations
-4. **Generate Task Breakdown** - Convert requirements into actionable, testable tasks
+### Decision Tree: Which Document Type to Start With?
 
-### Phase 2: Structured Implementation  
-5. **Step-by-Step Task Execution** - One sub-task at a time with explicit user approval
-6. **Test-First Development** - Write tests before implementation for each task
-7. **Quality Gate Verification** - Automated checks before task completion
-8. **Progressive Commits** - Structured commit messages with full traceability
+**START HERE:** What type of work are you doing?
 
-### Phase 3: Continuous Verification
-9. **Regression Protection** - Ensure new changes don't break existing functionality
-10. **Integration Verification** - Test how components work together
-11. **Progress Tracking** - Comprehensive documentation and progress summaries
+#### Path A: Business Feature Development
+```
+New Feature → User Story → Business Requirements
+↓
+Use: rvb-create-prd.mdc
+Creates: PRD document
+↓
+Use: rvb-generate-tasks.mdc (reference the PRD)
+Creates: Task breakdown based on business requirements
+```
+
+#### Path B: Technical Problem Solving  
+```
+Bug Fix → Performance Issue → Integration → Refactoring
+↓
+Use: rvb-create-spec.mdc
+Creates: Technical specification document
+↓
+Use: rvb-generate-tasks.mdc (reference the Spec)
+Creates: Task breakdown based on technical analysis
+```
+
+#### Path C: Complex Business Feature (Hybrid Approach)
+```
+Complex Business Feature with Technical Challenges
+↓
+1. Use: rvb-create-prd.mdc (define business requirements)
+2. Use: rvb-create-spec.mdc (analyze technical implementation)
+↓
+Use: rvb-generate-tasks.mdc (reference BOTH documents)
+Creates: Comprehensive task breakdown
+```
+
+### Sequential Workflow Steps
+
+#### Phase 1: Requirements & Planning
+1. **Choose Your Starting Document:**
+   - **Business Feature**: `@rvb-create-prd.mdc` → Creates PRD
+   - **Technical Problem**: `@rvb-create-spec.mdc` → Creates Spec  
+   - **Complex Feature**: Both PRD first, then Spec
+
+2. **Generate Tasks:**
+   - `@rvb-generate-tasks.mdc` → Reference your PRD and/or Spec
+   - AI creates high-level tasks → waits for your "Go" → creates detailed subtasks
+
+#### Phase 2: Implementation
+3. **Execute Tasks:**
+   - `@rvb-process-tasks.mdc` → Step-by-step execution with quality gates
+   - OR `@rvb-implement-task.mdc` → Individual task implementation
+
+4. **Verify Progress:**
+   - `@rvb-verify-progress.mdc` → Continuous quality checks
+
+#### Phase 3: Documentation
+5. **Commit Changes:**
+   - `@rvb-commit-message.mdc` → Structured commit messages
 
 ## 📁 File Structure
 
@@ -220,6 +264,103 @@ Use the `.mdc` prompts as workflows:
 Copy prompts into your workspace as reusable templates.
 
 ## 🎉 Getting Started
+
+### Quick Decision Guide
+
+**I want to build a new feature for users**
+→ Start with `@rvb-create-prd.mdc`
+
+**I need to fix a bug or technical issue**  
+→ Start with `@rvb-create-spec.mdc`
+
+**I'm building something complex with both business and technical challenges**
+→ Start with `@rvb-create-prd.mdc`, then `@rvb-create-spec.mdc`
+
+**I want to build a complete app in one shot (prototype/MVP)**
+→ Use the **Single-Shot App Workflow** below
+
+### 🚀 Single-Shot App Workflow (MVP/Prototype)
+
+For when you want to build a complete app quickly with minimal overhead:
+
+```
+1. @rvb-create-prd.mdc "Build a [app description]"
+   → AI asks clarifying questions focused on core features
+   → Creates streamlined PRD with Light Touch rigor level
+   → Focus on essential features only
+
+2. @rvb-generate-tasks.mdc [reference the PRD]
+   → AI creates 3-5 high-level tasks maximum
+   → User approves with "Go"
+   → AI creates minimal but sufficient subtasks
+
+3. @rvb-process-tasks.mdc
+   → Executes all tasks with Light Touch quality gates
+   → Minimal testing (smoke tests + core functionality)
+   → Fast iteration with user approval gates
+
+4. Optional: @rvb-commit-message.mdc
+   → Single commit for the entire app
+```
+
+**Single-Shot Characteristics:**
+- ✅ Light Touch rigor level (fastest)
+- ✅ Core functionality focus
+- ✅ Minimal but sufficient testing
+- ✅ 3-5 main tasks maximum
+- ✅ Same day completion target
+- ✅ Prototype/MVP quality standards
+
+### Example Workflows
+
+#### Simple Business Feature
+```
+1. @rvb-create-prd.mdc "Add user profile editing"
+   → Creates: ../directives/prd/2025-07-09_prd_user-profile-editing.md
+
+2. @rvb-generate-tasks.mdc [reference the PRD file]
+   → Creates: ../directives/tasks/2025-07-09_task_user-profile-editing.md
+
+3. @rvb-process-tasks.mdc
+   → Executes tasks step-by-step with quality gates
+```
+
+#### Technical Problem
+```
+1. @rvb-create-spec.mdc "Database queries are slow on user search"
+   → Creates: ../directives/spec/2025-07-09_spec_user-search-performance.md
+
+2. @rvb-generate-tasks.mdc [reference the Spec file]  
+   → Creates: ../directives/tasks/2025-07-09_task_user-search-performance.md
+
+3. @rvb-process-tasks.mdc
+   → Executes optimization tasks with testing
+```
+
+#### Complex Feature (Hybrid)
+```
+1. @rvb-create-prd.mdc "Add real-time chat system"
+   → Creates: ../directives/prd/2025-07-09_prd_realtime-chat.md
+
+2. @rvb-create-spec.mdc "Implement WebSocket architecture for chat" 
+   → Creates: ../directives/spec/2025-07-09_spec_websocket-chat-architecture.md
+
+3. @rvb-generate-tasks.mdc [reference BOTH the PRD and Spec files]
+   → Creates: ../directives/tasks/2025-07-09_task_realtime-chat.md
+   → Combines business requirements with technical implementation plan
+
+4. @rvb-process-tasks.mdc
+   → Executes comprehensive implementation plan
+```
+
+### Key Rules
+
+1. **Always generate tasks AFTER creating your requirements documents**
+2. **Reference the specific document files when generating tasks**
+3. **For complex features, create PRD first (business requirements), then Spec (technical analysis)**
+4. **The task generator can reference multiple documents - just mention both files**
+
+### Original Getting Started (Alternative Approach)
 
 ### 1. Choose Your Document Type
 - **For Business Features**: Use `@rvb-create-prd.mdc`

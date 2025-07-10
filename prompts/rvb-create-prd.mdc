@@ -16,7 +16,7 @@ To guide an AI assistant in creating a Product Requirements Document (PRD) that 
 3. **Complexity Assessment:** Determine rigor level needed (Light/Balanced/Full) based on clarifying questions
 4. **Ask Additional Questions:** Based on complexity level, ask targeted follow-up questions
 5. **Generate Rigour PRD:** Create PRD with integrated testing considerations using the answers
-6. **Save Document:** Store as `YYYY-MM-DD_prd_feature-name.md` in `../directives/prd/` directory
+6. **Save Document:** Store as `YYYY-MM-DD_prd_feature-name.md` in `../directives/prd/` directory (ensure directory exists)
 
 ## Initial Clarifying Questions
 
@@ -165,7 +165,9 @@ Use today's date (2025-07-08) and format the feature name in lowercase with hyph
 2. Then assess complexity level with assessment questions 
 3. Ask additional clarifying questions appropriate to the complexity level
 4. Take the user's answers to all clarifying questions and create a comprehensive PRD
-5. Create PRD with integrated testing strategy
-6. Do NOT start implementing - focus on requirements and test planning
-7. Ensure testing requirements match the complexity assessment
-8. Provide clear quality gates and definition of done
+5. Create PRD with integrated testing strategy following the standardized project structure
+6. **Save the PRD file to:** `../directives/prd/YYYY-MM-DD_prd_feature-name.md` (create directory if needed)
+7. Do NOT start implementing - focus on requirements and test planning
+8. Ensure testing requirements match the complexity assessment
+9. Include file placement guidance: specify where implementation files should go (`src/`), test files (`tests/`), and any environment configs (`environment/`)
+10. Provide clear quality gates and definition of done aligned with project structure

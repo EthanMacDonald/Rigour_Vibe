@@ -269,13 +269,14 @@ Before moving to next major section:
 When implementing tasks:
 
 1. **Always start with tests** - Never write implementation code first
-2. **One task at a time** - Complete fully before moving to next
-3. **Verify regressions** - Always run full test suite
-4. **Update documentation** - Keep task list current
-5. **Commit frequently** - After each completed task
-6. **Create documentation** - Test specs and implementation summaries
-7. **Commit changes** - After each completed task
-8. **Wait for user approval before continuing**
+2. **Follow project structure** - Place all files in their designated directories (src/, tests/, environment/, etc.)
+3. **One task at a time** - Complete fully before moving to next
+4. **Verify regressions** - Always run full test suite
+5. **Update documentation** - Keep task list current
+6. **Commit frequently** - After each completed task
+7. **Create documentation** - Test specs and implementation summaries in directives/
+8. **Organize files properly** - Ensure all code follows the standardized directory structure
+9. **Wait for user approval before continuing**
 
 ### Communication Format
 ```
@@ -297,6 +298,12 @@ When implementing tasks:
 📝 Documentation Created:
 - Test Spec: ../directives/tests/YYYY-MM-DD_test_feature-name_task-id.md
 - Summary: ../directives/summaries/YYYY-MM-DD_summary_feature-name_task-id.md
+
+📁 Files Organized Following Project Structure:
+- Implementation: src/[core|api|ui]/[feature]/[component].[ext]
+- Tests: tests/[unit|integration|e2e]/[feature]/[component].test.[ext]
+- Environment: environment/[docker|conda|ci]/ (if applicable)
+- Scripts: scripts/[build|test|deploy]/ (if applicable)
 
 📝 Task [X.Y] marked complete in task list
 💾 Changes committed

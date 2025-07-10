@@ -17,7 +17,7 @@ To create a detailed, test-driven task list from a Rigour Vibe PRD that ensures 
 4. **Phase 2: Generate Detailed Tasks:** Once the user confirms, break down each parent task into smaller, actionable sub-tasks with integrated testing requirements
 5. **Define Test Dependencies:** Ensure tests build progressively
 6. **Create Quality Checkpoints:** Add verification gates between major tasks
-7. **Save Task List:** Store as `YYYY-MM-DD_task_feature-name.md` in `../directives/tasks/`
+7. **Save Task List:** Store as `YYYY-MM-DD_task_feature-name.md` in `../directives/tasks/` (create directory if needed)
 
 ## Output Format
 
@@ -29,11 +29,19 @@ To create a detailed, test-driven task list from a Rigour Vibe PRD that ensures 
 **Testing Strategy:** [Summary from PRD]
 **Quality Gates:** [Key checkpoints]
 
-## Relevant Files
-- `path/to/implementation/file.ts` - [Purpose]
-- `path/to/implementation/file.test.ts` - Unit tests for implementation
-- `path/to/integration/test.spec.ts` - Integration tests
-- `docs/feature-name.md` - Documentation
+## Relevant Files (Following Standardized Project Structure)
+- `src/core/[feature]/[component].ts` - Core business logic implementation
+- `src/api/[feature]/[endpoint].ts` - API endpoint implementation (if needed)
+- `src/ui/[feature]/[component].tsx` - UI component implementation (if needed)
+- `src/utils/[feature]/[utility].ts` - Utility functions (if needed)
+- `tests/unit/[feature]/[component].test.ts` - Unit tests for core logic
+- `tests/integration/[feature]/[workflow].spec.ts` - Integration tests for workflows
+- `tests/e2e/[feature]/[scenario].e2e.ts` - End-to-end tests (if needed)
+- `tests/fixtures/[feature]/[data].json` - Test data and mock objects
+- `directives/tasks/YYYY-MM-DD_task_feature-name.md` - This task breakdown file
+- `docs/api/[feature].md` - API documentation (if applicable)
+- `environment/docker/Dockerfile` - Docker configuration (if needed)
+- `scripts/build/build-[feature].sh` - Build scripts (if needed)
 
 ## Progressive Test Requirements
 

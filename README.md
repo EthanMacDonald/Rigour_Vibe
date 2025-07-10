@@ -91,32 +91,34 @@ Creates: Comprehensive task breakdown
 5. **Commit Changes:**
    - `@rvb-commit-message.mdc` → Structured commit messages
 
-## 📁 File Structure
+## 📁 Clean Project Structure
+
+Rigour Vibe enforces a standardized project structure for maintainability and clarity:
 
 ```
 project-root/
-├── rigour_vibe/                 # Framework files
-│   ├── README.md                # This file
+├── rigour_vibe/                 # Framework files (methodology)
+│   ├── README.md                # Framework documentation
 │   ├── QUICK-START.md          # Getting started guide
-│   ├── prompts/
-│   │   ├── rvb-create-prd.mdc  # Interactive PRD creation with complexity assessment
-│   │   ├── rvb-create-spec.mdc # Technical specification for complex problems
-│   │   ├── rvb-generate-tasks.mdc # Two-phase task generation with user approval
-│   │   ├── rvb-process-tasks.mdc # Step-by-step task execution protocol
-│   │   ├── rvb-implement-task.mdc # Test-first task implementation
-│   │   ├── rvb-verify-progress.mdc # Progressive verification and regression testing
-│   │   └── rvb-commit-message.mdc # Structured commit message generation
-│   ├── templates/
-│   │   ├── rigour-prd-template.md # PRD template with testing considerations
-│   │   ├── task-with-tests.md   # Task template including test requirements
-│   │   └── verification-checklist.md # Quality gate checklist
-│   └── examples/
-│       ├── simple-feature-example/ # Example of light-touch rigour approach
-│       └── complex-feature-example/ # Example of full rigorous approach
-├── directives/                  # Generated project files (created when using framework)
+│   ├── prompts/                 # Updated prompts with structure awareness
+│   │   ├── rvb-create-prd.mdc  # Interactive PRD creation with clean structure
+│   │   ├── rvb-create-spec.mdc # Technical specification with file organization
+│   │   ├── rvb-generate-tasks.mdc # Task generation with directory planning
+│   │   ├── rvb-process-tasks.mdc # Step-by-step execution with file placement
+│   │   ├── rvb-implement-task.mdc # Test-first implementation with paths
+│   │   ├── rvb-verify-progress.mdc # Progressive verification and structure validation
+│   │   └── rvb-commit-message.mdc # Structured commit messages
+│   ├── templates/               # Templates with path specifications
+│   │   ├── rigour-prd-template.md # PRD template with file organization
+│   │   ├── task-with-tests.md   # Task template with directory structure
+│   │   └── verification-checklist.md # Quality gates with structure validation
+│   └── examples/                # Example projects with clean structure
+│       ├── simple-feature-example/ # Light-touch approach example
+│       └── complex-feature-example/ # Full rigor approach example
+├── directives/                  # Generated project files (planning & tracking)
 │   ├── prd/                     # Product Requirements Documents
 │   │   └── YYYY-MM-DD_prd_feature-name.md
-│   ├── spec/                    # Technical Specifications (NEW)
+│   ├── spec/                    # Technical Specifications
 │   │   └── YYYY-MM-DD_spec_feature-name.md
 │   ├── tasks/                   # Task breakdowns and plans
 │   │   └── YYYY-MM-DD_task_feature-name.md
@@ -124,7 +126,107 @@ project-root/
 │   │   └── YYYY-MM-DD_test_feature-name_task-id.md
 │   └── summaries/               # Implementation summaries and reports
 │       └── YYYY-MM-DD_summary_feature-name_task-id.md
-└── [your-project-files]/        # Your actual project code
+├── src/                         # Source code (implementation)
+│   ├── core/                    # Business logic and core functionality
+│   ├── api/                     # API endpoints and controllers
+│   ├── ui/                      # User interface components
+│   ├── utils/                   # Utility functions and helpers
+│   └── config/                  # Configuration and settings
+├── tests/                       # Actual test files (code)
+│   ├── unit/                    # Unit tests (isolated component testing)
+│   ├── integration/             # Integration tests (component interaction)
+│   ├── e2e/                     # End-to-end tests (full workflow)
+│   ├── performance/             # Performance and load tests
+│   └── fixtures/                # Test data and mock objects
+├── build/                       # Build artifacts and outputs
+│   ├── debug/                   # Debug builds
+│   ├── release/                 # Release builds
+│   └── docs/                    # Generated documentation
+├── scripts/                     # Automation and utility scripts
+│   ├── build/                   # Build scripts
+│   ├── deploy/                  # Deployment scripts
+│   ├── test/                    # Test execution scripts
+│   └── dev/                     # Development utility scripts
+├── environment/                 # Environment configuration
+│   ├── docker/                  # Docker configurations
+│   │   ├── Dockerfile
+│   │   ├── docker-compose.yml
+│   │   └── README_DOCKER.md
+│   ├── conda/                   # Conda environment files
+│   │   ├── environment.yml
+│   │   └── requirements.txt
+│   ├── venv/                    # Virtual environment configurations
+│   └── ci/                      # CI/CD configuration files
+├── docs/                        # Project documentation
+│   ├── api/                     # API documentation
+│   ├── user/                    # User guides
+│   └── dev/                     # Developer documentation
+├── assets/                      # Static assets and resources
+│   ├── images/
+│   ├── fonts/
+│   └── data/
+└── config/                      # Project-level configuration
+    ├── development/
+    ├── staging/
+    └── production/
+```
+
+### 🏗️ Directory Organization Principles
+
+#### Core Principles
+1. **Separation of Concerns**: Planning files separate from implementation
+2. **Clear Categorization**: Tests, source, environment, and automation in dedicated directories
+3. **Consistent Organization**: Every file type has a designated location
+4. **Scalable Structure**: Supports projects from simple scripts to complex applications
+
+#### Directory Functions
+
+| Directory | Purpose | Generated By | Contains |
+|-----------|---------|--------------|----------|
+| `rigour_vibe/` | Framework files | Manual setup | Prompts, templates, documentation |
+| `directives/` | Planning & tracking | RVB prompts | PRDs, specs, tasks, summaries |
+| `src/` | Source code | Implementation | Core logic, APIs, UI, utilities |
+| `tests/` | Test code | TDD implementation | Unit, integration, e2e tests |
+| `build/` | Build artifacts | Build systems | Compiled outputs, documentation |
+| `scripts/` | Automation | Setup & development | Build, deploy, test scripts |
+| `environment/` | Env configuration | Environment setup | Docker, conda, CI configs |
+| `docs/` | Documentation | Manual/generated | API docs, user guides, dev docs |
+| `assets/` | Static resources | Design/content | Images, fonts, data files |
+| `config/` | Configuration | Setup | Environment-specific settings |
+
+#### File Placement Rules
+
+**Planning Phase:**
+- Requirements → `directives/prd/` or `directives/spec/`
+- Task breakdowns → `directives/tasks/`
+- Test plans → `directives/tests/`
+- Progress tracking → `directives/summaries/`
+
+**Implementation Phase:**
+- Business logic → `src/core/[feature]/`
+- API endpoints → `src/api/[feature]/`
+- UI components → `src/ui/[feature]/`
+- Utility functions → `src/utils/[feature]/`
+- Unit tests → `tests/unit/[feature]/`
+- Integration tests → `tests/integration/[feature]/`
+- End-to-end tests → `tests/e2e/[feature]/`
+
+**Environment Phase:**
+- Docker configs → `environment/docker/`
+- Conda environments → `environment/conda/`
+- CI/CD configs → `environment/ci/`
+- Build scripts → `scripts/build/`
+- Test scripts → `scripts/test/`
+- Deployment scripts → `scripts/deploy/`
+
+#### Quick Project Setup
+
+```bash
+# Create complete project structure
+mkdir -p {rigour_vibe,directives/{prd,spec,tasks,tests,summaries},src/{core,api,ui,utils,config},tests/{unit,integration,e2e,performance,fixtures},build/{debug,release,docs},scripts/{build,deploy,test,dev},environment/{docker,conda,venv,ci},docs/{api,user,dev},assets/{images,fonts,data},config/{development,staging,production}}
+
+# Or use the setup script (created by the framework)
+./scripts/dev/setup_project_structure.sh
 ```
 
 ## 📋 File Organization System

@@ -24,6 +24,9 @@ Before proceeding past any quality gate:
 - [ ] Performance regression check
 - [ ] Security consideration review
 - [ ] Documentation completeness
+- [ ] **Project structure validation** - All files in correct directories
+- [ ] **Environment configuration check** - All configs in environment/
+- [ ] **Script organization verification** - All scripts in scripts/
 
 ### On Request
 When user asks for verification or status check:
@@ -34,7 +37,20 @@ When user asks for verification or status check:
 
 ## Verification Procedures
 
-### 1. Test Suite Verification
+### 1. Project Structure Verification
+```bash
+# Verify directory structure exists
+echo "📁 Verifying Project Structure..."
+ls -la src/ tests/ directives/ environment/ scripts/ docs/ build/ config/ 2>/dev/null || echo "Missing directories detected"
+
+# Check file organization
+echo "📋 Checking File Organization..."
+find src/ -name "*.ts" -o -name "*.js" -o -name "*.tsx" -o -name "*.jsx" 2>/dev/null | head -5
+find tests/ -name "*.test.*" -o -name "*.spec.*" 2>/dev/null | head -5
+find directives/ -name "*.md" 2>/dev/null | head -5
+```
+
+### 2. Test Suite Verification
 ```bash
 # Full test suite execution
 echo "🧪 Running Full Test Suite..."
@@ -273,6 +289,7 @@ When automated tests aren't sufficient:
 
 📊 Progress: [X/Y tasks complete] ([Z]%)
 🧪 Tests: [Passing/Total] ([Coverage]%)
+📁 Structure: [Organized/Needs Attention]
 ⚡ Performance: [Status]
 🔒 Security: [Status]
 📋 Quality: [Score/Rating]

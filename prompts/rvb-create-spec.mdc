@@ -32,7 +32,7 @@ To create detailed technical specifications for complex features that need compr
 3. **Investigation Questions:** Ask clarifying questions focused on technical details
 4. **Root Cause Analysis:** For bugs/issues, investigate underlying causes
 5. **Generate Technical Spec:** Create comprehensive specification with implementation steps
-6. **Save Specification:** Store as `YYYY-MM-DD_spec_feature-name.md` in `../directives/spec/`
+6. **Save Specification:** Store as `YYYY-MM-DD_spec_feature-name.md` in `../directives/spec/` (create directory if needed)
 
 ## Investigation Questions
 
@@ -226,6 +226,8 @@ Use today's date and descriptive technical names:
 3. **Investigate thoroughly** - Especially for bugs and system issues
 4. **Create implementation-ready specification** - AI agents should be able to execute steps
 5. **Include verification criteria** - Technical validation at each step
-6. **Cross-reference** - Link to related PRDs and tasks
-7. **Do NOT start implementing** - Focus on analysis and detailed planning
-8. **Ensure traceability** - Clear path from problem to solution to implementation
+6. **Follow project structure** - Specify where files should be placed (src/, tests/, environment/, etc.)
+7. **Cross-reference** - Link to related PRDs and tasks
+8. **Save to:** `../directives/spec/YYYY-MM-DD_spec_feature-name.md` (create directory if needed)
+9. **Do NOT start implementing** - Focus on analysis and detailed planning
+10. **Ensure traceability** - Clear path from problem to solution to implementation

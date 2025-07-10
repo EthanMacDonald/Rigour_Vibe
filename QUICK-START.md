@@ -147,7 +147,144 @@ Creates: `../directives/prd/2025-07-09_prd_feature-name.md`
 5. **Document:** Create test specs and implementation summaries
 
 **Creates per task:**
-- `../directives/tests/2025-07-08_test_feature-name_task-1-1.md`
+- `../directives/tests/2025-07-09_test_feature-name_task-1-1.md`
+- `../directives/summaries/2025-07-09_summary_feature-name_task-1-1.md`
+
+---
+
+## 🔧 Technical Problem Workflow
+
+**For bugs, performance issues, and architecture changes**
+
+### 1. Create Technical Specification 📋
+```bash
+@rvb-create-spec.mdc "Problem: [Description of technical issue]"
+```
+
+**AI will:**
+- Ask technical investigation questions
+- Perform root cause analysis (for bugs)
+- Create detailed technical specification
+- Creates: `../directives/spec/2025-07-09_spec_problem-name.md`
+
+### 2. Generate Technical Tasks 📝
+```bash
+@rvb-generate-tasks.mdc [reference your Spec file]
+```
+
+### 3. Implement Solution 🔧
+```bash
+@rvb-process-tasks.mdc
+```
+
+**Focus on:**
+- Root cause fixes
+- Performance improvements
+- System integration
+- Technical verification
+
+---
+
+## 🚀 Example: Single-Shot Todo App
+
+### Input:
+```bash
+@rvb-create-prd.mdc "Build a todo app with drag-and-drop priority ordering"
+```
+
+### AI Questions (quick answers):
+1. **Platform?** → Web app
+2. **Users?** → Individual users, personal use
+3. **Core actions?** → Add todos, drag to reorder, mark complete
+4. **Data persistence?** → Local storage
+5. **Success criteria?** → Can manage daily tasks effectively
+
+### Generated Tasks (auto Light Touch):
+```
+Task 1: Basic Todo CRUD
+├── 1.1 Create todo input form
+├── 1.2 Display todo list
+├── 1.3 Mark todos complete/incomplete
+
+Task 2: Drag-and-Drop Functionality  
+├── 2.1 Implement drag-and-drop library
+├── 2.2 Handle reordering logic
+├── 2.3 Visual feedback during drag
+
+Task 3: Data Persistence
+├── 3.1 Local storage save/load
+├── 3.2 Handle app refresh
+├── 3.3 Basic error handling
+
+Task 4: Polish & Testing
+├── 4.1 Basic styling and UX
+├── 4.2 Core functionality tests
+├── 4.3 Smoke test full workflow
+```
+
+### Time: ~5 hours total! ⏱️
+
+---
+
+## 💡 Tips for Success
+
+### Single-Shot Apps:
+- [ ] **Set a time box** (4-8 hours max)
+- [ ] **Define "done" upfront** (core features only)
+- [ ] **Use familiar tech** (avoid learning new frameworks)
+- [ ] **Trust the process** (let AI break down the work)
+- [ ] **Test as you go** (don't save testing for the end)
+
+### Feature Development:
+- [ ] **Answer complexity questions honestly**
+- [ ] **Include stakeholders in PRD review**
+- [ ] **Let AI guide the testing strategy**
+- [ ] **Use approval gates to stay focused**
+- [ ] **Keep regression tests running**
+
+### Technical Problems:
+- [ ] **Invest time in root cause analysis**
+- [ ] **Document your investigation**
+- [ ] **Test the fix thoroughly**
+- [ ] **Consider system-wide impact**
+
+## 🎯 Success Metrics
+
+### Single-Shot Apps:
+- ✅ **Core functionality works** without crashes
+- ✅ **Demonstrates the concept** effectively  
+- ✅ **Can be shown to others** immediately
+- ✅ **Documentation exists** for future reference
+
+### Production Features:
+- ✅ **All acceptance criteria met**
+- ✅ **Full test suite passes**
+- ✅ **Integrates cleanly** with existing system
+- ✅ **Performance is acceptable**
+- ✅ **Ready for team review**
+
+## 🔄 Next Steps
+
+### After Single-Shot Success:
+If your app proves valuable, upgrade it:
+1. **Create Technical Spec** for architecture improvements
+2. **Upgrade to Balanced Rigor** for production quality
+3. **Add security hardening** and performance optimization
+4. **Plan deployment** and monitoring
+
+### Ready to Start?
+
+**Choose your path:**
+
+🚀 **Single-Shot App**: `@rvb-create-prd.mdc "Build a [your app idea]"`
+
+🏗️ **Feature Development**: `@rvb-create-prd.mdc "Feature: [your feature]"`
+
+🔧 **Technical Problem**: `@rvb-create-spec.mdc "Problem: [your issue]"`
+
+---
+
+**Let's build something awesome! 🎉**
 - `../directives/summaries/2025-07-08_summary_feature-name_task-1-1.md`
 
 ## 5. Verify Progress Continuously ✅

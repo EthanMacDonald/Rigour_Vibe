@@ -144,9 +144,33 @@ project-root/
 │   └── docs/                    # Generated documentation
 ├── scripts/                     # Automation and utility scripts
 │   ├── build/                   # Build scripts
+│   │   ├── build-debug.sh       # Debug build automation
+│   │   ├── build-release.sh     # Release build automation
+│   │   └── build-clean.sh       # Clean build artifacts
 │   ├── deploy/                  # Deployment scripts
+│   │   ├── deploy-local.sh      # Local deployment
+│   │   ├── deploy-staging.sh    # Staging deployment
+│   │   └── deploy-production.sh # Production deployment
 │   ├── test/                    # Test execution scripts
-│   └── dev/                     # Development utility scripts
+│   │   ├── test-unit.sh         # Unit test execution
+│   │   ├── test-integration.sh  # Integration test execution
+│   │   ├── test-e2e.sh          # End-to-end test execution
+│   │   ├── test-performance.sh  # Performance test execution
+│   │   ├── test-dependencies.sh # Dependency verification
+│   │   └── test-coverage.sh     # Test coverage reports
+│   ├── dev/                     # Development utility scripts
+│   │   ├── dev-setup.sh         # Development environment setup
+│   │   ├── dev-reset.sh         # Reset development environment
+│   │   └── dev-lint.sh          # Code linting and formatting
+│   ├── env/                     # Environment management scripts
+│   │   ├── env-docker-build.sh  # Docker environment build
+│   │   ├── env-docker-start.sh  # Docker environment start
+│   │   ├── env-docker-stop.sh   # Docker environment stop
+│   │   └── env-docker-test.sh   # Docker environment testing
+│   └── ci/                      # CI/CD scripts
+│       ├── ci-validate.sh       # CI validation pipeline
+│       ├── ci-test.sh           # CI test pipeline
+│       └── ci-deploy.sh         # CI deployment pipeline
 ├── environment/                 # Environment configuration
 │   ├── docker/                  # Docker configurations
 │   │   ├── Dockerfile

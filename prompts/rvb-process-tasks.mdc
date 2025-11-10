@@ -32,7 +32,8 @@ To provide a structured protocol for executing task lists while maintaining qual
    - Check code quality
 
 3. **Mark Sub-Task Complete:**
-   - Change `[ ]` to `[x]` in task list
+   - Change `[ ]` to `[x]` in task list **immediately**
+   - **REQUIRED:** Update the task file with the completed checkbox
    - **CRITICAL:** Wait for user permission before proceeding to next sub-task
    - User must respond with "yes", "y", "continue", or "go" to proceed
 
@@ -42,6 +43,8 @@ To provide a structured protocol for executing task lists while maintaining qual
    - Implementation: [Brief description of changes]
    - Tests: [Test status and coverage]
    - Files Modified: [List of files changed]
+   
+   📝 Task file updated: [task-file-path]
    
    ⏸️ Waiting for permission to continue to next sub-task...
    ```
@@ -78,20 +81,41 @@ When all sub-tasks under a parent task are marked `[x]`:
 
 5. **Commit with Structured Message:**
    ```bash
-   git commit -m "feat: [parent task description]" \
+   git commit -m "Task [X.0]: [parent task description]" \
+              -m "" \
+              -m "Summary:" \
               -m "- [key change 1]" \
               -m "- [key change 2]" \
               -m "- [key change 3]" \
-              -m "Tests: [test summary]" \
-              -m "Related to Task [X.0] in [task-file-path]"
+              -m "" \
+              -m "Tests: [test summary - all passing]" \
+              -m "" \
+              -m "Task file: [relative-path-to-task-file]"
    ```
+   
+   **Commit Message Format:**
+   - **First line:** `Task [X.0]: [brief description of what the task accomplishes]`
+   - **Body:** Detailed summary of changes, test results, and task file reference
+   - **Task number:** Must be included in first line for traceability
+   - **Example:** `Task 3.2: Implement PDF report generation with benchmark comparison`
 
 #### Mark Parent Task Complete
-6. **Update Task List:**
-   - Mark parent task `[x]`
-   - Update "Relevant Files" section
+6. **Update Task File:**
+   - Mark parent task `[x]` in the task file
+   - Update "Relevant Files" section with all modified files
    - Add any newly discovered files
    - Note any new tasks discovered during implementation
+   - Update "Progress Summary" section with current counts
+   - Update "Last Updated" timestamp
+   - **Commit the task file update separately:**
+   ```bash
+   git add [task-file-path]
+   git commit -m "Task [X.0]: Mark task complete and update progress" \
+              -m "" \
+              -m "- Marked parent task [X.0] as complete" \
+              -m "- Updated relevant files list" \
+              -m "- Updated progress summary"
+   ```
 
 7. **Parent Task Completion Documentation:**
    ```markdown
@@ -103,7 +127,9 @@ When all sub-tasks under a parent task are marked `[x]`:
    - Tests added/updated: [count]
    - All tests passing: ✅
    
-   📝 Changes committed with message: [commit hash]
+   📝 Changes committed:
+   - Code commit: [commit hash] "Task [X.0]: [description]"
+   - Task file commit: [commit hash] "Task [X.0]: Mark task complete and update progress"
    
    🔄 Ready for next parent task...
    ```
@@ -202,6 +228,8 @@ Testing:
 - [Test type]: [Pass/Fail status]
 - Coverage: [If applicable]
 
+📝 Task file updated: [task-file-path] (sub-task [X.Y] marked complete)
+
 ⏸️ Ready for next sub-task? (Respond with 'yes' to continue)
 ```
 
@@ -213,7 +241,10 @@ Summary:
 - Sub-tasks: [X] completed
 - Files modified: [count]
 - Tests: All passing ✅
-- Commit: [hash] "[commit message]"
+
+Commits:
+- Code: [hash] "Task [X.0]: [description]"
+- Task file: [hash] "Task [X.0]: Mark task complete and update progress"
 
 Quality checks:
 - Functionality: ✅
@@ -228,11 +259,13 @@ Quality checks:
 
 ### Mandatory Behavior
 1. **One sub-task at a time:** NEVER start the next sub-task without explicit user permission
-2. **Follow project structure:** Place all files in their designated directories (src/, tests/, environment/, etc.)
-3. **Always run tests:** Before marking any task complete
-4. **Update task lists:** Keep progress tracking current
-5. **Commit properly:** Use structured commit messages
-6. **Wait for permission:** After each sub-task completion
+2. **Update task file immediately:** After completing each sub-task, update the task file with `[x]` checkbox
+3. **Follow project structure:** Place all files in their designated directories (src/, tests/, environment/, etc.)
+4. **Always run tests:** Before marking any task complete
+5. **Commit after parent tasks:** Create TWO commits - one for code changes, one for task file update
+6. **Use task numbers in commits:** Every commit message must start with "Task [X.Y]:" format
+7. **Update progress tracking:** Keep "Progress Summary" and "Relevant Files" sections current
+8. **Wait for permission:** After each sub-task completion
 
 ### Prohibited Actions
 - ❌ Working on multiple sub-tasks simultaneously
@@ -240,6 +273,9 @@ Quality checks:
 - ❌ Proceeding without user permission
 - ❌ Committing code with failing tests
 - ❌ Skipping quality gate checks
+- ❌ Forgetting to update task files after sub-task completion
+- ❌ Committing without task numbers in commit messages
+- ❌ Combining code and task file updates in a single commit
 
 ### Communication Requirements
 - ✅ Clear status updates after each sub-task
@@ -247,5 +283,7 @@ Quality checks:
 - ✅ Test results reporting
 - ✅ File change summaries
 - ✅ Quality gate verification
+- ✅ Confirmation that task file was updated
+- ✅ Commit hashes and messages in completion reports
 
 This protocol ensures systematic progress while maintaining high quality standards and proper coordination between AI and human team members.

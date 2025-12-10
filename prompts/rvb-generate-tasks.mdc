@@ -43,14 +43,21 @@ To create a detailed, test-driven task list from a Rigour Vibe PRD that ensures 
 - `environment/docker/Dockerfile` - Docker configuration (if needed)
 - `scripts/build/build-[feature].sh` - Build scripts (if needed)
 
-## Progressive Test Requirements
+## Progressive Implementation Requirements
 
-### Test Foundation (Complete First)
-- [ ] 0.1 Set up test infrastructure
-  - [ ] 0.1.1 Configure test runner for project
-  - [ ] 0.1.2 Create test utilities and helpers
-  - [ ] 0.1.3 Set up test data factories/fixtures
-  - [ ] 0.1.4 Verify test pipeline runs successfully
+### Environment Foundation (Complete First)
+- [ ] 0.1 Set up development environment infrastructure
+  - [ ] 0.1.1 Create Docker configuration files (if containerization needed)
+  - [ ] 0.1.2 Set up environment variables and configuration
+  - [ ] 0.1.3 Verify development environment builds and runs
+  - [ ] 0.1.4 Establish development workflow scripts
+
+### Test Infrastructure (Complete After Environment)
+- [ ] 0.2 Set up test framework within established environment
+  - [ ] 0.2.1 Configure test runners for target environment
+  - [ ] 0.2.2 Create test utilities and helpers
+  - [ ] 0.2.3 Set up test data factories/fixtures
+  - [ ] 0.2.4 Verify test pipeline runs in target environment
 
 ### Implementation Tasks
 
@@ -77,21 +84,35 @@ To create a detailed, test-driven task list from a Rigour Vibe PRD that ensures 
 
 ### Quality Gates
 
-#### Gate 1: Core Functionality ✅
-**Required Before Proceeding to Advanced Features**
+#### Gate 1: Development Environment Ready ✅
+**Required Before Proceeding to Test Infrastructure**
+- [ ] Development environment builds successfully
+- [ ] All environment configuration functional
+- [ ] Development workflow established
+- [ ] No critical environment issues
+
+#### Gate 2: Test Infrastructure Ready ✅
+**Required Before Core Feature Implementation**
+- [ ] All test frameworks configured and functional
+- [ ] Test pipeline runs successfully
+- [ ] Test data and fixtures established
+- [ ] No critical test setup failures
+
+#### Gate 3: Core Functionality Complete ✅
+**Required Before Advanced Features**
 - [ ] All core task tests passing
 - [ ] Basic integration verified
 - [ ] No critical test failures
 - [ ] Performance within acceptable range
 
-#### Gate 2: Feature Complete ✅
+#### Gate 4: Feature Complete ✅
 **Required Before Final Testing**
 - [ ] All feature tasks completed
 - [ ] Full test coverage achieved
 - [ ] Integration tests passing
 - [ ] Documentation updated
 
-#### Gate 3: Release Ready ✅
+#### Gate 5: Release Ready ✅
 **Required Before Deployment**
 - [ ] Complete test suite passing
 - [ ] End-to-end scenarios verified
@@ -181,12 +202,14 @@ Use today's date (2025-07-10) and match the feature name from the PRD:
 
 1. Analyze the PRD's complexity level first
 2. Generate high-level parent tasks appropriate to the rigor level
-3. Present parent tasks and wait for user confirmation with "Go" 
-4. Only after confirmation, generate detailed subtasks with test requirements BEFORE implementation steps
-5. Always include test requirements BEFORE implementation steps in detailed tasks
-6. Create progressive quality gates
-7. Ensure each task has clear completion criteria
-8. Include specific test commands for the project type
+3. **Environment First:** Always prioritize development environment setup (Docker, configs) before test infrastructure
+4. **Test Infrastructure Second:** Set up testing frameworks within the established environment
+5. Present parent tasks and wait for user confirmation with "Go" 
+6. Only after confirmation, generate detailed subtasks with environment setup BEFORE test requirements
+7. Always include environment requirements BEFORE test requirements in detailed tasks
+8. Create progressive quality gates starting with environment readiness
+9. Ensure each task has clear completion criteria
+10. Include specific commands for the established environment (Docker, local, etc.)
 
 ## Interaction Model
 

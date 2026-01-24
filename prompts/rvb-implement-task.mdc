@@ -51,7 +51,28 @@ A task is ONLY complete when:
 5. ✅ **Task marked complete in task list**
 6. ✅ **Test specification created**: `../directives/tests/YYYY-MM-DD_test_feature-name_task-id.md`
 7. ✅ **Implementation summary created**: `../directives/summaries/YYYY-MM-DD_summary_feature-name_task-id.md`
-8. ✅ **Changes committed with descriptive message**
+8. ✅ **Changes committed immediately** - Do NOT batch commits, commit after EVERY sub-task
+
+### Regular Commit Protocol
+
+**CRITICAL:** Commit after completing EACH sub-task, not just at parent task completion.
+
+```bash
+# After EVERY sub-task completion:
+git add .
+git commit -m "Task [X.Y]: [sub-task description]" \
+           -m "" \
+           -m "- [specific change 1]" \
+           -m "- [specific change 2]" \
+           -m "" \
+           -m "Status: Sub-task complete, tests passing"
+```
+
+Benefits of frequent commits:
+- Safer progress tracking - changes are saved regularly
+- Easier rollback if issues arise
+- Clear audit trail of implementation steps
+- Prevents loss of work
 
 ### Complexity-Level Implementation
 
@@ -94,27 +115,38 @@ After completing each task:
 2. Update "Relevant Files" section with any new/modified files
 3. Add any newly discovered tasks
 4. Update test execution status
+5. **Commit changes immediately** - do not wait
 
-### Git Workflow
-For each completed task:
+### Git Workflow - Commit After EVERY Sub-Task
+**CRITICAL:** Do NOT batch commits. Commit immediately after completing each sub-task.
+
+For each completed sub-task:
 ```bash
 # 1. Run tests to ensure everything passes
 npm test  # or appropriate test command
 
-# 2. Stage changes
+# 2. Stage ALL changes (including task file updates)
 git add .
 
-# 3. Commit with conventional format
-git commit -m "feat: implement [task description]" \
+# 3. Commit immediately with task number format
+git commit -m "Task [X.Y]: [sub-task description]" \
+           -m "" \
            -m "- [specific change 1]" \
            -m "- [specific change 2]" \
-           -m "- Tests: [test description]" \
-           -m "Related to task [X.Y] in ../directives/tasks/YYYY-MM-DD_task_[feature].md"
+           -m "" \
+           -m "Tests: passing" \
+           -m "Task file: [relative-path-to-task-file]"
 ```
+
+**Commit Message Requirements:**
+- First line MUST start with "Task [X.Y]:" format
+- Include brief description of what was accomplished
+- List key changes in the body
+- Reference the task file
 
 ### Parent Task Completion
 When all subtasks under a parent task are complete:
-1. ✅ Verify all subtask tests pass
+1. ✅ Verify all subtask tests pass (each should already be committed)
 2. ✅ Run integration tests for the parent task
 3. ✅ Check quality gate requirements
 4. ✅ Mark parent task complete

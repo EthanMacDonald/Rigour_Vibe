@@ -121,10 +121,22 @@ To create a detailed, test-driven task list from a Rigour Vibe PRD that ensures 
 - [ ] Rollback procedures tested
 
 ## Test Execution Commands
-- **Unit Tests:** `[command for running unit tests]`
-- **Integration Tests:** `[command for integration tests]`
-- **Full Suite:** `[command for complete test run]`
-- **Coverage:** `[command for test coverage report]`
+
+**NOTE:** Execute commands in Docker by default. Only use native execution if Docker is unavailable.
+
+### Docker Execution (Default - Preferred)
+- **Unit Tests:** `docker exec todo-backend-dev python -m pytest tests/unit/ -v`
+- **Integration Tests:** `docker exec todo-backend-dev python -m pytest tests/integration/ -v`
+- **Full Suite:** `docker exec todo-backend-dev python -m pytest tests/ -v`
+- **Coverage:** `docker exec todo-backend-dev python -m pytest tests/ --cov=src --cov-report=html`
+- **Frontend Tests:** `docker exec todo-frontend-dev npm test`
+- **E2E Tests:** `docker exec todo-frontend-dev npm run test:e2e`
+
+### Native Execution (Only if Docker Unavailable)
+- **Unit Tests:** `pytest tests/unit/ -v`
+- **Integration Tests:** `pytest tests/integration/ -v`
+- **Full Suite:** `pytest tests/ -v` or `npm test`
+- **Coverage:** `pytest tests/ --cov=src --cov-report=html` or `npm run test:coverage`
 
 ## Definition of Task Completion
 

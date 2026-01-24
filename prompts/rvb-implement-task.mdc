@@ -178,36 +178,93 @@ If a task becomes more complex than anticipated:
 
 ## Quality Verification Commands
 
+**NOTE:** Execute commands in Docker by default. Only use native execution if Docker is unavailable.
+
 ### Test Execution
 ```bash
-# Run specific test file
+# ===========================================
+# DOCKER EXECUTION (DEFAULT - PREFERRED)
+# ===========================================
+
+# Run specific test file (Docker)
+docker exec todo-backend-dev python -m pytest path/to/test.py -v
+# or for frontend:
+docker exec todo-frontend-dev npm test path/to/test.spec.ts
+
+# Run all backend tests (Docker)
+docker exec todo-backend-dev python -m pytest tests/ -v
+
+# Run all frontend tests (Docker)
+docker exec todo-frontend-dev npm test
+
+# Run tests with coverage (Docker)
+docker exec todo-backend-dev python -m pytest tests/ --cov=src --cov-report=html
+docker exec todo-frontend-dev npm run test:coverage
+
+# Run integration tests only (Docker)
+docker exec todo-backend-dev python -m pytest tests/integration/ -v
+
+# Run e2e tests (Docker)
+docker exec todo-frontend-dev npm run test:e2e
+
+# ===========================================
+# NATIVE EXECUTION (ONLY IF DOCKER UNAVAILABLE)
+# ===========================================
+
+# Run specific test file (Native - fallback)
 npm test path/to/test.spec.ts
 
-# Run all tests
+# Run all tests (Native - fallback)
 npm test
 
-# Run tests with coverage
+# Run tests with coverage (Native - fallback)
 npm run test:coverage
 
-# Run integration tests only
+# Run integration tests only (Native - fallback)
 npm run test:integration
 
-# Run e2e tests
+# Run e2e tests (Native - fallback)
 npm run test:e2e
 ```
 
 ### Code Quality Checks
 ```bash
-# Linting
+# ===========================================
+# DOCKER EXECUTION (DEFAULT - PREFERRED)
+# ===========================================
+
+# Linting (Docker)
+docker exec todo-frontend-dev npm run lint
+docker exec todo-backend-dev python -m flake8 src/
+
+# Type checking - TypeScript (Docker)
+docker exec todo-frontend-dev npm run type-check
+
+# Type checking - Python (Docker)
+docker exec todo-backend-dev python -m mypy src/
+
+# Format check (Docker)
+docker exec todo-frontend-dev npm run format:check
+docker exec todo-backend-dev python -m black --check src/
+
+# Security audit (Docker)
+docker exec todo-frontend-dev npm audit
+docker exec todo-backend-dev pip-audit
+
+# ===========================================
+# NATIVE EXECUTION (ONLY IF DOCKER UNAVAILABLE)
+# ===========================================
+
+# Linting (Native - fallback)
 npm run lint
 
-# Type checking (TypeScript)
+# Type checking (Native - fallback)
 npm run type-check
 
-# Format check
+# Format check (Native - fallback)
 npm run format:check
 
-# Security audit
+# Security audit (Native - fallback)
 npm audit
 ```
 

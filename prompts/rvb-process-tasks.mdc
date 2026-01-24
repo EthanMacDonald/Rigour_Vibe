@@ -75,7 +75,17 @@ When all sub-tasks under a parent task are marked `[x]`:
 #### Automated Quality Checks
 1. **Run Full Test Suite:**
    ```bash
-   # Execute complete test suite
+   # ===========================================
+   # DOCKER EXECUTION (DEFAULT - PREFERRED)
+   # ===========================================
+   # Execute complete test suite in Docker
+   docker exec todo-backend-dev python -m pytest tests/ -v
+   docker exec todo-frontend-dev npm test
+   
+   # ===========================================
+   # NATIVE EXECUTION (ONLY IF DOCKER UNAVAILABLE)
+   # ===========================================
+   # Execute complete test suite natively (fallback only)
    npm test
    # or appropriate test command for the project
    ```

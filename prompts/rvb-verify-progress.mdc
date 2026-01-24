@@ -37,9 +37,11 @@ When user asks for verification or status check:
 
 ## Verification Procedures
 
+**NOTE:** Execute commands in Docker by default. Only use native execution if Docker is unavailable.
+
 ### 1. Project Structure Verification
 ```bash
-# Verify directory structure exists
+# Verify directory structure exists (can run locally - file system check)
 echo "📁 Verifying Project Structure..."
 ls -la src/ tests/ directives/ environment/ scripts/ docs/ build/ config/ 2>/dev/null || echo "Missing directories detected"
 
@@ -52,51 +54,97 @@ find directives/ -name "*.md" 2>/dev/null | head -5
 
 ### 2. Test Suite Verification
 ```bash
-# Full test suite execution
+# ===========================================
+# DOCKER EXECUTION (DEFAULT - PREFERRED)
+# ===========================================
+
+# Full test suite execution (Docker)
 echo "🧪 Running Full Test Suite..."
+docker exec todo-backend-dev python -m pytest tests/ -v --cov=src
+docker exec todo-frontend-dev npm test --coverage
+
+# Integration test verification (Docker)
+echo "🔗 Verifying Integration Points..."
+docker exec todo-backend-dev python -m pytest tests/integration/ -v
+docker exec todo-frontend-dev npm run test:integration
+
+# End-to-end verification (Docker)
+echo "🎯 Running E2E Tests..."
+docker exec todo-frontend-dev npm run test:e2e
+
+# Performance regression check (Docker)
+echo "⚡ Checking Performance..."
+docker exec todo-backend-dev python -m pytest tests/performance/ -v
+
+# ===========================================
+# NATIVE EXECUTION (ONLY IF DOCKER UNAVAILABLE)
+# ===========================================
+
+# Full test suite execution (Native - fallback)
+echo "🧪 Running Full Test Suite (Native)..."
 npm test --coverage
 
-# Integration test verification
-echo "🔗 Verifying Integration Points..."
+# Integration test verification (Native - fallback)
+echo "🔗 Verifying Integration Points (Native)..."
 npm run test:integration
 
-# End-to-end verification (if applicable)
-echo "🎯 Running E2E Tests..."
+# End-to-end verification (Native - fallback)
+echo "🎯 Running E2E Tests (Native)..."
 npm run test:e2e
 
-# Performance regression check
-echo "⚡ Checking Performance..."
+# Performance regression check (Native - fallback)
+echo "⚡ Checking Performance (Native)..."
 npm run test:performance
 ```
 
-### 2. Code Quality Verification
+### 3. Code Quality Verification
 ```bash
-# Linting check
+# ===========================================
+# DOCKER EXECUTION (DEFAULT - PREFERRED)
+# ===========================================
+
+# Linting check (Docker)
 echo "📝 Code Quality Check..."
-npm run lint
+docker exec todo-frontend-dev npm run lint
+docker exec todo-backend-dev python -m flake8 src/
 
-# Type safety verification
+# Type safety verification (Docker)
 echo "🔍 Type Checking..."
-npm run type-check
+docker exec todo-frontend-dev npm run type-check
+docker exec todo-backend-dev python -m mypy src/
 
-# Security audit
+# Security audit (Docker)
 echo "🔒 Security Audit..."
-npm audit --audit-level=moderate
+docker exec todo-frontend-dev npm audit --audit-level=moderate
+docker exec todo-backend-dev pip-audit
 
-# Format verification
+# Format verification (Docker)
 echo "✨ Format Check..."
+docker exec todo-frontend-dev npm run format:check
+docker exec todo-backend-dev python -m black --check src/
+
+# ===========================================
+# NATIVE EXECUTION (ONLY IF DOCKER UNAVAILABLE)
+# ===========================================
+
+# Code quality (Native - fallback)
+echo "📝 Code Quality Check (Native)..."
+npm run lint
+npm run type-check
+npm audit --audit-level=moderate
 npm run format:check
 ```
 
-### 3. Regression Detection
+### 4. Regression Detection
 ```bash
-# Compare test results with baseline
+# Compare test results with baseline (git runs locally)
 echo "🔍 Regression Detection..."
 git diff HEAD~1 --name-only | grep -E '\.(test|spec)\.' || echo "No test files changed"
 
-# Run tests on changed files only (for speed)
+# Quick regression check (Docker preferred)
 echo "⚡ Quick Regression Check..."
-npm test --changedSince=HEAD~1
+docker exec todo-backend-dev python -m pytest tests/ -v --last-failed
+docker exec todo-frontend-dev npm test --changedSince=HEAD~1
 ```
 
 ## Progress Reporting

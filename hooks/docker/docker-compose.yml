@@ -1,0 +1,206 @@
+version: "3.8"
+
+# =============================================================================
+# Docker Compose for Comprehensive Linting Toolkit
+# =============================================================================
+# 
+# Usage:
+#   docker compose build                    # Build the linting image
+#   docker compose run lint                 # Interactive shell with all tools
+#   docker compose run analyze              # Run brownfield analysis
+#   docker compose run precommit            # Run pre-commit hook
+#
+# Environment Variables:
+#   TARGET_DIR      Path to codebase to analyze (default: parent directory)
+#   OUTPUT_DIR      Path for report output (default: ./reports)
+#   FIX_LEVEL       conservative|moderate|aggressive (default: moderate)
+#   SKIP_SECURITY   true|false - skip security scans (default: false)
+#   CHECK_ONLY      true|false - lint only, no fixes (default: false)
+# =============================================================================
+
+services:
+  # Interactive linting shell - access all tools
+  lint:
+    build:
+      context: .
+      dockerfile: Dockerfile.linting
+    volumes:
+      - ${TARGET_DIR:-../..}:/workspace:rw
+      - ${OUTPUT_DIR:-./reports}:/output:rw
+    environment:
+      - FIX_LEVEL=${FIX_LEVEL:-moderate}
+      - SKIP_SECURITY=${SKIP_SECURITY:-false}
+    working_dir: /workspace
+    stdin_open: true
+    tty: true
+    command: bash
+
+  # Brownfield codebase analyzer
+  analyze:
+    build:
+      context: .
+      dockerfile: Dockerfile.linting
+    volumes:
+      - ${TARGET_DIR:-../..}:/workspace:ro
+      - ${OUTPUT_DIR:-./reports}:/output:rw
+      - ../scripts:/scripts:ro
+    environment:
+      - OUTPUT_DIR=/output
+      - FIX_LEVEL=${FIX_LEVEL:-moderate}
+      - SKIP_SECURITY=${SKIP_SECURITY:-false}
+      - PARALLEL_JOBS=${PARALLEL_JOBS:-4}
+    working_dir: /workspace
+    command: bash /scripts/analyze_codebase.sh /workspace
+
+  # Pre-commit hook runner
+  precommit:
+    build:
+      context: .
+      dockerfile: Dockerfile.linting
+    volumes:
+      - ${TARGET_DIR:-../..}:/workspace:rw
+      - ../scripts:/scripts:ro
+    environment:
+      - FIX_LEVEL=${FIX_LEVEL:-moderate}
+      - CHECK_ONLY=${CHECK_ONLY:-false}
+      - STAGED_ONLY=${STAGED_ONLY:-false}
+      - VERBOSE=${VERBOSE:-false}
+      - FAIL_ON_ERROR=${FAIL_ON_ERROR:-true}
+    working_dir: /workspace
+    command: bash /scripts/agentic_precommit.sh
+
+  # Quick format only (conservative)
+  format:
+    build:
+      context: .
+      dockerfile: Dockerfile.linting
+    volumes:
+      - ${TARGET_DIR:-../..}:/workspace:rw
+      - ../scripts:/scripts:ro
+    environment:
+      - FIX_LEVEL=conservative
+      - CHECK_ONLY=false
+      - STAGED_ONLY=false
+    working_dir: /workspace
+    command: bash /scripts/agentic_precommit.sh
+
+  # Check only - no modifications
+  check:
+    build:
+      context: .
+      dockerfile: Dockerfile.linting
+    volumes:
+      - ${TARGET_DIR:-../..}:/workspace:ro
+      - ../scripts:/scripts:ro
+    environment:
+      - FIX_LEVEL=moderate
+      - CHECK_ONLY=true
+      - STAGED_ONLY=false
+      - VERBOSE=true
+    working_dir: /workspace
+    command: bash /scripts/agentic_precommit.sh
+
+  # Security scan only
+  security:
+    build:
+      context: .
+      dockerfile: Dockerfile.linting
+    volumes:
+      - ${TARGET_DIR:-../..}:/workspace:ro
+      - ${OUTPUT_DIR:-./reports}:/output:rw
+    working_dir: /workspace
+    command: >
+      bash -c "
+        echo '=== Security Scan ===' &&
+        echo '' &&
+        echo '--- Secrets Detection (gitleaks) ---' &&
+        gitleaks detect --source=/workspace --no-git -v 2>/dev/null || true &&
+        echo '' &&
+        echo '--- Dependency Vulnerabilities (trivy) ---' &&
+        trivy fs /workspace --scanners vuln 2>/dev/null || true &&
+        echo '' &&
+        echo '=== Scan Complete ==='
+      "
+
+  # Python-specific linting
+  python:
+    build:
+      context: .
+      dockerfile: Dockerfile.linting
+    volumes:
+      - ${TARGET_DIR:-../..}:/workspace:rw
+    environment:
+      - FIX_LEVEL=${FIX_LEVEL:-moderate}
+    working_dir: /workspace
+    command: >
+      bash -c "
+        echo '=== Python Linting ===' &&
+        ruff format . &&
+        isort . &&
+        ruff check --fix . || true &&
+        ruff check . &&
+        mypy . --ignore-missing-imports || true &&
+        echo '=== Complete ==='
+      "
+
+  # JavaScript/TypeScript-specific linting
+  javascript:
+    build:
+      context: .
+      dockerfile: Dockerfile.linting
+    volumes:
+      - ${TARGET_DIR:-../..}:/workspace:rw
+    working_dir: /workspace
+    command: >
+      bash -c "
+        echo '=== JavaScript/TypeScript Linting ===' &&
+        prettier --write '**/*.{js,jsx,ts,tsx,json,css,scss,md}' 2>/dev/null || true &&
+        eslint --fix '**/*.{js,jsx,ts,tsx}' 2>/dev/null || true &&
+        eslint '**/*.{js,jsx,ts,tsx}' 2>/dev/null || true &&
+        echo '=== Complete ==='
+      "
+
+  # Go-specific linting
+  golang:
+    build:
+      context: .
+      dockerfile: Dockerfile.linting
+    volumes:
+      - ${TARGET_DIR:-../..}:/workspace:rw
+    working_dir: /workspace
+    command: >
+      bash -c "
+        echo '=== Go Linting ===' &&
+        gofmt -w . &&
+        goimports -w . &&
+        golangci-lint run ./... || true &&
+        echo '=== Complete ==='
+      "
+
+  # Rust-specific linting
+  rust:
+    build:
+      context: .
+      dockerfile: Dockerfile.linting
+    volumes:
+      - ${TARGET_DIR:-../..}:/workspace:rw
+    working_dir: /workspace
+    command: >
+      bash -c "
+        echo '=== Rust Linting ===' &&
+        cargo fmt 2>/dev/null || echo 'No Cargo.toml found' &&
+        cargo clippy --fix --allow-dirty --allow-staged 2>/dev/null || true &&
+        cargo clippy 2>/dev/null || true &&
+        echo '=== Complete ==='
+      "
+
+# =============================================================================
+# Networks and Volumes
+# =============================================================================
+networks:
+  default:
+    name: linting-network
+
+volumes:
+  reports:
+    driver: local

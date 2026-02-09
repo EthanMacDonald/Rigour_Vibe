@@ -37,7 +37,7 @@
 - `tests/fixtures/[feature]/[data].json` - Test data and mock objects
 
 ### Environment & Scripts
-- `environment/docker/Dockerfile` - Docker configuration (if needed)
+- `docker/Dockerfile` - Docker configuration (if needed)
 - `environment/ci/github-actions.yml` - CI/CD configuration (if needed)
 - `scripts/build/build-[feature].sh` - Build scripts (if needed)
 - `scripts/test/test-[feature].sh` - Test execution scripts (if needed)

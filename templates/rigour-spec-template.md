@@ -58,7 +58,7 @@
 - Test fixtures: `tests/fixtures/[feature-name]/`
 
 **Environment & Infrastructure:**
-- Docker configs: `environment/docker/` (if changed)
+- Docker configs: `docker/` (if changed)
 - CI/CD updates: `environment/ci/` (if needed)
 - Build scripts: `scripts/build/` (if changed)
 - Deployment scripts: `scripts/deploy/` (if changed)

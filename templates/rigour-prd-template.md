@@ -135,7 +135,7 @@
 - Test fixtures: `tests/fixtures/[feature-name]/`
 
 **Environment & Scripts:**
-- Docker configs: `environment/docker/` (if needed)
+- Docker configs: `docker/` (if needed)
 - CI/CD configs: `environment/ci/` (if needed)
 - Build scripts: `scripts/build/` (if needed)
 - Deploy scripts: `scripts/deploy/` (if needed)

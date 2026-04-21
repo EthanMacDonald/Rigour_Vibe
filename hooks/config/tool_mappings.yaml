@@ -1,0 +1,300 @@
+# =============================================================================
+# File Type to Tools Mapping
+# Used by analyze_codebase.sh and agentic_precommit.sh
+# =============================================================================
+
+# Auto-fix levels:
+#   conservative: formatting only (whitespace, imports)
+#   moderate: safe auto-fixes (unused imports, simple refactors)
+#   aggressive: all auto-fixable issues
+
+file_types:
+  # Python
+  python:
+    extensions: [".py", ".pyi"]
+    formatters:
+      conservative: ["ruff format", "isort"]
+      moderate: ["ruff format", "isort", "ruff check --fix"]
+      aggressive: ["ruff format", "isort", "ruff check --fix --unsafe-fixes"]
+    linters: ["ruff check", "pylint", "mypy", "pyright"]
+    security: ["bandit", "pip-audit"]
+    test_runners:
+      local: "pytest -q"
+      docker: "docker compose run --rm tests pytest -q"
+    
+  # JavaScript
+  javascript:
+    extensions: [".js", ".jsx", ".mjs", ".cjs"]
+    formatters:
+      conservative: ["prettier --write"]
+      moderate: ["prettier --write", "eslint --fix"]
+      aggressive: ["prettier --write", "eslint --fix"]
+    linters: ["eslint"]
+    security: ["eslint-plugin-security"]
+    test_runners:
+      local: "npm test"
+      docker: "docker compose run --rm tests npm test"
+    
+  # TypeScript
+  typescript:
+    extensions: [".ts", ".tsx"]
+    formatters:
+      conservative: ["prettier --write"]
+      moderate: ["prettier --write", "eslint --fix"]
+      aggressive: ["prettier --write", "eslint --fix"]
+    linters: ["eslint", "tsc --noEmit"]
+    security: ["eslint-plugin-security"]
+    test_runners:
+      local: "npm test"
+      docker: "docker compose run --rm tests npm test"
+    
+  # Go
+  go:
+    extensions: [".go"]
+    formatters:
+      conservative: ["gofmt -w"]
+      moderate: ["gofmt -w", "goimports -w"]
+      aggressive: ["gofmt -w", "goimports -w"]
+    linters: ["golangci-lint run", "staticcheck"]
+    security: ["gosec", "govulncheck"]
+    test_runners:
+      local: "go test ./..."
+      docker: "docker compose run --rm tests go test ./..."
+    
+  # Rust
+  rust:
+    extensions: [".rs"]
+    formatters:
+      conservative: ["cargo fmt"]
+      moderate: ["cargo fmt", "cargo clippy --fix --allow-dirty"]
+      aggressive: ["cargo fmt", "cargo clippy --fix --allow-dirty --allow-staged"]
+    linters: ["cargo clippy"]
+    security: ["cargo audit"]
+    test_runners:
+      local: "cargo test"
+      docker: "docker compose run --rm tests cargo test"
+    
+  # C/C++
+  cpp:
+    extensions: [".c", ".cpp", ".cc", ".cxx", ".h", ".hpp", ".hxx"]
+    formatters:
+      conservative: ["clang-format -i"]
+      moderate: ["clang-format -i"]
+      aggressive: ["clang-format -i"]
+    linters: ["clang-tidy", "cppcheck"]
+    security: []
+    test_runners:
+      local: "ctest --output-on-failure"
+      docker: "docker compose run --rm tests ctest --output-on-failure"
+    
+  # Java
+  java:
+    extensions: [".java"]
+    formatters:
+      conservative: ["google-java-format -i"]
+      moderate: ["google-java-format -i"]
+      aggressive: ["google-java-format -i"]
+    linters: ["checkstyle", "pmd"]
+    security: []
+    test_runners:
+      local: "./gradlew test"
+      docker: "docker compose run --rm tests ./gradlew test"
+    
+  # Kotlin
+  kotlin:
+    extensions: [".kt", ".kts"]
+    formatters:
+      conservative: ["ktlint -F"]
+      moderate: ["ktlint -F"]
+      aggressive: ["ktlint -F"]
+    linters: ["ktlint"]
+    security: []
+    test_runners:
+      local: "./gradlew test"
+      docker: "docker compose run --rm tests ./gradlew test"
+    
+  # Ruby
+  ruby:
+    extensions: [".rb", ".rake"]
+    patterns: ["Gemfile", "Rakefile"]
+    formatters:
+      conservative: ["rubocop -a"]
+      moderate: ["rubocop -a"]
+      aggressive: ["rubocop -A"]
+    linters: ["rubocop"]
+    security: ["brakeman", "bundle-audit"]
+    test_runners:
+      local: "bundle exec rspec"
+      docker: "docker compose run --rm tests bundle exec rspec"
+    
+  # PHP
+  php:
+    extensions: [".php"]
+    formatters:
+      conservative: ["php-cs-fixer fix"]
+      moderate: ["php-cs-fixer fix"]
+      aggressive: ["php-cs-fixer fix --risky"]
+    linters: ["phpstan", "psalm"]
+    security: ["composer audit"]
+    test_runners:
+      local: "vendor/bin/phpunit"
+      docker: "docker compose run --rm tests vendor/bin/phpunit"
+    
+  # Shell
+  shell:
+    extensions: [".sh", ".bash", ".zsh"]
+    formatters:
+      conservative: ["shfmt -w"]
+      moderate: ["shfmt -w"]
+      aggressive: ["shfmt -w"]
+    linters: ["shellcheck"]
+    security: []
+    
+  # SQL
+  sql:
+    extensions: [".sql"]
+    formatters:
+      conservative: ["sqlfluff fix"]
+      moderate: ["sqlfluff fix"]
+      aggressive: ["sqlfluff fix"]
+    linters: ["sqlfluff lint"]
+    security: []
+    
+  # Markdown
+  markdown:
+    extensions: [".md", ".markdown"]
+    formatters:
+      conservative: ["prettier --write"]
+      moderate: ["prettier --write"]
+      aggressive: ["prettier --write"]
+    linters: ["markdownlint-cli2"]
+    security: []
+    
+  # YAML
+  yaml:
+    extensions: [".yaml", ".yml"]
+    formatters:
+      conservative: ["prettier --write"]
+      moderate: ["prettier --write"]
+      aggressive: ["prettier --write"]
+    linters: ["yamllint"]
+    security: []
+    
+  # JSON
+  json:
+    extensions: [".json"]
+    formatters:
+      conservative: ["prettier --write"]
+      moderate: ["prettier --write"]
+      aggressive: ["prettier --write"]
+    linters: ["jq empty"]
+    security: []
+    
+  # TOML
+  toml:
+    extensions: [".toml"]
+    formatters:
+      conservative: ["taplo fmt"]
+      moderate: ["taplo fmt"]
+      aggressive: ["taplo fmt"]
+    linters: ["taplo lint"]
+    security: []
+    
+  # Dockerfile
+  dockerfile:
+    extensions: []
+    patterns: ["Dockerfile", "Dockerfile.*", "*.dockerfile"]
+    formatters:
+      conservative: []
+      moderate: []
+      aggressive: []
+    linters: ["hadolint"]
+    security: ["trivy config"]
+    
+  # Terraform
+  terraform:
+    extensions: [".tf", ".tfvars"]
+    formatters:
+      conservative: ["terraform fmt"]
+      moderate: ["terraform fmt"]
+      aggressive: ["terraform fmt"]
+    linters: ["tflint", "terraform validate"]
+    security: ["tfsec"]
+    
+  # Kubernetes
+  kubernetes:
+    extensions: []
+    patterns: ["**/k8s/*.yaml", "**/k8s/*.yml", "**/kubernetes/*.yaml", "**/manifests/*.yaml"]
+    formatters:
+      conservative: ["prettier --write"]
+      moderate: ["prettier --write"]
+      aggressive: ["prettier --write"]
+    linters: ["kubeconform", "helm lint"]
+    security: ["trivy config"]
+    
+  # Jupyter Notebooks
+  notebook:
+    extensions: [".ipynb"]
+    formatters:
+      conservative: ["nbstripout"]
+      moderate: ["nbstripout", "nbqa ruff format"]
+      aggressive: ["nbstripout", "nbqa ruff format", "nbqa ruff check --fix"]
+    linters: ["nbqa ruff check", "nbqa mypy"]
+    security: []
+    
+  # GitHub Actions
+  github_actions:
+    extensions: []
+    patterns: [".github/workflows/*.yml", ".github/workflows/*.yaml"]
+    formatters:
+      conservative: ["prettier --write"]
+      moderate: ["prettier --write"]
+      aggressive: ["prettier --write"]
+    linters: ["actionlint"]
+    security: []
+
+  # R
+  r:
+    extensions: [".R", ".r", ".Rmd"]
+    formatters:
+      conservative: ["Rscript -e 'styler::style_file(\"FILE\")'"]
+      moderate: ["Rscript -e 'styler::style_file(\"FILE\")'"]
+      aggressive: ["Rscript -e 'styler::style_file(\"FILE\")'"]
+    linters: ["Rscript -e 'lintr::lint(\"FILE\")'"]
+    security: []
+
+# Universal checks (run on all files)
+universal:
+  spelling:
+    tools: ["codespell", "typos"]
+    skip_patterns: ["*.min.js", "*.lock", "node_modules/*", ".git/*", "*.svg"]
+    
+  secrets:
+    tools: ["gitleaks detect", "trufflehog filesystem"]
+    critical: true
+    
+  whitespace:
+    tools: ["editorconfig-checker"]
+    
+  prose:
+    tools: ["vale"]
+    file_types: ["markdown", "rst", "txt"]
+
+# Severity mappings for report generation
+severity_levels:
+  critical:
+    - "secrets detected"
+    - "security vulnerability"
+    - "type error"
+  high:
+    - "lint error"
+    - "syntax error"
+    - "missing type annotation"
+  medium:
+    - "lint warning"
+    - "complexity warning"
+    - "unused import"
+  low:
+    - "formatting issue"
+    - "spelling"
+    - "style suggestion"

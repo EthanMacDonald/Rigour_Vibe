@@ -69,6 +69,15 @@ Creates: Comprehensive task breakdown
 
 ### Sequential Workflow Steps
 
+### Execution Guardrails (Mandatory)
+1. Task list order is strict: always execute the next unchecked item, never jump ahead
+2. Commit cadence is strict: one commit per completed sub-task, then parent-level completion commits
+3. Test environment is strict: if Docker markers exist (`Dockerfile`, `docker-compose.yml`, `docker-compose.yaml`, `compose.yml`, `compose.yaml`), run tests in Docker
+4. Test reporting is mandatory after each test run and completion update:
+   - `Total: N | Passed: N | Failed: N | Status: PASS|FAIL`
+   - `Environment: docker|native`
+   - `Command: [exact command used]`
+
 #### Phase 1: Requirements & Planning
 1. **Choose Your Starting Document:**
    - **Business Feature**: `@rvb-create-prd.mdc` → Creates PRD
@@ -90,6 +99,11 @@ Creates: Comprehensive task breakdown
 #### Phase 3: Documentation
 5. **Commit Changes:**
    - `@rvb-commit-message.mdc` → Structured commit messages
+
+### Commit Requirements
+1. Each completed sub-task must produce its own commit before proceeding
+2. Parent task completion requires parent-level commit plus a separate task-file progress commit
+3. Every commit must include test totals/status and execution context
 
 ## 📁 Clean Project Structure
 

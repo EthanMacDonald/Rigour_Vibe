@@ -14,9 +14,20 @@ To implement individual tasks using a test-first approach that ensures quality w
 ### Pre-Implementation Checklist
 Before starting any task:
 - [ ] Identify current task from task list
+- [ ] Confirm it is the next unchecked task/sub-task in list order
+- [ ] Confirm all prior tasks/sub-tasks are marked complete
 - [ ] Review test requirements for this task
 - [ ] Verify all previous tasks' tests are still passing
 - [ ] Understand integration points with existing code
+
+### Mandatory Test Environment Selection
+Before running any tests, detect Docker markers in the target project:
+- `Dockerfile`
+- `docker-compose.yml` or `docker-compose.yaml`
+- `compose.yml` or `compose.yaml`
+
+If any marker exists, test commands must execute in Docker.
+If no marker exists, execute tests in native environment.
 
 ### Test-First Implementation Steps
 
@@ -51,28 +62,9 @@ A task is ONLY complete when:
 5. ✅ **Task marked complete in task list**
 6. ✅ **Test specification created**: `../directives/tests/YYYY-MM-DD_test_feature-name_task-id.md`
 7. ✅ **Implementation summary created**: `../directives/summaries/YYYY-MM-DD_summary_feature-name_task-id.md`
-8. ✅ **Changes committed immediately** - Do NOT batch commits, commit after EVERY sub-task
-
-### Regular Commit Protocol
-
-**CRITICAL:** Commit after completing EACH sub-task, not just at parent task completion.
-
-```bash
-# After EVERY sub-task completion:
-git add .
-git commit -m "Task [X.Y]: [sub-task description]" \
-           -m "" \
-           -m "- [specific change 1]" \
-           -m "- [specific change 2]" \
-           -m "" \
-           -m "Status: Sub-task complete, tests passing"
-```
-
-Benefits of frequent commits:
-- Safer progress tracking - changes are saved regularly
-- Easier rollback if issues arise
-- Clear audit trail of implementation steps
-- Prevents loss of work
+8. ✅ **Changes committed with descriptive message**
+9. ✅ **Test metrics captured**: `Total: N | Passed: N | Failed: N | Status: PASS|FAIL`
+10. ✅ **Test environment and command captured**: `Environment: docker|native`, `Command: [exact command]`
 
 ### Complexity-Level Implementation
 
@@ -115,38 +107,49 @@ After completing each task:
 2. Update "Relevant Files" section with any new/modified files
 3. Add any newly discovered tasks
 4. Update test execution status
-5. **Commit changes immediately** - do not wait
 
-### Git Workflow - Commit After EVERY Sub-Task
-**CRITICAL:** Do NOT batch commits. Commit immediately after completing each sub-task.
-
-For each completed sub-task:
+### Git Workflow
+For each completed task:
 ```bash
-# 1. Run tests to ensure everything passes
-npm test  # or appropriate test command
+# 1. Run tests to ensure everything passes in required environment
+# Docker project example:
+docker compose run --rm tests [project-test-command]
+# Native project example:
+[project-test-command]
 
-# 2. Stage ALL changes (including task file updates)
+# 2. Stage changes
 git add .
 
-# 3. Commit immediately with task number format
-git commit -m "Task [X.Y]: [sub-task description]" \
+# 3. Commit with conventional format
+git commit -m "Task [X.Y]: [task description]" \
            -m "" \
+           -m "Summary:" \
            -m "- [specific change 1]" \
            -m "- [specific change 2]" \
            -m "" \
-           -m "Tests: passing" \
-           -m "Task file: [relative-path-to-task-file]"
+           -m "Tests: Total: [N] | Passed: [N] | Failed: [N] | Status: [PASS|FAIL]" \
+           -m "Environment: [docker|native]" \
+           -m "Command: [exact command used]" \
+           -m "Related to task [X.Y] in ../directives/tasks/YYYY-MM-DD_task_[feature].md"
 ```
 
-**Commit Message Requirements:**
-- First line MUST start with "Task [X.Y]:" format
-- Include brief description of what was accomplished
-- List key changes in the body
-- Reference the task file
+### Sub-Task Commit Cadence
+For parent tasks with sub-tasks, each completed sub-task requires its own commit before moving to the next sub-task.
+Do not combine multiple completed sub-tasks into one commit.
+
+Required per-sub-task commit format:
+```bash
+git add .
+git commit -m "Task [X.Y]: [sub-task description]" \
+           -m "" \
+           -m "Tests: Total: [N] | Passed: [N] | Failed: [N] | Status: [PASS|FAIL]" \
+           -m "Environment: [docker|native]" \
+           -m "Command: [exact command used]"
+```
 
 ### Parent Task Completion
 When all subtasks under a parent task are complete:
-1. ✅ Verify all subtask tests pass (each should already be committed)
+1. ✅ Verify all subtask tests pass
 2. ✅ Run integration tests for the parent task
 3. ✅ Check quality gate requirements
 4. ✅ Mark parent task complete
@@ -178,93 +181,36 @@ If a task becomes more complex than anticipated:
 
 ## Quality Verification Commands
 
-**NOTE:** Execute commands in Docker by default. Only use native execution if Docker is unavailable.
-
 ### Test Execution
 ```bash
-# ===========================================
-# DOCKER EXECUTION (DEFAULT - PREFERRED)
-# ===========================================
+# Run specific test file
+[docker compose run --rm tests] [project command for specific test]
 
-# Run specific test file (Docker)
-docker exec todo-backend-dev python -m pytest path/to/test.py -v
-# or for frontend:
-docker exec todo-frontend-dev npm test path/to/test.spec.ts
+# Run all tests
+[docker compose run --rm tests] [project full test command]
 
-# Run all backend tests (Docker)
-docker exec todo-backend-dev python -m pytest tests/ -v
+# Run tests with coverage
+[docker compose run --rm tests] [project coverage command]
 
-# Run all frontend tests (Docker)
-docker exec todo-frontend-dev npm test
+# Run integration tests only
+[docker compose run --rm tests] [project integration command]
 
-# Run tests with coverage (Docker)
-docker exec todo-backend-dev python -m pytest tests/ --cov=src --cov-report=html
-docker exec todo-frontend-dev npm run test:coverage
-
-# Run integration tests only (Docker)
-docker exec todo-backend-dev python -m pytest tests/integration/ -v
-
-# Run e2e tests (Docker)
-docker exec todo-frontend-dev npm run test:e2e
-
-# ===========================================
-# NATIVE EXECUTION (ONLY IF DOCKER UNAVAILABLE)
-# ===========================================
-
-# Run specific test file (Native - fallback)
-npm test path/to/test.spec.ts
-
-# Run all tests (Native - fallback)
-npm test
-
-# Run tests with coverage (Native - fallback)
-npm run test:coverage
-
-# Run integration tests only (Native - fallback)
-npm run test:integration
-
-# Run e2e tests (Native - fallback)
-npm run test:e2e
+# Run e2e tests
+[docker compose run --rm tests] [project e2e command]
 ```
 
 ### Code Quality Checks
 ```bash
-# ===========================================
-# DOCKER EXECUTION (DEFAULT - PREFERRED)
-# ===========================================
-
-# Linting (Docker)
-docker exec todo-frontend-dev npm run lint
-docker exec todo-backend-dev python -m flake8 src/
-
-# Type checking - TypeScript (Docker)
-docker exec todo-frontend-dev npm run type-check
-
-# Type checking - Python (Docker)
-docker exec todo-backend-dev python -m mypy src/
-
-# Format check (Docker)
-docker exec todo-frontend-dev npm run format:check
-docker exec todo-backend-dev python -m black --check src/
-
-# Security audit (Docker)
-docker exec todo-frontend-dev npm audit
-docker exec todo-backend-dev pip-audit
-
-# ===========================================
-# NATIVE EXECUTION (ONLY IF DOCKER UNAVAILABLE)
-# ===========================================
-
-# Linting (Native - fallback)
+# Linting
 npm run lint
 
-# Type checking (Native - fallback)
+# Type checking (TypeScript)
 npm run type-check
 
-# Format check (Native - fallback)
+# Format check
 npm run format:check
 
-# Security audit (Native - fallback)
+# Security audit
 npm audit
 ```
 
@@ -359,13 +305,16 @@ When implementing tasks:
 
 1. **Always start with tests** - Never write implementation code first
 2. **Follow project structure** - Place all files in their designated directories (src/, tests/, environment/, etc.)
-3. **One task at a time** - Complete fully before moving to next
+3. **One task at a time** - Complete fully before moving to next; do not skip ahead
 4. **Verify regressions** - Always run full test suite
 5. **Update documentation** - Keep task list current
-6. **Commit frequently** - After each completed task
-7. **Create documentation** - Test specs and implementation summaries in directives/
-8. **Organize files properly** - Ensure all code follows the standardized directory structure
-9. **Wait for user approval before continuing**
+6. **Commit after each completed sub-task** - One commit minimum per sub-task
+7. **Commit after each completed task** - Parent task completion and task-file progress updates
+8. **Create documentation** - Test specs and implementation summaries in directives/
+9. **Organize files properly** - Ensure all code follows the standardized directory structure
+10. **Use Docker for tests when Docker markers exist**
+11. **Report test totals in commits and progress updates**
+12. **Wait for user approval before continuing**
 
 ### Communication Format
 ```

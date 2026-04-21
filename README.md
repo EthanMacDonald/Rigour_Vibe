@@ -236,7 +236,7 @@ project-root/
 - End-to-end tests → `tests/e2e/[feature]/`
 
 **Environment Phase:**
-- Docker configs → `environment/docker/`
+- Docker configs → `docker/`
 - Conda environments → `environment/conda/`
 - CI/CD configs → `environment/ci/`
 - Build scripts → `scripts/build/`

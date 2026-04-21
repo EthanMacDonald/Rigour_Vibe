@@ -15,13 +15,16 @@ To provide a structured protocol for executing task lists while maintaining qual
 1. **Identify Current Task:** Find the next unchecked `[ ]` task in the task list
 2. **Review Context:** Read the task description and any related documentation
 3. **Check Prerequisites:** Ensure all previous tasks are properly completed
-4. **Verify Test Environment:** Confirm all existing tests are passing
+4. **Verify Environment:** Confirm development environment is functional (Docker containers, configs, etc.)
+5. **Verify Test Environment:** Confirm test infrastructure is available (only after environment is established)
 
 ### Individual Sub-Task Execution
 
 #### For Each Sub-Task:
 1. **Start Implementation:** 
-   - Follow test-first approach if new functionality
+   - Verify environment prerequisites are met
+   - Follow environment-first approach for setup tasks
+   - Follow test-first approach if new functionality (after environment is ready)
    - Read existing code if modifying functionality
    - Understand integration points
 
@@ -37,7 +40,22 @@ To provide a structured protocol for executing task lists while maintaining qual
    - **CRITICAL:** Wait for user permission before proceeding to next sub-task
    - User must respond with "yes", "y", "continue", or "go" to proceed
 
-4. **Sub-Task Completion Documentation:**
+4. **Commit Sub-Task Changes:**
+   ```bash
+   # Stage and commit after EVERY sub-task completion
+   git add .
+   git commit -m "Task [X.Y]: [sub-task description]" \
+              -m "" \
+              -m "- [key change 1]" \
+              -m "- [key change 2]" \
+              -m "" \
+              -m "Status: Sub-task complete, tests passing"
+   ```
+   - **REQUIRED:** Commit immediately after each sub-task
+   - Do NOT wait until parent task completion
+   - Small, frequent commits are preferred for safety and traceability
+
+5. **Sub-Task Completion Documentation:**
    ```markdown
    ✅ Completed Sub-Task [X.Y]: [Description]
    - Implementation: [Brief description of changes]
@@ -45,6 +63,7 @@ To provide a structured protocol for executing task lists while maintaining qual
    - Files Modified: [List of files changed]
    
    📝 Task file updated: [task-file-path]
+   💾 Changes committed: [commit hash] "Task [X.Y]: [description]"
    
    ⏸️ Waiting for permission to continue to next sub-task...
    ```
@@ -56,7 +75,17 @@ When all sub-tasks under a parent task are marked `[x]`:
 #### Automated Quality Checks
 1. **Run Full Test Suite:**
    ```bash
-   # Execute complete test suite
+   # ===========================================
+   # DOCKER EXECUTION (DEFAULT - PREFERRED)
+   # ===========================================
+   # Execute complete test suite in Docker
+   docker exec todo-backend-dev python -m pytest tests/ -v
+   docker exec todo-frontend-dev npm test
+   
+   # ===========================================
+   # NATIVE EXECUTION (ONLY IF DOCKER UNAVAILABLE)
+   # ===========================================
+   # Execute complete test suite natively (fallback only)
    npm test
    # or appropriate test command for the project
    ```
@@ -68,9 +97,11 @@ When all sub-tasks under a parent task are marked `[x]`:
    - Any project-specific tests: ✅
 
 #### Git Workflow (Only if all tests pass)
-3. **Stage Changes:**
+3. **Verify Sub-Task Commits:**
+   - All sub-task changes should already be committed
+   - Review recent commits to ensure completeness:
    ```bash
-   git add .
+   git log --oneline -10
    ```
 
 4. **Clean Up:**
@@ -229,6 +260,10 @@ Testing:
 - Coverage: [If applicable]
 
 📝 Task file updated: [task-file-path] (sub-task [X.Y] marked complete)
+<<<<<<< HEAD
+=======
+💾 Committed: [hash] "Task [X.Y]: [description]"
+>>>>>>> origin/main
 
 ⏸️ Ready for next sub-task? (Respond with 'yes' to continue)
 ```
@@ -260,12 +295,22 @@ Quality checks:
 ### Mandatory Behavior
 1. **One sub-task at a time:** NEVER start the next sub-task without explicit user permission
 2. **Update task file immediately:** After completing each sub-task, update the task file with `[x]` checkbox
+<<<<<<< HEAD
 3. **Follow project structure:** Place all files in their designated directories (src/, tests/, environment/, etc.)
 4. **Always run tests:** Before marking any task complete
 5. **Commit after parent tasks:** Create TWO commits - one for code changes, one for task file update
 6. **Use task numbers in commits:** Every commit message must start with "Task [X.Y]:" format
 7. **Update progress tracking:** Keep "Progress Summary" and "Relevant Files" sections current
 8. **Wait for permission:** After each sub-task completion
+=======
+3. **Commit after EVERY sub-task:** Git commit immediately after each sub-task completion - do NOT batch commits
+4. **Follow project structure:** Place all files in their designated directories (src/, tests/, environment/, etc.)
+5. **Always run tests:** Before marking any task complete
+6. **Commit after parent tasks:** Create a summary commit for task file update after all sub-tasks complete
+7. **Use task numbers in commits:** Every commit message must start with "Task [X.Y]:" format
+8. **Update progress tracking:** Keep "Progress Summary" and "Relevant Files" sections current
+9. **Wait for permission:** After each sub-task completion
+>>>>>>> origin/main
 
 ### Prohibited Actions
 - ❌ Working on multiple sub-tasks simultaneously
@@ -275,7 +320,12 @@ Quality checks:
 - ❌ Skipping quality gate checks
 - ❌ Forgetting to update task files after sub-task completion
 - ❌ Committing without task numbers in commit messages
+<<<<<<< HEAD
 - ❌ Combining code and task file updates in a single commit
+=======
+- ❌ Batching commits - commit after EACH sub-task, not at the end
+- ❌ Completing a sub-task without committing the changes
+>>>>>>> origin/main
 
 ### Communication Requirements
 - ✅ Clear status updates after each sub-task

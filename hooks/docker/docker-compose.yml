@@ -122,6 +122,25 @@ services:
         echo '=== Scan Complete ==='
       "
 
+  # Generic test execution service (set TEST_COMMAND)
+  tests:
+    build:
+      context: .
+      dockerfile: Dockerfile.linting
+    volumes:
+      - ${TARGET_DIR:-../..}:/workspace:rw
+    environment:
+      - TEST_COMMAND=${TEST_COMMAND:-npm test}
+      - CI=${CI:-true}
+    working_dir: /workspace
+    command: >
+      bash -lc "
+        echo '=== Test Execution ===' &&
+        echo \"Command: ${TEST_COMMAND}\" &&
+        eval \"${TEST_COMMAND}\" &&
+        echo '=== Tests Complete ==='
+      "
+
   # Python-specific linting
   python:
     build:

@@ -7,6 +7,8 @@ A Docker-based linting environment containing **all tools** from the [survey of 
 - **50+ linting/formatting tools** across 15+ languages
 - **Brownfield analyzer** - Generate detailed health reports for existing codebases
 - **Agentic pre-commit hook** - Smart file-type detection with configurable fix levels
+- **Docker-first test guardrails** - Docker projects run tests in containers before commit
+- **Test status reporting** - Prints test totals/status when detectable
 - **Docker-based** - Consistent environment, no local installation required
 - **Three fix levels** - Conservative, moderate, and aggressive auto-fixing
 
@@ -53,6 +55,21 @@ TARGET_DIR=/path/to/project docker compose run format
 
 # Check only (no modifications)
 TARGET_DIR=/path/to/project docker compose run check
+```
+
+### 3a. Enforced Test Guardrail
+
+`agentic_precommit.sh` now enforces test execution as part of pre-commit:
+
+1. Detects Docker markers (`Dockerfile`, `docker-compose.yml`, `docker-compose.yaml`, `compose.yml`, `compose.yaml`)
+2. If Docker markers exist, runs tests in Docker using the `tests` compose service
+3. If Docker markers do not exist, runs native tests
+4. Blocks commit when tests fail
+
+Example:
+
+```bash
+TARGET_DIR=/path/to/project TEST_COMMAND="npm test" docker compose run precommit
 ```
 
 ### 4. Interactive Shell
@@ -188,10 +205,14 @@ sqlfluff
 | `STAGED_ONLY` | `true` | Only check git staged files |
 | `VERBOSE` | `false` | Show detailed output |
 | `PARALLEL_JOBS` | `4` | Parallel analysis jobs |
+| `RUN_TESTS` | `true` | Run tests during pre-commit |
+| `TEST_COMMAND` | auto-detect | Override detected test command |
 
 ### Tool Mappings
 
 File type to tool mappings are defined in [config/tool_mappings.yaml](config/tool_mappings.yaml). You can customize which tools run for each file type and fix level.
+
+The mapping file now includes `test_runners.local` and `test_runners.docker` entries for major languages to support Docker-first enforcement.
 
 ## Report Output
 

@@ -21,6 +21,8 @@ CHECK_ONLY="${CHECK_ONLY:-false}"    # If true, don't auto-fix
 VERBOSE="${VERBOSE:-false}"
 STAGED_ONLY="${STAGED_ONLY:-true}"   # Only check staged files
 FAIL_ON_ERROR="${FAIL_ON_ERROR:-true}"
+RUN_TESTS="${RUN_TESTS:-true}"
+TEST_COMMAND="${TEST_COMMAND:-}"
 
 print_status() { echo -e "${BLUE}[INFO]${NC} $1"; }
 print_success() { echo -e "${GREEN}[✓]${NC} $1"; }
@@ -41,6 +43,8 @@ Environment Variables:
     VERBOSE         Verbose output: true|false (default: false)
     STAGED_ONLY     Only check staged files: true|false (default: true)
     FAIL_ON_ERROR   Exit with error on issues: true|false (default: true)
+    RUN_TESTS       Run tests as part of hook: true|false (default: true)
+    TEST_COMMAND    Override auto-detected test command
 
 Fix Levels:
     conservative    Formatting only (whitespace, line endings, imports order)
@@ -58,6 +62,132 @@ Install as Git Hook:
     chmod +x .git/hooks/pre-commit
 EOF
     exit 0
+}
+
+detect_test_command() {
+    if [[ -n "$TEST_COMMAND" ]]; then
+        echo "$TEST_COMMAND"
+        return 0
+    fi
+
+    if [[ -f "package.json" ]]; then
+        echo "npm test"
+        return 0
+    fi
+    if [[ -f "pyproject.toml" || -f "requirements.txt" || -f "requirements-dev.txt" ]]; then
+        echo "pytest -q"
+        return 0
+    fi
+    if [[ -f "Cargo.toml" ]]; then
+        echo "cargo test"
+        return 0
+    fi
+    if [[ -f "go.mod" ]]; then
+        echo "go test ./..."
+        return 0
+    fi
+    if [[ -f "Gemfile" ]]; then
+        echo "bundle exec rspec"
+        return 0
+    fi
+    if [[ -f "composer.json" ]]; then
+        echo "vendor/bin/phpunit"
+        return 0
+    fi
+
+    echo ""
+}
+
+is_docker_project() {
+    [[ -f "Dockerfile" || -f "docker-compose.yml" || -f "docker-compose.yaml" || -f "compose.yml" || -f "compose.yaml" ]]
+}
+
+print_test_metrics() {
+    local output="$1"
+    local status="$2"
+    local total="unknown"
+    local passed="unknown"
+    local failed="unknown"
+
+    if [[ "$output" =~ Tests:[[:space:]]*([0-9]+)[[:space:]]+passed,[[:space:]]*([0-9]+)[[:space:]]+total ]]; then
+        passed="${BASH_REMATCH[1]}"
+        total="${BASH_REMATCH[2]}"
+        failed="$((total - passed))"
+    elif [[ "$output" =~ ([0-9]+)[[:space:]]+passed ]] || [[ "$output" =~ ([0-9]+)[[:space:]]+failed ]]; then
+        local passed_match
+        local failed_match
+        passed_match=$(echo "$output" | grep -Eo '[0-9]+[[:space:]]+passed' | tail -1 | awk '{print $1}')
+        failed_match=$(echo "$output" | grep -Eo '[0-9]+[[:space:]]+failed' | tail -1 | awk '{print $1}')
+
+        [[ -n "$passed_match" ]] && passed="$passed_match"
+        [[ -n "$failed_match" ]] && failed="$failed_match"
+        [[ -z "$failed_match" && -n "$passed_match" ]] && failed="0"
+
+        if [[ "$passed" =~ ^[0-9]+$ && "$failed" =~ ^[0-9]+$ ]]; then
+            total="$((passed + failed))"
+        fi
+    elif [[ "$output" =~ ([0-9]+)[[:space:]]+passed ]]; then
+        passed="${BASH_REMATCH[1]}"
+        failed="0"
+        total="$passed"
+    fi
+
+    if [[ "$status" == "PASS" ]]; then
+        print_success "Tests: Total: $total | Passed: $passed | Failed: $failed | Status: PASS"
+    else
+        print_error "Tests: Total: $total | Passed: $passed | Failed: $failed | Status: FAIL"
+    fi
+}
+
+run_test_guardrail() {
+    [[ "$RUN_TESTS" != "true" ]] && {
+        print_warning "Skipping tests (RUN_TESTS=false)"
+        return 0
+    }
+
+    local detected_cmd
+    detected_cmd=$(detect_test_command)
+    if [[ -z "$detected_cmd" ]]; then
+        print_warning "No known test command detected; set TEST_COMMAND to enforce tests"
+        return 0
+    fi
+
+    local run_cmd
+    local environment
+    if is_docker_project; then
+        environment="docker"
+        print_status "Docker project detected; enforcing containerized test execution"
+        if ! command -v docker &>/dev/null; then
+            print_error "Docker project detected but docker CLI is unavailable"
+            ((ERRORS++)) || true
+            return 1
+        fi
+        if [[ ! -f "docker-compose.yml" && ! -f "docker-compose.yaml" && ! -f "compose.yml" && ! -f "compose.yaml" ]]; then
+            print_error "Docker project detected but no compose file found for test execution"
+            ((ERRORS++)) || true
+            return 1
+        fi
+        run_cmd="docker compose run --rm -e TEST_COMMAND=\"$detected_cmd\" tests"
+    else
+        environment="native"
+        run_cmd="$detected_cmd"
+    fi
+
+    print_status "Running tests in $environment environment"
+    print_status "Command: $run_cmd"
+
+    local test_output
+    if test_output=$(eval "$run_cmd" 2>&1); then
+        echo "$test_output"
+        print_test_metrics "$test_output" "PASS"
+    else
+        echo "$test_output"
+        print_test_metrics "$test_output" "FAIL"
+        ((ERRORS++)) || true
+        return 1
+    fi
+
+    return 0
 }
 
 [[ "${1:-}" == "-h" || "${1:-}" == "--help" ]] && show_help
@@ -691,6 +821,7 @@ main() {
     process_github_actions
     
     run_universal_checks
+    run_test_guardrail
     restage_files
     
     # Summary

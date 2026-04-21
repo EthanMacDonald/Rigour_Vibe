@@ -18,6 +18,9 @@ file_types:
       aggressive: ["ruff format", "isort", "ruff check --fix --unsafe-fixes"]
     linters: ["ruff check", "pylint", "mypy", "pyright"]
     security: ["bandit", "pip-audit"]
+    test_runners:
+      local: "pytest -q"
+      docker: "docker compose run --rm tests pytest -q"
     
   # JavaScript
   javascript:
@@ -28,6 +31,9 @@ file_types:
       aggressive: ["prettier --write", "eslint --fix"]
     linters: ["eslint"]
     security: ["eslint-plugin-security"]
+    test_runners:
+      local: "npm test"
+      docker: "docker compose run --rm tests npm test"
     
   # TypeScript
   typescript:
@@ -38,6 +44,9 @@ file_types:
       aggressive: ["prettier --write", "eslint --fix"]
     linters: ["eslint", "tsc --noEmit"]
     security: ["eslint-plugin-security"]
+    test_runners:
+      local: "npm test"
+      docker: "docker compose run --rm tests npm test"
     
   # Go
   go:
@@ -48,6 +57,9 @@ file_types:
       aggressive: ["gofmt -w", "goimports -w"]
     linters: ["golangci-lint run", "staticcheck"]
     security: ["gosec", "govulncheck"]
+    test_runners:
+      local: "go test ./..."
+      docker: "docker compose run --rm tests go test ./..."
     
   # Rust
   rust:
@@ -58,6 +70,9 @@ file_types:
       aggressive: ["cargo fmt", "cargo clippy --fix --allow-dirty --allow-staged"]
     linters: ["cargo clippy"]
     security: ["cargo audit"]
+    test_runners:
+      local: "cargo test"
+      docker: "docker compose run --rm tests cargo test"
     
   # C/C++
   cpp:
@@ -68,6 +83,9 @@ file_types:
       aggressive: ["clang-format -i"]
     linters: ["clang-tidy", "cppcheck"]
     security: []
+    test_runners:
+      local: "ctest --output-on-failure"
+      docker: "docker compose run --rm tests ctest --output-on-failure"
     
   # Java
   java:
@@ -78,6 +96,9 @@ file_types:
       aggressive: ["google-java-format -i"]
     linters: ["checkstyle", "pmd"]
     security: []
+    test_runners:
+      local: "./gradlew test"
+      docker: "docker compose run --rm tests ./gradlew test"
     
   # Kotlin
   kotlin:
@@ -88,6 +109,9 @@ file_types:
       aggressive: ["ktlint -F"]
     linters: ["ktlint"]
     security: []
+    test_runners:
+      local: "./gradlew test"
+      docker: "docker compose run --rm tests ./gradlew test"
     
   # Ruby
   ruby:
@@ -99,6 +123,9 @@ file_types:
       aggressive: ["rubocop -A"]
     linters: ["rubocop"]
     security: ["brakeman", "bundle-audit"]
+    test_runners:
+      local: "bundle exec rspec"
+      docker: "docker compose run --rm tests bundle exec rspec"
     
   # PHP
   php:
@@ -109,6 +136,9 @@ file_types:
       aggressive: ["php-cs-fixer fix --risky"]
     linters: ["phpstan", "psalm"]
     security: ["composer audit"]
+    test_runners:
+      local: "vendor/bin/phpunit"
+      docker: "docker compose run --rm tests vendor/bin/phpunit"
     
   # Shell
   shell:

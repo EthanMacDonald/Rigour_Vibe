@@ -76,6 +76,11 @@ Document how changes were verified:
 - Performance impact verified
 - Security considerations tested
 
+Required format in every commit body:
+- `Tests: Total: N | Passed: N | Failed: N | Status: PASS|FAIL`
+- `Environment: docker|native`
+- `Command: [exact test command used]`
+
 ### 5. Traceability Links
 Connect to the broader context:
 - Reference to task number and file
@@ -132,6 +137,9 @@ Testing Verification:
 - Manual testing with invalid card data confirmed proper error handling
 - Performance testing shows <5ms validation overhead
 - Security review confirmed no PII exposure in logs
+- Tests: Total: 57 | Passed: 57 | Failed: 0 | Status: PASS
+- Environment: docker
+- Command: docker compose run --rm tests npm run test:full -- --coverage
 
 Quality Gates Verified:
 - All new tests pass ✅
@@ -198,6 +206,9 @@ git commit -m "feat: Added user profile avatar upload functionality" \
            -m "Implemented secure file upload with image validation, automatic resizing to standard dimensions, and cloud storage integration. Added fallback avatar generation for users without uploads." \
            -m "" \
            -m "Testing: Added unit tests for file validation, integration tests for upload workflow, manual testing with various image formats confirmed proper handling." \
+           -m "Tests: Total: [N] | Passed: [N] | Failed: [N] | Status: [PASS|FAIL]" \
+           -m "Environment: [docker|native]" \
+           -m "Command: [exact command used]" \
            -m "" \
            -m "Quality Gates: All tests pass ✅, Security review ✅, Performance within limits ✅" \
            -m "" \
@@ -213,6 +224,9 @@ git commit -m "fix: Resolved race condition in user session management" \
            -m "Added proper locking mechanism and converted session updates to atomic operations. Implemented retry logic for failed session operations." \
            -m "" \
            -m "Testing: Added concurrency tests, stress testing with 100 concurrent users, verified no session corruption under load." \
+           -m "Tests: Total: [N] | Passed: [N] | Failed: [N] | Status: [PASS|FAIL]" \
+           -m "Environment: [docker|native]" \
+           -m "Command: [exact command used]" \
            -m "" \
            -m "Quality Gates: All tests pass ✅, Load testing ✅, Security verified ✅" \
            -m "" \
@@ -239,6 +253,8 @@ When generating commit messages:
 - ✅ Problem being solved
 - ✅ Solution approach
 - ✅ Testing verification performed
+- ✅ Tests total/passed/failed/status
+- ✅ Test environment and exact command
 - ✅ Quality gates passed
 - ✅ Task progress tracking
 - ✅ Files modified summary

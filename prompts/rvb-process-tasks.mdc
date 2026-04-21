@@ -17,6 +17,21 @@ To provide a structured protocol for executing task lists while maintaining qual
 3. **Check Prerequisites:** Ensure all previous tasks are properly completed
 4. **Verify Test Environment:** Confirm all existing tests are passing
 
+### Mandatory Sequential Enforcement
+- Work only on the first available unchecked item in list order
+- Do not start a task if any earlier task or sub-task remains unchecked
+- Treat out-of-order requests as blocked until prerequisite items are completed
+- Do not mark a checkbox complete without verified test evidence for that item
+
+### Mandatory Test Environment Selection
+Before running tests, detect Docker markers in the target project:
+- `Dockerfile`
+- `docker-compose.yml` or `docker-compose.yaml`
+- `compose.yml` or `compose.yaml`
+
+If any marker exists, all test execution must run in Docker.
+If no marker exists, run tests in the native environment.
+
 ### Individual Sub-Task Execution
 
 #### For Each Sub-Task:
@@ -32,8 +47,25 @@ To provide a structured protocol for executing task lists while maintaining qual
    - Check code quality
 
 3. **Mark Sub-Task Complete:**
+   - Run task-relevant tests using required environment selection rules
+   - Capture test totals and status in this format: `Total: N | Passed: N | Failed: N | Status: PASS|FAIL`
+   - If status is FAIL, do not mark complete and do not commit
    - Change `[ ]` to `[x]` in task list **immediately**
    - **REQUIRED:** Update the task file with the completed checkbox
+   - **REQUIRED:** Commit sub-task implementation before proceeding:
+   ```bash
+   git add .
+   git commit -m "Task [X.Y]: [sub-task description]" \
+              -m "" \
+              -m "Summary:" \
+              -m "- [key change 1]" \
+              -m "- [key change 2]" \
+              -m "" \
+              -m "Tests: Total: [N] | Passed: [N] | Failed: [N] | Status: [PASS|FAIL]" \
+              -m "Environment: [docker|native]" \
+              -m "Command: [exact command used]" \
+              -m "Task file: [relative-path-to-task-file]"
+   ```
    - **CRITICAL:** Wait for user permission before proceeding to next sub-task
    - User must respond with "yes", "y", "continue", or "go" to proceed
 
@@ -41,7 +73,9 @@ To provide a structured protocol for executing task lists while maintaining qual
    ```markdown
    ✅ Completed Sub-Task [X.Y]: [Description]
    - Implementation: [Brief description of changes]
-   - Tests: [Test status and coverage]
+   - Tests: Total: [N] | Passed: [N] | Failed: [N] | Status: [PASS|FAIL]
+   - Test Environment: [docker|native]
+   - Test Command: [exact command]
    - Files Modified: [List of files changed]
    
    📝 Task file updated: [task-file-path]
@@ -56,9 +90,11 @@ When all sub-tasks under a parent task are marked `[x]`:
 #### Automated Quality Checks
 1. **Run Full Test Suite:**
    ```bash
-   # Execute complete test suite
-   npm test
-   # or appropriate test command for the project
+   # Execute complete test suite in required environment
+   # Docker project example:
+   docker compose run --rm tests [project-test-command]
+   # Native project example:
+   [project-test-command]
    ```
 
 2. **Verify All Tests Pass:**
@@ -88,7 +124,9 @@ When all sub-tasks under a parent task are marked `[x]`:
               -m "- [key change 2]" \
               -m "- [key change 3]" \
               -m "" \
-              -m "Tests: [test summary - all passing]" \
+              -m "Tests: Total: [N] | Passed: [N] | Failed: [N] | Status: [PASS|FAIL]" \
+              -m "Environment: [docker|native]" \
+              -m "Command: [exact command used]" \
               -m "" \
               -m "Task file: [relative-path-to-task-file]"
    ```
@@ -125,7 +163,8 @@ When all sub-tasks under a parent task are marked `[x]`:
    - Sub-tasks completed: [count]
    - Files modified: [count] 
    - Tests added/updated: [count]
-   - All tests passing: ✅
+   - Tests: Total: [N] | Passed: [N] | Failed: [N] | Status: [PASS|FAIL]
+   - Test Environment: [docker|native]
    
    📝 Changes committed:
    - Code commit: [commit hash] "Task [X.0]: [description]"
@@ -140,6 +179,7 @@ When all sub-tasks under a parent task are marked `[x]`:
 Before marking any task complete:
 - [ ] **Functionality Complete:** All required functionality implemented
 - [ ] **Tests Pass:** All new and existing tests passing
+- [ ] **Ordered Execution:** All earlier tasks/sub-tasks are complete
 - [ ] **Code Quality:** Meets project coding standards
 - [ ] **Documentation:** Code is properly documented
 - [ ] **Integration:** Works with existing system
@@ -147,6 +187,7 @@ Before marking any task complete:
 ### Parent Task Quality Gates
 Before moving to next parent task:
 - [ ] **Full Test Suite:** Complete test suite passes
+- [ ] **Test Metrics Captured:** Total/Passed/Failed/Status recorded
 - [ ] **Regression Check:** No existing functionality broken
 - [ ] **Performance:** No significant performance degradation
 - [ ] **Security:** No security vulnerabilities introduced
@@ -225,8 +266,12 @@ Changes:
 - [File 2]: [Changes made]
 
 Testing:
-- [Test type]: [Pass/Fail status]
-- Coverage: [If applicable]
+- Total: [N]
+- Passed: [N]
+- Failed: [N]
+- Status: [PASS|FAIL]
+- Environment: [docker|native]
+- Command: [exact command]
 
 📝 Task file updated: [task-file-path] (sub-task [X.Y] marked complete)
 
@@ -240,7 +285,8 @@ Testing:
 Summary:
 - Sub-tasks: [X] completed
 - Files modified: [count]
-- Tests: All passing ✅
+- Tests: Total: [N] | Passed: [N] | Failed: [N] | Status: [PASS|FAIL]
+- Environment: [docker|native]
 
 Commits:
 - Code: [hash] "Task [X.0]: [description]"
@@ -261,17 +307,22 @@ Quality checks:
 1. **One sub-task at a time:** NEVER start the next sub-task without explicit user permission
 2. **Update task file immediately:** After completing each sub-task, update the task file with `[x]` checkbox
 3. **Follow project structure:** Place all files in their designated directories (src/, tests/, environment/, etc.)
-4. **Always run tests:** Before marking any task complete
-5. **Commit after parent tasks:** Create TWO commits - one for code changes, one for task file update
-6. **Use task numbers in commits:** Every commit message must start with "Task [X.Y]:" format
-7. **Update progress tracking:** Keep "Progress Summary" and "Relevant Files" sections current
-8. **Wait for permission:** After each sub-task completion
+4. **Always run tests:** Before marking any task complete, in Docker when project markers are present
+5. **Commit after each sub-task:** Create one commit per completed sub-task
+6. **Commit after parent tasks:** Create TWO additional commits - one for parent-level code summary, one for task file update
+7. **Use task numbers in commits:** Every commit message must start with "Task [X.Y]:" format
+8. **Update progress tracking:** Keep "Progress Summary" and "Relevant Files" sections current
+9. **Wait for permission:** After each sub-task completion
+10. **Enforce task order:** Never jump ahead in the task list
+11. **Report test totals:** Include Total/Passed/Failed/Status in completion and commit reporting
 
 ### Prohibited Actions
 - ❌ Working on multiple sub-tasks simultaneously
+- ❌ Jumping ahead to later tasks while earlier tasks are incomplete
 - ❌ Marking tasks complete without running tests
 - ❌ Proceeding without user permission
 - ❌ Committing code with failing tests
+- ❌ Running tests on host when Docker markers are present
 - ❌ Skipping quality gate checks
 - ❌ Forgetting to update task files after sub-task completion
 - ❌ Committing without task numbers in commit messages

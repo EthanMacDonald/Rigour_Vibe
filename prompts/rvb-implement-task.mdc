@@ -14,9 +14,20 @@ To implement individual tasks using a test-first approach that ensures quality w
 ### Pre-Implementation Checklist
 Before starting any task:
 - [ ] Identify current task from task list
+- [ ] Confirm it is the next unchecked task/sub-task in list order
+- [ ] Confirm all prior tasks/sub-tasks are marked complete
 - [ ] Review test requirements for this task
 - [ ] Verify all previous tasks' tests are still passing
 - [ ] Understand integration points with existing code
+
+### Mandatory Test Environment Selection
+Before running any tests, detect Docker markers in the target project:
+- `Dockerfile`
+- `docker-compose.yml` or `docker-compose.yaml`
+- `compose.yml` or `compose.yaml`
+
+If any marker exists, test commands must execute in Docker.
+If no marker exists, execute tests in native environment.
 
 ### Test-First Implementation Steps
 
@@ -52,6 +63,8 @@ A task is ONLY complete when:
 6. ✅ **Test specification created**: `../directives/tests/YYYY-MM-DD_test_feature-name_task-id.md`
 7. ✅ **Implementation summary created**: `../directives/summaries/YYYY-MM-DD_summary_feature-name_task-id.md`
 8. ✅ **Changes committed with descriptive message**
+9. ✅ **Test metrics captured**: `Total: N | Passed: N | Failed: N | Status: PASS|FAIL`
+10. ✅ **Test environment and command captured**: `Environment: docker|native`, `Command: [exact command]`
 
 ### Complexity-Level Implementation
 
@@ -98,18 +111,40 @@ After completing each task:
 ### Git Workflow
 For each completed task:
 ```bash
-# 1. Run tests to ensure everything passes
-npm test  # or appropriate test command
+# 1. Run tests to ensure everything passes in required environment
+# Docker project example:
+docker compose run --rm tests [project-test-command]
+# Native project example:
+[project-test-command]
 
 # 2. Stage changes
 git add .
 
 # 3. Commit with conventional format
-git commit -m "feat: implement [task description]" \
+git commit -m "Task [X.Y]: [task description]" \
+           -m "" \
+           -m "Summary:" \
            -m "- [specific change 1]" \
            -m "- [specific change 2]" \
-           -m "- Tests: [test description]" \
+           -m "" \
+           -m "Tests: Total: [N] | Passed: [N] | Failed: [N] | Status: [PASS|FAIL]" \
+           -m "Environment: [docker|native]" \
+           -m "Command: [exact command used]" \
            -m "Related to task [X.Y] in ../directives/tasks/YYYY-MM-DD_task_[feature].md"
+```
+
+### Sub-Task Commit Cadence
+For parent tasks with sub-tasks, each completed sub-task requires its own commit before moving to the next sub-task.
+Do not combine multiple completed sub-tasks into one commit.
+
+Required per-sub-task commit format:
+```bash
+git add .
+git commit -m "Task [X.Y]: [sub-task description]" \
+           -m "" \
+           -m "Tests: Total: [N] | Passed: [N] | Failed: [N] | Status: [PASS|FAIL]" \
+           -m "Environment: [docker|native]" \
+           -m "Command: [exact command used]"
 ```
 
 ### Parent Task Completion
@@ -149,19 +184,19 @@ If a task becomes more complex than anticipated:
 ### Test Execution
 ```bash
 # Run specific test file
-npm test path/to/test.spec.ts
+[docker compose run --rm tests] [project command for specific test]
 
 # Run all tests
-npm test
+[docker compose run --rm tests] [project full test command]
 
 # Run tests with coverage
-npm run test:coverage
+[docker compose run --rm tests] [project coverage command]
 
 # Run integration tests only
-npm run test:integration
+[docker compose run --rm tests] [project integration command]
 
 # Run e2e tests
-npm run test:e2e
+[docker compose run --rm tests] [project e2e command]
 ```
 
 ### Code Quality Checks
@@ -270,13 +305,16 @@ When implementing tasks:
 
 1. **Always start with tests** - Never write implementation code first
 2. **Follow project structure** - Place all files in their designated directories (src/, tests/, environment/, etc.)
-3. **One task at a time** - Complete fully before moving to next
+3. **One task at a time** - Complete fully before moving to next; do not skip ahead
 4. **Verify regressions** - Always run full test suite
 5. **Update documentation** - Keep task list current
-6. **Commit frequently** - After each completed task
-7. **Create documentation** - Test specs and implementation summaries in directives/
-8. **Organize files properly** - Ensure all code follows the standardized directory structure
-9. **Wait for user approval before continuing**
+6. **Commit after each completed sub-task** - One commit minimum per sub-task
+7. **Commit after each completed task** - Parent task completion and task-file progress updates
+8. **Create documentation** - Test specs and implementation summaries in directives/
+9. **Organize files properly** - Ensure all code follows the standardized directory structure
+10. **Use Docker for tests when Docker markers exist**
+11. **Report test totals in commits and progress updates**
+12. **Wait for user approval before continuing**
 
 ### Communication Format
 ```

@@ -37,6 +37,17 @@ When user asks for verification or status check:
 
 ## Verification Procedures
 
+### 0. Test Environment Detection
+Before any verification run, detect project test environment:
+- Docker markers: `Dockerfile`, `docker-compose.yml`, `docker-compose.yaml`, `compose.yml`, `compose.yaml`
+- If markers exist: run tests in Docker
+- If markers do not exist: run tests natively
+
+Required reporting after each test run:
+- `Total: N | Passed: N | Failed: N | Status: PASS|FAIL`
+- `Environment: docker|native`
+- `Command: [exact command used]`
+
 ### 1. Project Structure Verification
 ```bash
 # Verify directory structure exists
@@ -54,19 +65,19 @@ find directives/ -name "*.md" 2>/dev/null | head -5
 ```bash
 # Full test suite execution
 echo "🧪 Running Full Test Suite..."
-npm test --coverage
+[docker compose run --rm tests] [project full test command with coverage]
 
 # Integration test verification
 echo "🔗 Verifying Integration Points..."
-npm run test:integration
+[docker compose run --rm tests] [project integration command]
 
 # End-to-end verification (if applicable)
 echo "🎯 Running E2E Tests..."
-npm run test:e2e
+[docker compose run --rm tests] [project e2e command]
 
 # Performance regression check
 echo "⚡ Checking Performance..."
-npm run test:performance
+[docker compose run --rm tests] [project performance command]
 ```
 
 ### 2. Code Quality Verification
@@ -96,7 +107,7 @@ git diff HEAD~1 --name-only | grep -E '\.(test|spec)\.' || echo "No test files c
 
 # Run tests on changed files only (for speed)
 echo "⚡ Quick Regression Check..."
-npm test --changedSince=HEAD~1
+[docker compose run --rm tests] [project changed-since command]
 ```
 
 ## Progress Reporting
@@ -121,6 +132,9 @@ npm test --changedSince=HEAD~1
 - **Total Tests:** [Number]
 - **Passing:** [Number] ✅
 - **Failing:** [Number] ❌
+- **Status:** [PASS/FAIL]
+- **Environment:** [docker|native]
+- **Command:** [exact command used]
 - **Coverage:** [Percentage]%
 - **Performance:** [Within/Outside] acceptable range
 
@@ -163,17 +177,23 @@ npm test --changedSince=HEAD~1
 - **Files:** [Number] test files
 - **Tests:** [Number] total tests
 - **Status:** [All Passing/Some Failing]
+- **Totals:** Total [N] | Passed [N] | Failed [N]
 - **Coverage:** [Percentage]%
 
 #### Integration Tests
 - **Workflows:** [Number] tested
 - **Status:** [All Passing/Some Failing]
+- **Totals:** Total [N] | Passed [N] | Failed [N]
 - **Critical Paths:** [Status of key workflows]
 
 #### Quality Metrics
 - **Code Quality Score:** [Score/Rating]
 - **Performance:** [Benchmark results]
 - **Security:** [Audit results]
+
+#### Execution Context
+- **Environment:** [docker|native]
+- **Command(s):** [exact command list]
 ```
 
 ## Quality Gate Verification
@@ -188,13 +208,13 @@ npm test --changedSince=HEAD~1
 **Verification Commands:**
 ```bash
 # Run core functionality tests
-npm test -- --testNamePattern="core|basic|fundamental"
+[docker compose run --rm tests] [project command for core/basic/fundamental tests]
 
 # Verify critical paths
-npm run test:critical-path
+[docker compose run --rm tests] [project critical path command]
 
 # Performance baseline
-npm run benchmark:baseline
+[docker compose run --rm tests] [project benchmark baseline command]
 ```
 
 ### Gate 2: Feature Complete ✅
@@ -208,13 +228,13 @@ npm run benchmark:baseline
 **Verification Commands:**
 ```bash
 # Full feature test suite
-npm test
+[docker compose run --rm tests] [project full feature test command]
 
 # Coverage report
-npm run coverage:report
+[docker compose run --rm tests] [project coverage report command]
 
 # Integration verification
-npm run test:integration
+[docker compose run --rm tests] [project integration command]
 
 # Documentation check
 npm run docs:verify
@@ -232,13 +252,13 @@ npm run docs:verify
 **Verification Commands:**
 ```bash
 # Full release verification
-npm run test:release
+[docker compose run --rm tests] [project release verification command]
 
 # End-to-end verification
-npm run test:e2e
+[docker compose run --rm tests] [project e2e command]
 
 # Performance verification
-npm run test:performance
+[docker compose run --rm tests] [project performance verification command]
 
 # Security scan
 npm run security:scan
@@ -258,13 +278,13 @@ npm run verify:deployment
 ### Automated Checks
 ```bash
 # Pre-commit verification
-npm run verify:pre-commit
+[docker compose run --rm tests] [project pre-commit verification command]
 
 # Post-implementation verification
-npm run verify:post-task
+[docker compose run --rm tests] [project post-task verification command]
 
 # Quality gate verification
-npm run verify:quality-gate
+[docker compose run --rm tests] [project quality gate command]
 ```
 
 ### Manual Verification Points
@@ -288,7 +308,8 @@ When automated tests aren't sufficient:
 🔍 RIGOUR VIBE VERIFICATION REPORT
 
 📊 Progress: [X/Y tasks complete] ([Z]%)
-🧪 Tests: [Passing/Total] ([Coverage]%)
+🧪 Tests: Total: [N] | Passed: [N] | Failed: [N] | Status: [PASS|FAIL]
+🧪 Context: Environment=[docker|native] | Command=[exact command]
 📁 Structure: [Organized/Needs Attention]
 ⚡ Performance: [Status]
 🔒 Security: [Status]

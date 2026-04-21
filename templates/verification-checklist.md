@@ -2,6 +2,12 @@
 
 ## Quality Gate Verification
 
+## Test Environment Rule
+- Detect Docker markers before running tests: `Dockerfile`, `docker-compose.yml`, `docker-compose.yaml`, `compose.yml`, `compose.yaml`
+- If markers exist, run tests in Docker
+- If markers do not exist, run tests natively
+- Record for each run: `Total: N | Passed: N | Failed: N | Status: PASS|FAIL`
+
 ### Gate 1: Foundation Complete ✅
 **Purpose:** Verify core functionality is solid before building upon it
 
@@ -14,15 +20,16 @@
 #### Verification Steps
 - [ ] **Test Suite Status**
   ```bash
-  npm test -- --testPathPattern="(foundation|core|data|service)"
+  [docker compose run --rm tests] [project foundation/core/data/service test command]
   ```
   - [ ] All foundation tests passing
   - [ ] Test coverage meets minimum threshold
   - [ ] No flaky or intermittent test failures
+  - [ ] Test totals/status recorded
 
 - [ ] **Integration Verification**
   ```bash
-  npm run test:integration:foundation
+  [docker compose run --rm tests] [project integration foundation command]
   ```
   - [ ] Data persistence working correctly
   - [ ] API endpoints responding as expected
@@ -30,7 +37,7 @@
 
 - [ ] **Performance Baseline**
   ```bash
-  npm run test:performance:baseline
+  [docker compose run --rm tests] [project performance baseline command]
   ```
   - [ ] Response times within acceptable range
   - [ ] Memory usage reasonable
@@ -75,7 +82,7 @@
 #### Verification Steps
 - [ ] **Full Feature Test Suite**
   ```bash
-  npm test
+  [docker compose run --rm tests] [project full feature test command]
   ```
   - [ ] All unit tests passing
   - [ ] All integration tests passing
@@ -90,7 +97,7 @@
 
 - [ ] **Cross-Browser Compatibility** (if web app)
   ```bash
-  npm run test:cross-browser
+  [docker compose run --rm tests] [project cross-browser command]
   ```
   - [ ] Chrome/Chromium
   - [ ] Firefox
@@ -99,7 +106,7 @@
 
 - [ ] **Performance Verification**
   ```bash
-  npm run test:performance:feature
+  [docker compose run --rm tests] [project feature performance command]
   ```
   - [ ] Feature doesn't introduce performance regressions
   - [ ] Page load times acceptable
@@ -121,7 +128,7 @@
 #### Verification Steps
 - [ ] **Complete Test Suite**
   ```bash
-  npm run test:release
+  [docker compose run --rm tests] [project release test command]
   ```
   - [ ] 100% of tests passing
   - [ ] No skipped or ignored tests
@@ -138,7 +145,7 @@
 
 - [ ] **Performance Verification**
   ```bash
-  npm run test:performance:full
+  [docker compose run --rm tests] [project full performance command]
   ```
   - [ ] Load testing passes
   - [ ] Stress testing within limits
@@ -176,11 +183,12 @@
 
 - [ ] **Regression Check**
   ```bash
-  npm test
+  [docker compose run --rm tests] [project full regression command]
   ```
   - [ ] Full test suite still passing
   - [ ] No new test failures introduced
   - [ ] Performance hasn't degraded
+  - [ ] Test totals/status recorded
 
 - [ ] **Integration Verification**
   - [ ] Feature integrates properly with existing code
@@ -191,6 +199,7 @@
 - [ ] **Morning Setup**
   - [ ] Pull latest code changes
   - [ ] Run test suite to verify starting state
+  - [ ] Record test totals/status and environment
   - [ ] Review task list for current priorities
 
 - [ ] **During Development**
@@ -200,6 +209,7 @@
 
 - [ ] **End of Day**
   - [ ] Full test suite run
+  - [ ] Record test totals/status and environment
   - [ ] All changes committed
   - [ ] Task list updated with progress
   - [ ] No broken tests left for tomorrow

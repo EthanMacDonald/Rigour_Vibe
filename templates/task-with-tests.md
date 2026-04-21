@@ -21,6 +21,13 @@
   - [ ] 0.5 Verify CI/CD pipeline includes tests
   - [ ] 0.6 Document test execution commands
 
+## Execution Rules (Mandatory)
+- Execute tasks and sub-tasks in listed order only
+- Do not start a task/sub-task while any earlier item is unchecked
+- Commit after each completed sub-task
+- If Docker markers exist (`Dockerfile`, `docker-compose.yml`, `docker-compose.yaml`, `compose.yml`, `compose.yaml`), run all tests in Docker
+- Record for every test run: `Total: N | Passed: N | Failed: N | Status: PASS|FAIL`
+
 ## Relevant Files (Following Rigour Vibe Project Structure)
 ### Implementation Files
 - `src/core/[feature]/[module].ts` - Core business logic
@@ -37,7 +44,7 @@
 - `tests/fixtures/[feature]/[data].json` - Test data and mock objects
 
 ### Environment & Scripts
-- `environment/docker/Dockerfile` - Docker configuration (if needed)
+- `environment/docker/Dockerfile` - Docker configuration (required for Docker-based test execution when project is containerized)
 - `environment/ci/github-actions.yml` - CI/CD configuration (if needed)
 - `scripts/build/build-[feature].sh` - Build scripts (if needed)
 - `scripts/test/test-[feature].sh` - Test execution scripts (if needed)
@@ -142,13 +149,13 @@
 **Gate 1 Verification Commands:**
 ```bash
 # Run foundation tests
-npm test -- --testPathPattern="(data|service|business)"
+[docker compose run --rm tests] [project data/service/business test command]
 
 # Integration verification
-npm run test:integration:foundation
+[docker compose run --rm tests] [project integration foundation command]
 
 # Performance check
-npm run test:performance:baseline
+[docker compose run --rm tests] [project performance baseline command]
 ```
 
 ### Quality Gate 2: Feature Complete ✅
@@ -163,13 +170,13 @@ npm run test:performance:baseline
 **Gate 2 Verification Commands:**
 ```bash
 # Full feature test suite
-npm test
+[docker compose run --rm tests] [project full feature test command]
 
 # UI/Component tests
-npm run test:components
+[docker compose run --rm tests] [project component test command]
 
 # Accessibility check
-npm run test:a11y
+[docker compose run --rm tests] [project a11y test command]
 
 # Documentation verification
 npm run docs:verify
@@ -189,16 +196,16 @@ npm run docs:verify
 **Gate 3 Verification Commands:**
 ```bash
 # Complete release verification
-npm run test:release
+[docker compose run --rm tests] [project release test command]
 
 # Performance verification
-npm run test:performance:full
+[docker compose run --rm tests] [project full performance command]
 
 # Security scan
 npm run security:scan
 
 # End-to-end verification
-npm run test:e2e
+[docker compose run --rm tests] [project e2e command]
 
 # Production readiness check
 npm run verify:production
@@ -206,46 +213,50 @@ npm run verify:production
 
 ## Test Execution Commands
 
+Environment selection:
+- Docker markers present: run commands in Docker
+- No Docker markers: run commands natively
+
 ### Development Testing
 ```bash
 # Run all tests
-npm test
+[docker compose run --rm tests] [project full test command]
 
 # Run tests in watch mode
-npm run test:watch
+[docker compose run --rm tests] [project watch command]
 
 # Run specific test file
-npm test path/to/test.spec.ts
+[docker compose run --rm tests] [project specific test command]
 
 # Run tests with coverage
-npm run test:coverage
+[docker compose run --rm tests] [project coverage command]
 ```
 
 ### Integration Testing
 ```bash
 # Run integration tests only
-npm run test:integration
+[docker compose run --rm tests] [project integration command]
 
 # Run API integration tests
-npm run test:api
+[docker compose run --rm tests] [project API integration command]
 
 # Run database integration tests
-npm run test:db
+[docker compose run --rm tests] [project DB integration command]
 ```
 
 ### Specialized Testing
 ```bash
 # Run accessibility tests
-npm run test:a11y
+[docker compose run --rm tests] [project a11y command]
 
 # Run performance tests
-npm run test:performance
+[docker compose run --rm tests] [project performance command]
 
 # Run security tests
-npm run test:security
+[docker compose run --rm tests] [project security command]
 
 # Run visual regression tests (if applicable)
-npm run test:visual
+[docker compose run --rm tests] [project visual regression command]
 ```
 
 ## Task Completion Criteria
@@ -259,6 +270,8 @@ A task is complete when:
 5. ✅ **Regression check** - All previous tests still pass
 6. ✅ **Documentation updated** - Changes documented
 7. ✅ **Committed** - Changes committed with descriptive message
+8. ✅ **Test totals reported** - Total/Passed/Failed/Status included in commit body
+9. ✅ **Test environment recorded** - docker|native and exact command captured
 
 ### Quality Gate Completion
 A quality gate is passed when:
@@ -292,6 +305,7 @@ If any task becomes more complex than expected:
 - [ ] Complete one focused task/subtask
 - [ ] Update task list with progress
 - [ ] Commit changes with clear messages
+- [ ] Include test totals/status and environment in progress notes and commits
 - [ ] Verify no regressions introduced
 
 ### Weekly Review

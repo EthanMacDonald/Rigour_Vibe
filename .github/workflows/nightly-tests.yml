@@ -1,0 +1,94 @@
+name: Nightly Tests
+
+on:
+  schedule:
+    - cron: '0 9 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  repo-health:
+    name: Repository health
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node when package.json exists
+        if: ${{ hashFiles('package.json') != '' }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: ${{ hashFiles('package-lock.json') != '' && 'npm' || '' }}
+
+      - name: Install Node dependencies
+        if: ${{ hashFiles('package.json') != '' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ -f pnpm-lock.yaml ]; then
+            corepack enable
+            pnpm install --frozen-lockfile
+          elif [ -f yarn.lock ]; then
+            corepack enable
+            yarn install --frozen-lockfile
+          elif [ -f package-lock.json ]; then
+            npm ci
+          else
+            npm install
+          fi
+
+      - name: Run Node quality scripts when present
+        if: ${{ hashFiles('package.json') != '' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          node - <<'NODE' > /tmp/package-scripts.txt
+          const fs = require('fs');
+          const pkg = JSON.parse(fs.readFileSync('package.json', 'utf8'));
+          for (const name of ['lint', 'typecheck', 'test', 'build']) {
+            if (pkg.scripts && pkg.scripts[name]) console.log(name);
+          }
+          NODE
+          if [ ! -s /tmp/package-scripts.txt ]; then
+            echo 'No standard npm scripts found.'
+            exit 0
+          fi
+          while read -r script; do
+            echo "::group::npm run $script"
+            npm run "$script"
+            echo '::endgroup::'
+          done < /tmp/package-scripts.txt
+
+      - name: Set up Python when Python markers exist
+        if: ${{ hashFiles('requirements.txt', 'pyproject.toml', 'pytest.ini', 'tox.ini') != '' }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Python dependencies
+        if: ${{ hashFiles('requirements.txt', 'pyproject.toml', 'pytest.ini', 'tox.ini') != '' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then python -m pip install -r requirements.txt; fi
+          if [ -f pyproject.toml ]; then python -m pip install -e . || true; fi
+          python -m pip install pytest
+
+      - name: Run Python tests when present
+        if: ${{ hashFiles('requirements.txt', 'pyproject.toml', 'pytest.ini', 'tox.ini') != '' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ -d tests ] || [ -d test ] || [ -f pytest.ini ]; then
+            python -m pytest
+          else
+            echo 'Python markers found but no pytest suite detected.'
+          fi
+
+      - name: No automated checks detected
+        if: ${{ hashFiles('package.json', 'requirements.txt', 'pyproject.toml', 'pytest.ini', 'tox.ini') == '' }}
+        run: echo 'No standard automated checks detected yet.'

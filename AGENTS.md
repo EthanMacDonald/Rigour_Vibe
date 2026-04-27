@@ -35,3 +35,30 @@
 
 ## Known gaps
 - This file was generated from repository inspection and should be refined with project-specific details as they become known.
+
+<!-- BEGIN HERMES REPO OPERATING STANDARD -->
+
+## Hermes repo operating standard
+
+Version: `2026-04-27.1`
+
+### Autonomy boundaries
+- Allowed without extra approval: inspect code, create plans, run tests, create branches, commit to `hermes/*` branches, and open draft PRs.
+- Requires Ethan approval: merge PRs, deploy, change production secrets, alter billing/auth/security controls, delete data, force-push, or run destructive migrations.
+
+### Required workflow
+1. Start from the default branch and create a focused `hermes/*` branch.
+2. For behavior changes, write or update tests before implementation when practical.
+3. Run relevant local checks before pushing.
+4. Open a PR with summary, test evidence, and risk notes.
+5. Leave final merge/deploy decisions to Ethan unless he explicitly delegates them.
+
+### Standard documentation
+- `docs/architecture.md` describes project architecture and risk boundaries.
+- `docs/testing.md` describes local and CI quality gates.
+- `docs/plans/` stores PRDs, technical designs, and implementation plans.
+
+### Current detected quality commands
+  - `echo 'No automated checks detected yet; add tests and update docs/testing.md.'`
+
+<!-- END HERMES REPO OPERATING STANDARD -->

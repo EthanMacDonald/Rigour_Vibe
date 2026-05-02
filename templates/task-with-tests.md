@@ -27,6 +27,8 @@
 - Commit after each completed sub-task
 - If Docker markers exist (`Dockerfile`, `docker-compose.yml`, `docker-compose.yaml`, `compose.yml`, `compose.yaml`), run all tests in Docker
 - Record for every test run: `Total: N | Passed: N | Failed: N | Status: PASS|FAIL`
+- Agent Handoff blocks are optional/additive metadata. They must not replace these checkbox steps, test evidence, or commit requirements.
+- Code Approver must be able to review durable artifacts only: PRD, task list, diffs, tests, summaries, evidence, and commits.
 
 ## Relevant Files (Following Rigour Vibe Project Structure)
 ### Implementation Files
@@ -77,6 +79,13 @@
     - [ ] 1.0.V2 Data validation prevents invalid inputs
     - [ ] 1.0.V3 Error scenarios handled gracefully
     - [ ] 1.0.V4 Integration with existing data layer verified
+  - **Agent Handoff (Optional, Additive):**
+    - **Mode:** Human-clickable | Subagent-assisted | Code-approver-review
+    - **Implementer:** Allowed files: [paths]; Forbidden files: [paths]; Objective: [exact task objective]
+    - **Spec Reviewer:** Check approved requirements, allowed files, acceptance criteria, evidence; output PASS/FAIL with exact gaps
+    - **Quality/Security Reviewer:** Check maintainability, bugs, security, regressions, and test adequacy; output APPROVED/REQUEST_CHANGES
+    - **Tester/Validator:** Run or inspect [validation commands] when relevant
+    - **Parent Verification:** Verify files, git diff, test output, evidence, and no unexpected changes before marking complete
 
 - [ ] 2.0 Business Logic Implementation
   - **Prerequisites:**
@@ -145,6 +154,8 @@
 - [ ] Business logic functioning correctly
 - [ ] No critical performance issues
 - [ ] Error handling working properly
+- [ ] Spec review PASS or documented manual equivalent for completed tasks using Agent Handoff
+- [ ] Quality/security review APPROVED or documented manual equivalent for completed tasks using Agent Handoff
 
 **Gate 1 Verification Commands:**
 ```bash

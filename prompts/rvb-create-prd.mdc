@@ -16,6 +16,7 @@ To guide an AI assistant in creating a Product Requirements Document (PRD) that 
 3. **Complexity Assessment:** Determine rigor level needed (Light/Balanced/Full) based on clarifying questions
 4. **Ask Additional Questions:** Based on complexity level, ask targeted follow-up questions
 5. **Generate Rigour PRD:** Create PRD with integrated testing considerations using the answers
+   - For Balanced Rigor and Full Rigor, include an additive Agent Execution Plan that supports subagent-assisted implementation without replacing the normal human-readable PRD.
 6. **Save Document:** Store as `YYYY-MM-DD_prd_feature-name.md` in `../directives/prd/` directory (ensure directory exists)
 
 ## Initial Clarifying Questions
@@ -140,6 +141,35 @@ Based on answers, recommend:
 - No task is complete until tests pass
 - Verify all previous tests still pass before proceeding
 
+### Agent Execution Plan
+This section is additive and must not replace the normal human-readable PRD. It exists so the same PRD can support:
+- Human-clickable task execution
+- Subagent-assisted implementation and review
+- Code Approver-style review from durable artifacts
+
+**Recommended Roles:**
+- Discovery Agent: inspect repo context and constraints before implementation planning
+- Product Reviewer: check user-intent fit, MVP scope, and measurable acceptance criteria
+- Architecture Reviewer: check fit with existing code, data, auth, deployment, and risk constraints
+- Task Decomposition Reviewer: check task order, size, exact files, tests, and evidence requirements
+- Safety Reviewer: check external side effects and human approval gates
+- Implementer: implement one approved task at a time
+- Spec Reviewer: compare implementation against approved task spec; output PASS/FAIL
+- Quality/Security Reviewer: review maintainability, bugs, security, regressions, and test adequacy
+- Tester/Validator: independently verify tests, validation commands, dry-runs, and evidence when relevant
+- Integration Reviewer: review final cross-task consistency
+- Release Readiness Reviewer: assess PR/deployment readiness and remaining approvals
+
+**Required Gates:**
+- PRD approved before task generation
+- Task list approved before implementation
+- Spec review PASS before quality/security review
+- Quality/security review APPROVED before marking task complete
+- Tests/validation evidence captured before commit
+- Explicit human approval before production/external side effects
+
+**Compatibility Rule:** Subagent instructions must be copied into task-level Agent Handoff metadata, not hidden as the only implementation guidance. A human and Code Approver must still be able to understand the work from the PRD, task list, diffs, tests, summaries, and evidence files.
+
 ### Definition of Done
 [Specific criteria for considering feature complete]
 ```
@@ -171,3 +201,4 @@ Use today's date (2025-07-10) and format the feature name in lowercase with hyph
 8. Ensure testing requirements match the complexity assessment
 9. Include file placement guidance: specify where implementation files should go (`src/`), test files (`tests/`), and any environment configs (`environment/`)
 10. Provide clear quality gates and definition of done aligned with project structure
+11. For Balanced Rigor and Full Rigor, include the Agent Execution Plan section unless the user explicitly requests a human-only/lightweight PRD

@@ -16,6 +16,7 @@ To provide a structured protocol for executing task lists while maintaining qual
 2. **Review Context:** Read the task description and any related documentation
 3. **Check Prerequisites:** Ensure all previous tasks are properly completed
 4. **Verify Test Environment:** Confirm all existing tests are passing
+5. **Review Agent Handoff Metadata:** If present, treat it as routing/review guidance only. It must not override the normal checkbox flow, sequential enforcement, test evidence, or user permission checkpoints.
 
 ### Mandatory Sequential Enforcement
 - Work only on the first available unchecked item in list order
@@ -33,6 +34,16 @@ If any marker exists, all test execution must run in Docker.
 If no marker exists, run tests in the native environment.
 
 ### Individual Sub-Task Execution
+
+#### Optional Subagent Routing
+When the current task includes an `Agent Handoff` block or the user explicitly asks for subagents:
+- Use an Implementer subagent for the current task only.
+- Use a Spec Reviewer subagent after implementation and before style/quality review.
+- Use a Quality/Security Reviewer subagent only after spec review passes.
+- Use a Tester/Validator subagent for non-trivial validation, security-sensitive changes, or deployment-adjacent tasks.
+- The parent/main agent remains responsible for checking files, git diff, test output, evidence files, task checkboxes, and commits.
+
+This routing is additive. A human clicking through tasks should still follow the same visible checklist, and Code Approver should still be able to evaluate durable artifacts without needing subagent runtime logs.
 
 #### For Each Sub-Task:
 1. **Start Implementation:** 
@@ -181,6 +192,8 @@ Before marking any task complete:
 - [ ] **Tests Pass:** All new and existing tests passing
 - [ ] **Ordered Execution:** All earlier tasks/sub-tasks are complete
 - [ ] **Code Quality:** Meets project coding standards
+- [ ] **Spec Review:** PASS from subagent review or documented manual equivalent when Agent Handoff is present
+- [ ] **Quality/Security Review:** APPROVED from subagent review or documented manual equivalent when Agent Handoff is present
 - [ ] **Documentation:** Code is properly documented
 - [ ] **Integration:** Works with existing system
 

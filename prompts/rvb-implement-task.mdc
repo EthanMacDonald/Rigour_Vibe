@@ -17,8 +17,20 @@ Before starting any task:
 - [ ] Confirm it is the next unchecked task/sub-task in list order
 - [ ] Confirm all prior tasks/sub-tasks are marked complete
 - [ ] Review test requirements for this task
+- [ ] Review any Agent Handoff metadata for allowed files, forbidden files, reviewer expectations, and evidence requirements
 - [ ] Verify all previous tasks' tests are still passing
 - [ ] Understand integration points with existing code
+
+### Optional Subagent-Assisted Execution
+If the task list includes Agent Handoff metadata or the user requests subagents, use this additive workflow without changing the human-clickable task semantics:
+
+1. **Implementer Subagent:** Implement only the current approved task/sub-task. Pass the full task text, PRD summary, allowed/forbidden files, required tests, and evidence requirements. Do not let multiple implementers edit the same files concurrently.
+2. **Spec Reviewer Subagent:** After implementation, compare the diff against the approved task spec. Output `PASS` or `FAIL` with exact gaps. Do not judge style yet and do not modify files.
+3. **Quality/Security Reviewer Subagent:** Run only after spec review passes. Check correctness, maintainability, security, edge cases, regressions, and test adequacy. Output `APPROVED` or `REQUEST_CHANGES`.
+4. **Tester/Validator Subagent:** Use when validation is non-trivial, deployment-adjacent, security-sensitive, or requested by the task metadata.
+5. **Parent Verification:** The main agent must verify subagent claims against files, git diff, test output, and evidence before marking the task complete.
+
+Subagent summaries are not durable evidence by themselves. Copy any important review findings into the task summary or evidence files so Code Approver can review the work without ephemeral subagent state.
 
 ### Mandatory Test Environment Selection
 Before running any tests, detect Docker markers in the target project:
@@ -59,12 +71,14 @@ A task is ONLY complete when:
 2. ✅ **Full regression test suite passes**
 3. ✅ **Code quality standards met**
 4. ✅ **Integration points verified**
-5. ✅ **Task marked complete in task list**
-6. ✅ **Test specification created**: `../directives/tests/YYYY-MM-DD_test_feature-name_task-id.md`
-7. ✅ **Implementation summary created**: `../directives/summaries/YYYY-MM-DD_summary_feature-name_task-id.md`
-8. ✅ **Changes committed with descriptive message**
-9. ✅ **Test metrics captured**: `Total: N | Passed: N | Failed: N | Status: PASS|FAIL`
-10. ✅ **Test environment and command captured**: `Environment: docker|native`, `Command: [exact command]`
+5. ✅ **Spec review passed** when Agent Handoff/subagent-assisted mode is used, or equivalent manual spec check is documented
+6. ✅ **Quality/security review approved** when Agent Handoff/subagent-assisted mode is used, or equivalent manual quality check is documented
+7. ✅ **Task marked complete in task list**
+8. ✅ **Test specification created**: `../directives/tests/YYYY-MM-DD_test_feature-name_task-id.md`
+9. ✅ **Implementation summary created**: `../directives/summaries/YYYY-MM-DD_summary_feature-name_task-id.md`
+10. ✅ **Changes committed with descriptive message**
+11. ✅ **Test metrics captured**: `Total: N | Passed: N | Failed: N | Status: PASS|FAIL`
+12. ✅ **Test environment and command captured**: `Environment: docker|native`, `Command: [exact command]`
 
 ### Complexity-Level Implementation
 

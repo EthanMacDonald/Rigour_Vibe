@@ -17,7 +17,8 @@ To create a detailed, test-driven task list from a Rigour Vibe PRD that ensures 
 4. **Phase 2: Generate Detailed Tasks:** Once the user confirms, break down each parent task into smaller, actionable sub-tasks with integrated testing requirements
 5. **Define Test Dependencies:** Ensure tests build progressively
 6. **Create Quality Checkpoints:** Add verification gates between major tasks
-7. **Save Task List:** Store as `YYYY-MM-DD_task_feature-name.md` in `../directives/tasks/` (create directory if needed)
+7. **Add Agent Handoff Metadata:** For Balanced Rigor and Full Rigor tasks, add an optional Agent Handoff block after normal task steps. This must preserve human-clickable task flow and Code Approver compatibility.
+8. **Save Task List:** Store as `YYYY-MM-DD_task_feature-name.md` in `../directives/tasks/` (create directory if needed)
 
 ## Output Format
 
@@ -72,6 +73,13 @@ To create a detailed, test-driven task list from a Rigour Vibe PRD that ensures 
     - [ ] 1.0.V1 All new tests pass
     - [ ] 1.0.V2 All existing tests still pass
     - [ ] 1.0.V3 Integration points verified
+  - **Agent Handoff (Optional, Additive):**
+    - **Mode:** Human-clickable | Subagent-assisted | Code-approver-review
+    - **Implementer:** Allowed files, forbidden files, exact objective, required tests/validation, evidence to update
+    - **Spec Reviewer:** Confirm requirements from approved task spec; output PASS or FAIL with exact gaps
+    - **Quality/Security Reviewer:** Check maintainability, bugs, security, regressions, test adequacy; output APPROVED or REQUEST_CHANGES
+    - **Tester/Validator:** Independently run or inspect validation commands when relevant
+    - **Parent Verification:** Verify files, git diff, test output, and evidence before marking complete
   
 - [ ] 2.0 [Parent Task Name]
   - **Tests Required Before Implementation:**
@@ -170,6 +178,13 @@ A task is only complete when:
 
 ## Task Generation Rules
 
+### Backwards Compatibility Rules
+- Preserve the normal checkbox-based, human-clickable task flow.
+- Do not replace implementation steps with subagent-only instructions.
+- Keep task IDs, parent/subtask structure, quality gates, test commands, status lines, evidence paths, and commit instructions stable.
+- Treat Agent Handoff blocks as optional metadata. Code Approver must be able to review the PRD, task list, diffs, tests, and evidence without seeing ephemeral subagent runtime state.
+- If a task is Light Touch, add Agent Handoff only when the user asks for subagents or the task is risky enough to benefit from review.
+
 ### For Light Touch (Level 1):
 - 3-5 main tasks maximum
 - 1-2 tests per task
@@ -197,7 +212,8 @@ A task is only complete when:
 2. **Wait for Approval:** User responds with "Go" to proceed
 3. **Detail Subtasks:** Break down each task with specific test and implementation steps
 4. **Add Quality Gates:** Insert verification checkpoints
-5. **Finalize:** Complete task list with execution commands
+5. **Add Agent Handoff Metadata:** Add optional routing guidance for implementer/reviewer/tester subagents after the human-readable steps, without interrupting the checklist flow
+6. **Finalize:** Complete task list with execution commands
 
 ## Output Location
 - **Format:** Markdown (`.md`)
@@ -222,6 +238,8 @@ Use today's date (2025-07-10) and match the feature name from the PRD:
 8. Create progressive quality gates starting with environment readiness
 9. Ensure each task has clear completion criteria
 10. Include specific commands for the established environment (Docker, local, etc.)
+11. For Balanced Rigor and Full Rigor, include Agent Handoff metadata for each parent implementation task
+12. Do not make subagent execution mandatory for Code Approver review; durable task/evidence artifacts remain the source of truth
 
 ## Interaction Model
 

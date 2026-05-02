@@ -95,6 +95,29 @@
 - [ ] **Feature Completion:** Full test suite passes + integration verified
 - [ ] **Release Readiness:** All quality criteria met + production ready
 
+### Agent Execution Plan (Additive)
+Use this section for Balanced Rigor and Full Rigor, or when the user asks for subagent-assisted execution. It must not replace the normal PRD content, acceptance criteria, or human-readable implementation guidance.
+
+**Supported Modes:**
+- Human-clickable task execution
+- Subagent-assisted implementation and review
+- Code Approver-style review from durable artifacts
+
+**Recommended Roles:**
+- Discovery Agent: inspect repo context and constraints
+- Product Reviewer: review user-intent fit, MVP scope, and acceptance criteria
+- Architecture Reviewer: review fit with codebase, data, auth, deployment, and risk constraints
+- Task Decomposition Reviewer: review task order, size, exact files, tests, and evidence requirements
+- Safety Reviewer: review external side effects and approval gates
+- Implementer: implement one approved task/sub-task at a time
+- Spec Reviewer: compare implementation against approved task spec; output PASS/FAIL
+- Quality/Security Reviewer: review maintainability, bugs, security, regressions, and test adequacy
+- Tester/Validator: independently verify tests, validation commands, dry-runs, and evidence when relevant
+- Integration Reviewer: review final cross-task consistency
+- Release Readiness Reviewer: assess PR/deployment readiness and remaining approvals
+
+**Compatibility Rule:** Subagent guidance is metadata for execution. A human and Code Approver must still be able to evaluate the work from the PRD, task list, diffs, tests, summaries, and evidence files.
+
 ### Non-Functional Requirements
 - **Performance:** [Response time, throughput requirements]
 - **Reliability:** [Uptime, error rate targets]
@@ -181,6 +204,8 @@ A feature is complete when:
 - [ ] All functional requirements implemented
 - [ ] All tests pass (unit, integration, e2e as appropriate)
 - [ ] Code review completed
+- [ ] Spec review completed or documented manual equivalent provided
+- [ ] Quality/security review completed or documented manual equivalent provided
 - [ ] Documentation updated
 - [ ] Performance requirements met
 - [ ] Security requirements verified

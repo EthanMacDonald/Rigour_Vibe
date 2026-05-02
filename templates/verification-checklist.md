@@ -8,6 +8,12 @@
 - If markers do not exist, run tests natively
 - Record for each run: `Total: N | Passed: N | Failed: N | Status: PASS|FAIL`
 
+## Subagent / Code Approver Compatibility Rule
+- Subagent reviews are allowed, but durable evidence remains the source of truth.
+- If an Agent Handoff block is present, record spec review and quality/security review outcomes in the task summary or evidence file.
+- Do not require Code Approver to inspect ephemeral subagent runtime logs; it must be able to approve from PRD, task list, diffs, tests, summaries, evidence, and commits.
+- Human-clickable checkboxes remain authoritative for progress tracking.
+
 ### Gate 1: Foundation Complete ✅
 **Purpose:** Verify core functionality is solid before building upon it
 
@@ -178,6 +184,8 @@
 - [ ] **Immediate Verification**
   - [ ] Task-specific tests all pass
   - [ ] Implementation meets acceptance criteria
+  - [ ] Spec review PASS or documented manual equivalent when Agent Handoff is present
+  - [ ] Quality/security review APPROVED or documented manual equivalent when Agent Handoff is present
   - [ ] Code quality standards met
   - [ ] Task marked complete in task list
 
